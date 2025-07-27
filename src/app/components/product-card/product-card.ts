@@ -35,7 +35,6 @@ export class ProductCardComponent {
 
   addToCart() {
     // Logique pour ajouter le produit au panier
-    // Par exemple, appeler un service de panier
     this.cartService.addToCart(this.product);
     
     // Afficher un toast avec les informations du produit ajouté

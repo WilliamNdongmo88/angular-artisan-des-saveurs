@@ -135,7 +135,9 @@
 <app-order-modal 
   *ngIf="showOrderModal"
   [orderData]="orderData"
+  [cartItems]="cartItems"
   (closeModalEvent)="closeOrderModal()"
+  (clearCartEvent)="clearCart()"
   (submitOrderEvent)="onOrderSubmit($event)">
 </app-order-modal>
 

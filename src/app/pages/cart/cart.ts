@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CartComponent implements OnInit, OnDestroy {
   submitMessage = '';
   submitSuccess = false;
+  isResponse: boolean = false;
   cartItems: CartItem[] = [];
   subtotal = 0;
   discountPercentage = 10;
@@ -117,6 +118,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onOrderSubmit(formData: OrderFormData) {
+    console.log('### Valider la commane ####');
     // Créer l'objet de commande avec les données du formulaire
     const order: OrderPayload = {
       firstName: formData.firstName,
@@ -133,34 +135,35 @@ export class CartComponent implements OnInit, OnDestroy {
     console.log('Commande soumise:', order);
 
     // Envoi de la commande à l'API
-    this.cartService.submitOrder(order).subscribe({
-      next: (response) => {
-        this.submitSuccess = true;
-        const message = response.message;
-        this.submitMessage = `Commande soumise avec succès !\n\nTotal: Rs ${this.total.toFixed(2)}\n` +
-          `${this.isEligibleForFreeShipping ? 'Livraison gratuite incluse !' : 'Frais de livraison à ajouter'}`;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // this.cartService.submitOrder(order).subscribe({
+    //   next: (response) => {
+    //     this.submitSuccess = true;
+    //     this.isResponse = true;
+    //     const message = response.message;
+    //     this.submitMessage = `Commande soumise avec succès !\n\nTotal: Rs ${this.total.toFixed(2)}\n` +
+    //       `${this.isEligibleForFreeShipping ? 'Livraison gratuite incluse !' : 'Frais de livraison à ajouter'}`;
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Masquer le message après 5 secondes
-        setTimeout(() => {
-          this.submitMessage = '';
-          this.submitSuccess = false;
-        }, 10000);
+    //     // Masquer le message après 5 secondes
+    //     setTimeout(() => {
+    //       this.submitMessage = '';
+    //       this.submitSuccess = false;
+    //     }, 4000);
 
-        // Vider le panier après la commande
-        this.clearCart();
-      },
-      error: (error) => {
-        this.submitSuccess = false;
-        this.submitMessage = 'Une erreur est survenue. Veuillez réessayer.';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    //     // Vider le panier après la commande
+    //     this.clearCart();
+    //   },
+    //   error: (error) => {
+    //     this.submitSuccess = false;
+    //     this.submitMessage = 'Une erreur est survenue. Veuillez réessayer.';
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Masquer le message après 5 secondes
-        setTimeout(() => {
-          this.submitMessage = '';
-        }, 5000);
-      }
-    });
+    //     // Masquer le message après 5 secondes
+    //     setTimeout(() => {
+    //       this.submitMessage = '';
+    //     }, 5000);
+    //   }
+    // });
   }
 
   onImageError(event: any) {

@@ -53,7 +53,7 @@
           id="phone" 
           formControlName="phone"
           [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
-          placeholder="+33 1 23 45 67 89">
+          placeholder="+230 59 45 67 89">
         <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
           Le numéro de téléphone est requis
         </div>
@@ -85,7 +85,13 @@
           <span *ngIf="isSubmitting">Traitement en cours...</span>
         </button>
       </div>
+      @if(isSubmitting) {
+        <div class="loading-spinner">
+          <app-loading-spinner [overlay]="true"></app-loading-spinner>
+        </div>
+      }
     </form>
   </div>
 </div>
+
 
