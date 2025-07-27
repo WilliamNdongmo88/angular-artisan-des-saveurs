@@ -272,7 +272,7 @@
   }
 }
 
-@media (max-width: 333px) {
+@media (max-width: 443px) {
   .product-card {
     .product-image {
       height: 150px;
@@ -302,7 +302,7 @@
     }
 
     .product-footer {
-      display: flow;
+      display: flex;
       flex-direction: column;
       gap: 1rem;
       align-items: stretch;
