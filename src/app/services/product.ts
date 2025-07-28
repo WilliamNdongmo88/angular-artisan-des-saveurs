@@ -19,18 +19,30 @@ export class ProductService {
       origin: 'Île Maurice',
       preparation: 'Idéales grillées au barbecue ou à la plancha. Cuisson recommandée : 6-8 minutes de chaque côté à feu moyen.'
     },
-    {
+        {
       id: '2',
-      name: 'Travers de Porc',
-      description: 'Travers de porc marinés selon notre recette maison. Parfaits pour une cuisson lente au four ou au barbecue.',
+      name: 'Rouelle de Porc',
+      description: 'Morceau généreux découpé dans la cuisse du porc, avec os et gras, idéal pour les cuissons longues. Sa chair moelleuse et savoureuse en fait un plat familial traditionnel apprécié.',
       price: 583,
       unit: 'kg',
       category: ProductCategory.COTES_TRAVERS,
-      image: 'img/produits/cotes-de-porc.jpg',
+      image: 'img/produits/rouelle-de-porc.webp',
       featured: false,
       origin: 'Île Maurice',
-      preparation: 'Cuisson lente au four à 160°C pendant 2h30 ou au barbecue à feu doux. Badigeonner régulièrement de marinade.'
+      preparation: 'Cuisson lente au four à 180°C pendant 2h à 2h30, arrosée régulièrement de son jus. Peut aussi être mijotée en cocotte avec des légumes et des aromates.'
     },
+    // {
+    //   id: '2',
+    //   name: 'Travers de Porc',
+    //   description: 'Travers de porc marinés selon notre recette maison. Parfaits pour une cuisson lente au four ou au barbecue.',
+    //   price: 583,
+    //   unit: 'kg',
+    //   category: ProductCategory.COTES_TRAVERS,
+    //   image: 'img/produits/cotes-de-porc.webp',
+    //   featured: false,
+    //   origin: 'Île Maurice',
+    //   preparation: 'Cuisson lente au four à 160°C pendant 2h30 ou au barbecue à feu doux. Badigeonner régulièrement de marinade.'
+    // },
     {
       id: '3',
       name: 'Rôti de Porc dans l\'Échine',
@@ -69,36 +81,36 @@ export class ProductService {
     },
     {
       id: '6',
-      name: 'Saucisses Fraîches de Porc',
+      name: 'Chipolata Normale',
       description: 'Saucisses artisanales préparées selon nos recettes traditionnelles. 100% viande de porc, sans colorants ni conservateurs.',
-      price: 310,
+      price: 698,
       unit: 'kg',
       category: ProductCategory.SAUCISSES_CHARCUTERIE,
-      image: 'img/produits/saucisses-fraiches.jpg',
+      image: 'img/produits/chipo-normal.jpg',
       featured: true,
       origin: 'Fabrication Maison',
       preparation: 'Cuisson à la poêle à feu moyen pendant 12-15 minutes en les retournant régulièrement.'
     },
     {
       id: '7',
-      name: 'Saucisses aux Herbes de Provence',
+      name: 'Chipolata aux Herbes',
       description: 'Saucisses parfumées aux herbes de Provence, idéales pour apporter une touche méditerranéenne à vos repas.',
-      price: 250,
+      price: 731.50,
       unit: 'kg',
       category: ProductCategory.SAUCISSES_CHARCUTERIE,
-      image: 'img/produits/saucisses-fraiches.jpg',
+      image: 'img/produits/chipo_aux_herbes.png',
       featured: false,
       origin: 'Fabrication Maison',
       preparation: 'Parfaites grillées au barbecue ou cuites à la poêle avec un peu d\'huile d\'olive.'
     },
     {
       id: '8',
-      name: 'Jambon Blanc Artisanal',
+      name: 'Jambon Cuit Torchon',
       description: 'Jambon blanc cuit à l\'ancienne, sans polyphosphates. Goût authentique et texture fondante garantis.',
-      price: 290,
+      price: 885.50,
       unit: 'kg',
       category: ProductCategory.SAUCISSES_CHARCUTERIE,
-      image: 'img/produits/saucisses-fraiches.jpg',
+      image: 'img/produits/jambon-de-porc.png',
       featured: false,
       origin: 'Fabrication Maison',
       preparation: 'Prêt à consommer. Parfait en sandwich, salade ou plat chaud. Se conserve 5 jours au réfrigérateur.'

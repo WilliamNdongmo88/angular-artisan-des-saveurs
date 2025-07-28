@@ -139,7 +139,7 @@
   }
 
   .product-price {
-    display: inline;
+    display: -webkit-inline-box;
     flex-direction: column;
     
     .price {
@@ -157,7 +157,7 @@
     .add-to-cart {
       bottom: 2rem;
       right: 2rem;
-      margin-left: 3rem;
+      margin-left: 1rem;
       background-color: white;
       color: #8b0000;
       border: none;
@@ -184,6 +184,7 @@
   .product-actions {
     .btn {
       padding: 0.5rem 1rem;
+      //margin-left: 1rem;
       border-radius: 6px;
       font-size: 0.85rem;
       font-weight: 500;
