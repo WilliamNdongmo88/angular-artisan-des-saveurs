@@ -19,9 +19,9 @@ export class AboutComponent {
       icon: '👨‍🍳'
     },
     {
-      name: 'Damien',
+      name: 'Indiren',
       role: 'Boucher & Responsable Qualité',
-      description: 'Damien a repris le flambeau familial. Formé aux techniques modernes tout en respectant les traditions, il assure la continuité de notre savoir-faire.',
+      description: 'Indiren a repris le flambeau familial. Formé aux techniques modernes tout en respectant les traditions, il assure la continuité de notre savoir-faire.',
       icon: '👨‍💼'
     },
     {
