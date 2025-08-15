@@ -1,11 +1,12 @@
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   description: string;
   price: number;
   unit: string;
   category: ProductCategory;
   image: string;
+  imageUrl: string;
   featured: boolean;
   origin: string;
   preparation?: string;
@@ -18,6 +19,11 @@ export enum ProductCategory {
   MORCEAUX_BRAISER = 'morceaux-braiser',
   PRODUITS_TRANSFORMES = 'produits-transformes'
 }
+      /*[ProductCategory.COTES_TRAVERS]: 'Côtes et Travers',
+      [ProductCategory.ROTIS_FILETS]: 'Rôtis et Filets',
+      [ProductCategory.SAUCISSES_CHARCUTERIE]: 'Saucisses et Charcuterie',
+      [ProductCategory.MORCEAUX_BRAISER]: 'Morceaux à Braiser',
+      [ProductCategory.PRODUITS_TRANSFORMES]: 'Produits Transformés'*/
 
 export interface ContactForm {
   firstName: string;

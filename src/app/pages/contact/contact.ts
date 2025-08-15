@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../services/contact';
 import { ContactForm } from '../../models/product';
 import { ScrollToTopComponent } from "../../components/scroll-to-top-button/scroll-to-top.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-contact',
@@ -12,11 +13,18 @@ import { ScrollToTopComponent } from "../../components/scroll-to-top-button/scro
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   contactForm: FormGroup;
   isSubmitting = false;
   submitMessage = '';
   submitSuccess = false;
+  isUserConnected = false; 
+  user = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+  };
 
   subjects = [
     { value: 'commande', label: 'Commande spéciale' },
@@ -28,9 +36,31 @@ export class ContactComponent {
 
   constructor(
     private fb: FormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private authService: AuthService,
   ) {
     this.contactForm = this.createForm();
+  }
+  ngOnInit() {
+    // Vérifier si l'utilisateur est connecté
+    const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    console.log('[ContactComponent] data :: ', data);
+    // Si l'utilisateur est connecté, pré-remplir le formulaire
+    if (data && data.token) {
+      this.isUserConnected = true;
+      this.authService.extractUserFromToken(data.token); // Recupère les informations de l'utilisateur depuis le token
+      const userData = this.authService.getUser();
+      console.log('[ContactComponent] userData :: ', userData);
+      if (userData) {
+          this.contactForm.patchValue({
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          email: userData.email || '',
+          phone: userData.phone || ''
+        });
+      }
+    } 
+    console.log('Contact form initialized:', this.contactForm.value);
   }
 
   createForm(): FormGroup {

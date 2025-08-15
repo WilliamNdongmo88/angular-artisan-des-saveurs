@@ -183,6 +183,7 @@
       background-color: #2563eb;
     }
   }
+
 }
 
 @keyframes fadeIn {
@@ -231,4 +232,34 @@
     }
   }
 }
+
+.user-info {
+  background-color: #f8f9fa;
+  border-left: 5px solid #007bff;
+  padding: 5px;
+  margin-top: -5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 16px;
+    color: #333;
+
+    strong {
+      color: #007bff;
+    }
+  }
+
+  .user-name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .user-email,
+  .user-phone {
+    font-size: 14px;
+  }
+}
+
 

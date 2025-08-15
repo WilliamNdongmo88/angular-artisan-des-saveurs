@@ -9,3 +9,13 @@ export class User implements ContactForms {
 	contactRequests!: ContactRequest[];
 
 }
+
+export class Users {
+	id!:number;
+	firstName!: string;
+	lastName!: string;
+	email!: string;
+	phone!: string;
+ 	actif: boolean = false;
+	role: string = '';
+}

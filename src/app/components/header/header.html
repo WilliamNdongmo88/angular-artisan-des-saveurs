@@ -24,12 +24,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/catalogue" routerLinkActive="active" (click)="closeMenu()">
+          <a class="nav-link" routerLink="/catalog" routerLinkActive="active" (click)="closeMenu()">
             Nos Produits
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/a-propos" routerLinkActive="active" (click)="closeMenu()">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">
             À Propos
           </a>
         </li>
@@ -38,7 +38,27 @@
             Contact
           </a>
         </li>
+        
+        <!-- Menu admin -->
+        <li class="nav-item" *ngIf="currentUser && isAdmin()">
+          <a class="nav-link admin-link" routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">
+            Dashboard
+          </a>
+        </li>
       </ul>
+      
+      <!-- Menu utilisateur -->
+      <div class="user-menu">
+        <div *ngIf="!currentUser" class="auth-links">
+          <a class="nav-link login-link" routerLink="/login" (click)="closeMenu()">Connexion</a>
+          <a class="nav-link register-link" routerLink="/register" (click)="closeMenu()">Inscription</a>
+        </div>
+        
+        <div *ngIf="currentUser" class="user-info">
+          <span class="user-name">{{ currentUser.username }}</span>
+          <button class="logout-btn" (click)="logout()">Déconnexion</button>
+        </div>
+      </div>
     </div>
     
     <!-- Icône panier -->

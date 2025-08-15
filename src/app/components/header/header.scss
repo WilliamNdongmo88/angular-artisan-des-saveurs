@@ -15,6 +15,7 @@
     margin: 0 auto;
     padding: 0 1rem;
     display: flex;
+    //gap: 5rem;
     justify-content: space-between;
     align-items: center;
   }
@@ -77,12 +78,14 @@
 
   .navbar-collapse {
     display: flex;
+    // gap: 10rem;
+    // margin-left: 10rem;
   }
 
   .navbar-nav {
     display: flex;
     list-style: none;
-    margin: 0;
+    margin: 10px;
     padding: 0;
     gap: 2rem;
 
@@ -520,6 +523,121 @@
       font-size: 0.65rem;
       top: -3px;
       right: -3px;
+    }
+  }
+}
+
+
+
+/* Styles pour l'authentification */
+.user-menu {
+  display: flex;
+  align-items: center;
+  margin-left: 5rem;
+  
+  .auth-links {
+    display: flex;
+    //gap: 15px; //Ne fontionne que si display: flex;
+    align-items: center;
+
+    .login-link{
+      text-decoration: none;
+    }
+    
+    .register-link {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white !important;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-left: 1rem;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+    }
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .user-name {
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+      background-color: palegreen;
+      padding: 4px;
+      border-radius: 10px;
+    }
+    
+    .logout-btn {
+      background: transparent;
+      color: #dc3545;
+      border: 1px solid #dc3545;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: #dc3545;
+        color: white;
+      }
+    }
+  }
+}
+
+.admin-link {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  }
+}
+
+@media (max-width: 768px) {//768px
+  .navbar-collapse {
+    display: flex;
+    .user-menu {
+      margin-left: 0;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e9ecef;
+      
+      .auth-links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        
+        .nav-link {
+          text-align: center;
+          padding: 10px;
+          margin-left: 14px;
+          text-decoration: none;
+        }
+      }
+      
+      .user-info {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-align: center;
+        
+        .logout-btn {
+          width: 100%;
+          padding: 12px;
+        }
+      }
     }
   }
 }

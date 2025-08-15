@@ -6,85 +6,106 @@
     </div>
     
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="order-form">
-      <div class="form-group">
-        <label for="firstName">Prénom *</label>
-        <input 
-          type="text" 
-          id="firstName" 
-          formControlName="firstName"
-          [class.error]="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched"
-          placeholder="Votre prénom">
-        <div class="error-message" *ngIf="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched">
-          Le prénom est requis
+      @if(!isUserConnected){
+        <div class="form-group">
+          <label for="firstName">Prénom *</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName"
+            [class.error]="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched"
+            placeholder="Votre prénom">
+          <div class="error-message" *ngIf="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched">
+            Le prénom est requis
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="lastName">Nom *</label>
-        <input 
-          type="text" 
-          id="lastName" 
-          formControlName="lastName"
-          [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
-          placeholder="Votre nom">
-        <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
-          Le nom est requis
+        <div class="form-group">
+          <label for="lastName">Nom *</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName"
+            [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
+            placeholder="Votre nom">
+          <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
+            Le nom est requis
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="email">Email *</label>
-        <input 
-          type="email" 
-          id="email" 
-          formControlName="email"
-          [class.error]="orderForm.get('email')?.invalid && orderForm.get('email')?.touched"
-          placeholder="votre.email@exemple.com">
-        <div class="error-message" *ngIf="orderForm.get('email')?.invalid && orderForm.get('email')?.touched">
-          <span *ngIf="orderForm.get('email')?.errors?.['required']">L'email est requis</span>
-          <span *ngIf="orderForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            [class.error]="orderForm.get('email')?.invalid && orderForm.get('email')?.touched"
+            placeholder="votre.email@exemple.com">
+          <div class="error-message" *ngIf="orderForm.get('email')?.invalid && orderForm.get('email')?.touched">
+            <span *ngIf="orderForm.get('email')?.errors?.['required']">L'email est requis</span>
+            <span *ngIf="orderForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="phone">Téléphone *</label>
-        <input 
-          type="tel" 
-          id="phone" 
-          formControlName="phone"
-          [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
-          placeholder="+230 59 45 67 89">
-        <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
-          Le numéro de téléphone est requis
+        <div class="form-group">
+          <label for="phone">Téléphone *</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            formControlName="phone"
+            [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
+            placeholder="+230 59 45 67 89">
+          <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
+            Le numéro de téléphone est requis
+          </div>
         </div>
-      </div>
+      }
+      @if (isUserConnected) {
+        <div class="user-info">
+          <p class="user-name">
+            👤 <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+          </p>
+          <p class="user-email">📧  {{ user.email }}</p>
+          <p class="user-phone">📞  {{ user.phone }}</p>
+        </div>
+      }
 
       <div class="order-summary">
         <h3>Résumé de votre commande</h3>
         <div class="summary-line">
           <span>Sous-total:</span>
-          <span>{{ orderData.subtotal | currency:'EUR':'symbol':'1.2-2' }}</span>
+          <span>{{ orderData.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</span>
         </div>
         <div class="summary-line" *ngIf="orderData.discount > 0">
           <span>Remise:</span>
-          <span class="discount">-{{ orderData.discount | currency:'EUR':'symbol':'1.2-2' }}</span>
+          <span class="discount">-{{ orderData.discount | currency:'Rs ':'symbol':'1.2-2' }}</span>
         </div>
         <div class="summary-line total">
           <span><strong>Total:</strong></span>
-          <span><strong>{{ orderData.total | currency:'EUR':'symbol':'1.2-2' }}</strong></span>
+          <span><strong>{{ orderData.total | currency:'Rs ':'symbol':'1.2-2' }}</strong></span>
         </div>
         <div class="shipping-info" *ngIf="orderData.freeShipping">
           <span class="free-shipping">✓ Livraison gratuite incluse</span>
         </div>
       </div>
 
+      @if (isUserConnected){
       <div class="form-actions">
         <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
-        <button type="submit" class="btn-submit" [disabled]="orderForm.invalid || isSubmitting">
+        <button type="submit" class="btn-submit">
           <span *ngIf="!isSubmitting">Confirmer la commande</span>
           <span *ngIf="isSubmitting">Traitement en cours...</span>
         </button>
       </div>
+      }@else {
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
+          <button type="submit" class="btn-submit" [disabled]="isDisabled || isSubmitting">
+            <span *ngIf="!isSubmitting">Confirmer la commande</span>
+            <span *ngIf="isSubmitting">Traitement en cours...</span>
+          </button>
+        </div>
+      }
       @if(isSubmitting) {
         <div class="loading-spinner">
           <app-loading-spinner [overlay]="true"></app-loading-spinner>

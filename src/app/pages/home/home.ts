@@ -16,16 +16,23 @@ import { ScrollToTopComponent } from '../../components/scroll-to-top-button/scro
 export class HomeComponent implements OnInit {
   featuredProducts: Product[] = [];
   trackByProductId!: TrackByFunction<Product>;
+ 
 
   constructor(private productService: ProductService) {}
 
   ngOnInit() {
-    this.loadFeaturedProducts();
+    this.loadProducts();
   }
 
-  loadFeaturedProducts() {
-    this.productService.getFeaturedProducts().subscribe(products => {
-      this.featuredProducts = products;
+  loadProducts() {
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+      this.featuredProducts = products.filter(product => product.featured);
+      console.log("[HomeComponent] featuredProducts :: ", this.featuredProducts);
+      },
+      error: () => {
+        console.error('Erreur lors du chargement des produits', 'Erreur');
+      }
     });
   }
 }

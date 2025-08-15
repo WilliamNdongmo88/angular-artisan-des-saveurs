@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart.service';
@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss'
 })
@@ -35,7 +35,7 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  loadProduct(id: string) {
+  loadProduct(id: number) {
     this.loading = true;
     this.error = false;
     
@@ -77,7 +77,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/catalogue']);
+    console.log('Retour au catalogue');
+    this.router.navigate(['/catalog']);
   }
 
   onImageError(event: any) {

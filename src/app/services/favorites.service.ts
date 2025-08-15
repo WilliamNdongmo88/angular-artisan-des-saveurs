@@ -29,7 +29,7 @@ export class FavoritesService {
     }
   }
 
-  removeFromFavorites(productId: string) {
+  removeFromFavorites(productId: number) {
     this.favorites = this.favorites.filter(product => product.id !== productId);
     this.saveFavoritesToStorage();
     this.favoritesSubject.next([...this.favorites]);
@@ -43,7 +43,7 @@ export class FavoritesService {
     }
   }
 
-  isFavorite(productId: string): boolean {
+  isFavorite(productId: number): boolean {
     return this.favorites.some(product => product.id === productId);
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Product } from '../models/product';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OrderPayload } from '../models/order';
 import { catchError, delay, tap } from 'rxjs/operators';
 
@@ -10,14 +10,19 @@ export interface CartItem {
   quantity: number;
 }
 
+  const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   private cartItems: CartItem[] = [];
   private cartItemCountSubject = new BehaviorSubject<number>(0);
-  //private apiUrl = 'http://localhost:8070/api/orders';
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+
+  private apiUrl = 'http://localhost:8070/api/orders';
+  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
 
   constructor(private http: HttpClient) {
     // Charger le panier depuis le localStorage au démarrage
@@ -44,14 +49,14 @@ export class CartService {
   }
 
   // Retirer un produit du panier
-  removeFromCart(productId: string): void {
+  removeFromCart(productId: number): void {
     this.cartItems = this.cartItems.filter(item => item.product.id !== productId);
     this.updateCartCount();
     this.saveCartToStorage();
   }
 
   // Mettre à jour la quantité d'un produit
-  updateQuantity(productId: string, quantity: number): void {
+  updateQuantity(productId: number, quantity: number): void {
     const item = this.cartItems.find(item => item.product.id === productId);
     if (item) {
       if (quantity <= 0) {
@@ -114,7 +119,7 @@ export class CartService {
 
   // Méthode pour envoyer le panier à un serveur ou une API
   submitOrder(order: OrderPayload): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(this.apiUrl+"/place-order", order).pipe(
+    return this.http.post<{ success: boolean; message: string }>(this.apiUrl+"/place-order", order, httpOptions).pipe(
       tap((response) => console.log('Produit créé avec succès par l\'API :', response),
     ),
       catchError(err => {

@@ -1,0 +1,41 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Activation</h2>
+      <p>Recevoir un nouveau lien d'activation</p>
+    </div>
+
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input 
+          type="text" 
+          id="username"
+          formControlName="username" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['username'].errors"
+          placeholder="Votre email">
+        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+          <div *ngIf="f['username'].errors['required']">L'email d'utilisateur est requis</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block"
+          [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Envoyer
+        </button>
+      </div>
+
+      <div class="auth-links">
+        <p> Retourner a la  ? </p>
+        <!-- <div class="separator">•</div> -->
+        <a routerLink="/login" class="link">Connexion</a>
+      </div>
+    </form>
+  </div>
+</div>
+
