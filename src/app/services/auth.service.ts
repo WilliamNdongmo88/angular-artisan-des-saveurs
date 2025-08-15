@@ -2,18 +2,19 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { last, map } from 'rxjs/operators';
-import { 
-  LoginRequest, 
-  SignupRequest, 
-  JwtResponse, 
-  MessageResponse, 
-  EmailRequest, 
+import {
+  LoginRequest,
+  SignupRequest,
+  JwtResponse,
+  MessageResponse,
+  EmailRequest,
   ResetPasswordRequest,
   AuthUser
 } from '../models/auth.models';
 import { Users } from '../models/user';
 
-const AUTH_API = 'http://localhost:8070/api/auth/';
+//const AUTH_API = 'http://localhost:8070/api/auth/';
+const AUTH_API = 'https://artisan-des-saveurs-production.up.railway.app/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -124,9 +125,9 @@ export class AuthService {
         console.error('Erreur de décodage du token', e);
       }
   }
-  
+
   getUser() {
-    return this.user(); 
+    return this.user();
   }
 }
 

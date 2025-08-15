@@ -21,8 +21,8 @@ export class CartService {
   private cartItems: CartItem[] = [];
   private cartItemCountSubject = new BehaviorSubject<number>(0);
 
-  private apiUrl = 'http://localhost:8070/api/orders';
-  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+  //private apiUrl = 'http://localhost:8070/api/orders';
+  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
 
   constructor(private http: HttpClient) {
     // Charger le panier depuis le localStorage au démarrage
@@ -37,13 +37,13 @@ export class CartService {
   // Ajouter un produit au panier
   addToCart(product: Product, quantity: number = 1): void {
     const existingItem = this.cartItems.find(item => item.product.id === product.id);
-    
+
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
       this.cartItems.push({ product, quantity });
     }
-    
+
     this.updateCartCount();
     this.saveCartToStorage();
   }
