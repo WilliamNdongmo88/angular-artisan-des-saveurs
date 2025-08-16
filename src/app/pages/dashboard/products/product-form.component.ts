@@ -87,6 +87,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadProduct(id: number) {
+    console.log("loadProduct id :::", id);
     this.loading = true;
     this.productService.getProductById(id).subscribe({
       next: (product) => {
