@@ -54,6 +54,7 @@ export class ProductListComponent implements OnInit {
     // Charge les produits disponibles
     this.productService.getAvailableProducts().subscribe({
       next: (products) => {
+        console.log("[productService] : ", this.products);
         this.products = products;
         this.filteredProducts = products;
         this.loading = false;

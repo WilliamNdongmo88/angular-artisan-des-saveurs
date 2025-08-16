@@ -92,12 +92,12 @@ export class ProductFormComponent implements OnInit {
     this.productService.getProductById(id).subscribe({
       next: (product) => {
         console.log("product :::", product);
-        // this.myFile = {
-        //   id: product.mainImage.id,
-        //   name: product.mainImage.name,
-        //   content: product.mainImage.content,
-        //   temp: product.mainImage.temp
-        // };
+        this.myFile = {
+          id: product.mainImage.id,
+          name: product.mainImage.name,
+          content: product.mainImage.content,
+          temp: product.mainImage.temp
+        };
         console.log(" ::: test before :::");
         this.productForm.patchValue({
           name: product.name,
