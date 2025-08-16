@@ -91,7 +91,7 @@ export class ProductFormComponent implements OnInit {
     this.loading = true;
     this.productService.getProductById(id).subscribe({
       next: (product) => {
-        console.log("product :::", product);
+        
         this.myFile = {
           id: product.mainImage.id,
           name: product.mainImage.name,
@@ -99,6 +99,7 @@ export class ProductFormComponent implements OnInit {
           temp: product.mainImage.temp
         };
         console.log(" ::: test before :::");
+        console.log("product :::", product);
         this.productForm.patchValue({
           name: product.name,
           origin: product.origin,
