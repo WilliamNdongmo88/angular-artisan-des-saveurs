@@ -48,7 +48,9 @@ export class ProductFormComponent implements OnInit {
     this.loadCategories();
 
     // Vérifier si nous sommes en mode édition
+    console.log("productId :::Vérifier si nous sommes en mode édition);
     this.route.params.subscribe(params => {
+      console.log("params['id'] :::", params['id']);
       if (params['id']) {
         this.isEditMode = true;
         this.productId = +params['id'];
