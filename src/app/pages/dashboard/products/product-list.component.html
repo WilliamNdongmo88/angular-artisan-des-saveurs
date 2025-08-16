@@ -1,0 +1,101 @@
+<app-header></app-header>
+<div class="product-list-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Gestion des Produits</h1>
+      <button class="btn btn-primary" (click)="createProduct()">
+        <i class="icon-plus"></i>
+        Nouveau Produit
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-section">
+    <div class="filters-row">
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Rechercher un produit..."
+          class="form-control">
+        <i class="search-icon">🔍</i>
+      </div>
+
+      <div class="category-filter">
+        <select
+          [(ngModel)]="selectedCategory"
+          (change)="onCategoryChange()"
+          class="form-control">
+          <option value="">Toutes les catégories</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <button class="btn btn-outline" (click)="clearFilters()">
+        Effacer les filtres
+      </button>
+    </div>
+  </div>
+
+  <div class="products-section">
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des produits...</p>
+    </div>
+
+    <div *ngIf="!loading && filteredProducts.length === 0" class="empty-state">
+      <div class="empty-icon">📦</div>
+      <h3>Aucun produit trouvé</h3>
+      <p>{{ searchTerm || selectedCategory ? 'Aucun produit ne correspond à vos critères de recherche.' : 'Commencez par créer votre premier produit.' }}</p>
+      <button *ngIf="!searchTerm && !selectedCategory" class="btn btn-primary" (click)="createProduct()">
+        Créer un produit
+      </button>
+    </div>
+
+    <div *ngIf="!loading && filteredProducts.length > 0" class="products-grid">
+      <div *ngFor="let product of filteredProducts" class="product-card">
+        <div class="product-image">
+          <img [src]="product.mainImage.content" (error)="handleImageError($event)" [alt]="product.name" />
+          <div class="product-status" [class.available]="product.available" [class.unavailable]="!product.available">
+            {{ product.available ? 'Disponible' : 'Indisponible' }}
+          </div>
+        </div>
+
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-category">{{ product.category }}</p>
+          <p class="product-description">{{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '...' : '' }}</p>
+
+          <div class="product-details">
+            <div class="price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
+            <div class="stock">Stock: {{ product.stockQuantity }} {{ product.unit }}</div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn btn-sm btn-outline" (click)="viewProduct(product.id)" title="Voir">
+            👁️
+          </button>
+          <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
+            ✏️
+          </button>
+          <button
+            class="btn btn-sm"
+            [class.btn-success]="!product.available"
+            [class.btn-warning]="product.available"
+            (click)="toggleAvailability(product)"
+            [title]="product.available ? 'Désactiver' : 'Activer'">
+            {{ product.available ? '🔒' : '🔓' }}
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
+            🗑️
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

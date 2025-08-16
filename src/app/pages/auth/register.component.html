@@ -1,0 +1,136 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Créer un compte</h2>
+      <p>Rejoignez Artisan des Saveurs</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">Prénom</label>
+          <input 
+            type="text" 
+            id="firstName"
+            formControlName="firstName" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['firstName'].errors"
+            placeholder="Votre prénom">
+          <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['firstName'].errors['required']">Le prénom est requis</div>
+            <div *ngIf="f['firstName'].errors['maxlength']">Le prénom ne peut pas dépasser 50 caractères</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Nom</label>
+          <input 
+            type="text" 
+            id="lastName"
+            formControlName="lastName" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['lastName'].errors"
+            placeholder="Votre nom">
+          <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['lastName'].errors['required']">Le nom est requis</div>
+            <div *ngIf="f['lastName'].errors['maxlength']">Le nom ne peut pas dépasser 50 caractères</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input 
+          type="text" 
+          id="username"
+          formControlName="username" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['username'].errors"
+          placeholder="Choisissez un nom d'utilisateur">
+        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+          <div *ngIf="f['username'].errors['required']">Le nom d'utilisateur est requis</div>
+          <div *ngIf="f['username'].errors['minlength']">Le nom d'utilisateur doit contenir au moins 3 caractères</div>
+          <div *ngIf="f['username'].errors['maxlength']">Le nom d'utilisateur ne peut pas dépasser 20 caractères</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['email'].errors"
+          placeholder="votre@email.com">
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">L'email est requis</div>
+          <div *ngIf="f['email'].errors['email']">L'email n'est pas valide</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Téléphone (optionnel)</label>
+        <input 
+          type="tel" 
+          id="phone"
+          formControlName="phone" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['phone'].errors"
+          placeholder="+230 123 456 789">
+        <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+          <div *ngIf="f['phone'].errors['maxlength']">Le téléphone ne peut pas dépasser 20 caractères</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input 
+            type="password" 
+            id="password"
+            formControlName="password" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['password'].errors"
+            placeholder="Mot de passe">
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Le mot de passe est requis</div>
+            <div *ngIf="f['password'].errors['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
+            <div *ngIf="f['password'].errors['maxlength']">Le mot de passe ne peut pas dépasser 40 caractères</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input 
+            type="password" 
+            id="confirmPassword"
+            formControlName="confirmPassword" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['confirmPassword'].errors"
+            placeholder="Confirmer le mot de passe">
+          <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['confirmPassword'].errors['required']">La confirmation du mot de passe est requise</div>
+            <div *ngIf="f['confirmPassword'].errors['mustMatch']">Les mots de passe ne correspondent pas</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block"
+          [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Créer mon compte
+        </button>
+      </div>
+
+      <div class="auth-links">
+        <span>Déjà un compte ?</span>
+        <a routerLink="/login" class="link">Se connecter</a>
+      </div>
+    </form>
+  </div>
+</div>
+

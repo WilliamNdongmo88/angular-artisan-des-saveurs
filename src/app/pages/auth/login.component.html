@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Connexion</h2>
+      <p>Connectez-vous à votre compte</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input 
+          type="text" 
+          id="username"
+          formControlName="username" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['username'].errors"
+          placeholder="Votre nom d'utilisateur">
+        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+          <div *ngIf="f['username'].errors['required']">Le nom d'utilisateur est requis</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password" 
+          class="form-control"
+          [class.is-invalid]="submitted && f['password'].errors"
+          placeholder="Votre mot de passe">
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">Le mot de passe est requis</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block"
+          [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Se connecter
+        </button>
+      </div>
+
+      <div class="auth-links">
+        <a routerLink="/sent-email" class="link">Mot de passe oublié ?</a>
+        <div class="separator">•</div>
+        <a routerLink="/register" class="link">Créer un compte</a>
+      </div>
+    </form>
+  </div>
+</div>
+

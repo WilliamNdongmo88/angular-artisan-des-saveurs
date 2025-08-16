@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+
+.toast-top-center {
+  top: 3rem !important; /* ou la marge souhaitée */
+}

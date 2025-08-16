@@ -1,0 +1,213 @@
+<app-header></app-header>
+<div class="product-form-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>{{ isEditMode ? 'Modifier le Produit' : 'Nouveau Produit' }}</h1>
+      <button class="btn btn-outline" (click)="onCancel()">
+        ← Retour à la liste
+      </button>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+      <div class="form-grid">
+        <!-- Nom du produit -->
+        <div class="form-group full-width">
+          <label for="name">Nom du produit *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.is-invalid]="submitted && f['name'].errors"
+            placeholder="Nom du produit">
+          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+            <div *ngIf="f['name'].errors['required']">Le nom est requis</div>
+            <div *ngIf="f['name'].errors['maxlength']">Le nom ne peut pas dépasser 100 caractères</div>
+          </div>
+        </div>
+
+        <!-- Origine du produit -->
+        <div class="form-group full-width">
+          <label for="origin">Origine du produit *</label>
+          <input
+            type="text"
+            id="origin"
+            formControlName="origin"
+            class="form-control"
+            [class.is-invalid]="submitted && f['origin'].errors"
+            placeholder="Origine du produit">
+          <div *ngIf="submitted && f['origin'].errors" class="invalid-feedback">
+            <div *ngIf="f['origin'].errors['required']">L'origine est requis</div>
+            <div *ngIf="f['origin'].errors['maxlength']">L'origin ne peut pas dépasser 100 caractères</div>
+          </div>
+        </div>
+
+        <!-- Prix -->
+        <div class="form-group">
+          <label for="price">Prix (Rs) *</label>
+          <input
+            type="number"
+            id="price"
+            formControlName="price"
+            class="form-control"
+            [class.is-invalid]="submitted && f['price'].errors"
+            placeholder="0.00"
+            step="0.01"
+            min="0">
+          <div *ngIf="submitted && f['price'].errors" class="invalid-feedback">
+            <div *ngIf="f['price'].errors['required']">Le prix est requis</div>
+            <div *ngIf="f['price'].errors['min']">Le prix doit être supérieur à 0</div>
+          </div>
+        </div>
+
+        <!-- Catégorie -->
+        <div class="form-group">
+          <label for="category">Catégorie</label>
+          <select
+            id="category"
+            formControlName="category"
+            class="form-control"
+            [class.is-invalid]="submitted && f['category'].errors">
+            <option value="" disabled selected>-- Sélectionner une catégorie --</option>
+            <option value="cotes-travers">Côtes & travers</option>
+            <option value="rotis-filets">Rôtis & filets</option>
+            <option value="saucisses-charcuterie">Saucisses & charcuterie</option>
+            <option value="morceaux-braiser">Morceaux à braiser</option>
+            <option value="produits-transformes">Produits transformés</option>
+          </select>
+
+          <div *ngIf="submitted && f['category'].errors" class="invalid-feedback">
+            <div *ngIf="f['category'].errors['maxlength']">
+              La catégorie ne peut pas dépasser 50 caractères
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Stock -->
+        <div class="form-group">
+          <label for="stockQuantity">Quantité en stock</label>
+          <input
+            type="number"
+            id="stockQuantity"
+            formControlName="stockQuantity"
+            class="form-control"
+            [class.is-invalid]="submitted && f['stockQuantity'].errors"
+            placeholder="0"
+            min="0">
+          <div *ngIf="submitted && f['stockQuantity'].errors" class="invalid-feedback">
+            <div *ngIf="f['stockQuantity'].errors['min']">La quantité ne peut pas être négative</div>
+          </div>
+        </div>
+
+        <!-- Unité -->
+        <div class="form-group">
+          <label for="unit">Unité</label>
+          <input
+            type="text"
+            id="unit"
+            formControlName="unit"
+            class="form-control"
+            [class.is-invalid]="submitted && f['unit'].errors"
+            placeholder="kg, pièce, litre...">
+          <div *ngIf="submitted && f['unit'].errors" class="invalid-feedback">
+            <div *ngIf="f['unit'].errors['maxlength']">L'unité ne peut pas dépasser 50 caractères</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group full-width">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            [class.is-invalid]="submitted && f['description'].errors"
+            placeholder="Description du produit"
+            rows="4"></textarea>
+          <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+            <div *ngIf="f['description'].errors['maxlength']">La description ne peut pas dépasser 1000 caractères</div>
+          </div>
+        </div>
+
+        <!-- Préparation -->
+        <div class="form-group full-width">
+          <label for="preparation">Préparation</label>
+          <textarea
+            id="preparation"
+            formControlName="preparation"
+            class="form-control"
+            [class.is-invalid]="submitted && f['preparation'].errors"
+            placeholder="preparation du produit"
+            rows="4"></textarea>
+          <div *ngIf="submitted && f['preparation'].errors" class="invalid-feedback">
+            <div *ngIf="f['preparation'].errors['maxlength']">Le text ne peut pas dépasser 1000 caractères</div>
+          </div>
+        </div>
+
+        <!-- URL de l'image -->
+        <div class="form-group full-width">
+          <label for="imageUrl">URL de l'image</label>
+          <div class="image-url-group">
+            <input
+              type="url"
+              id="imageUrl"
+              formControlName="imageUrl"
+              class="form-control"
+              [class.is-invalid]="submitted && f['imageUrl'].errors"
+              placeholder="img/produits/">
+              <button type="button" class="btn btn-outline btn-sm">
+                <label for="productImageUpload" class="upload-box">
+                  <input type="file" id="productImageUpload" accept="image/*" (change)="onProductImageSelected($event)" style="display: none;" />
+                  <i class="fas fa-plus"></i>
+                  Ajouter une image
+                </label>
+              </button>
+          </div>
+          <div *ngIf="submitted && f['imageUrl'].errors" class="invalid-feedback">
+            <div *ngIf="f['imageUrl'].errors['maxlength']">L'URL ne peut pas dépasser 500 caractères</div>
+          </div>
+        </div>
+
+        <!-- Aperçu de l'image -->
+        <div class="form-group full-width" *ngIf="productImageBase64">
+          <label>Aperçu de l'image</label>
+          <div class="image-preview">
+                <img [src]="productImageBase64" alt="Product Image Preview" />
+          </div>
+        </div>
+
+        <!-- Disponibilité -->
+        <div class="form-group full-width">
+          <div class="checkbox-group">
+            <input
+              type="checkbox"
+              id="available"
+              formControlName="available"
+              class="checkbox">
+            <label for="available" class="checkbox-label">
+              Produit disponible à la vente
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" (click)="onCancel()">
+          Annuler
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          {{ isEditMode ? 'Modifier' : 'Créer' }} le produit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

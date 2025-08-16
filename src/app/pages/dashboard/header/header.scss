@@ -1,0 +1,86 @@
+.dashboard-header {
+  background: linear-gradient(135deg, #738bf5 0%, #a559f2 100%);
+  border-bottom: 1px solid #e9ecef;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .logout-icon {
+    color: #e10404;
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .brand {
+      h1 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+        cursor: pointer;
+      }
+
+      p {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 900;
+        margin: 4px 0 0 0;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .welcome {
+        color: #333;
+        font-weight: 500;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: none;
+
+        &.btn-outline {
+          background: transparent;
+          color: #dc3545;
+          border: 1px solid #dc3545;
+
+          &:hover {
+            background: #dc3545;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dashboard-card {
+    padding: 20px;
+  }
+}
