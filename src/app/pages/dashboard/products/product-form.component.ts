@@ -52,6 +52,7 @@ export class ProductFormComponent implements OnInit {
       if (params['id']) {
         this.isEditMode = true;
         this.productId = +params['id'];
+        console.log("productId :::", productId);
         this.loadProduct(this.productId);
       }
     });
