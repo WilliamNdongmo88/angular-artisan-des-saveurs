@@ -29,6 +29,7 @@ export class AuthGuard implements CanActivate {
       );
 
       console.log('[AuthGuard] currentUser has valid role ::', hasRole);
+      console.log('[AuthGuard] isAuthenticated ::', this.authService.isAuthenticated());
 
       if (hasRole) {
         return true; // accès autorisé

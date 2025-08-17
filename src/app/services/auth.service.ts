@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { last, map } from 'rxjs/operators';
 import {
   LoginRequest,
@@ -25,6 +26,7 @@ const httpOptions = {
 })
 export class AuthService {
 
+  private jwtHelper = new JwtHelperService();
   private currentUserSubject: BehaviorSubject<AuthUser | null>;
   public currentUser: Observable<AuthUser | null>;
   user = signal<Users | undefined| null>(undefined);
@@ -103,6 +105,17 @@ export class AuthService {
   getToken(): string | null {
     const user = this.currentUserValue;
     return user ? user.token : null;
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+
+    if (!token) {
+      return false;
+    }
+
+    // Vérifie si le token est expiré
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   // Méthode helper pour extraire les infos utilisateur du TOKEN
