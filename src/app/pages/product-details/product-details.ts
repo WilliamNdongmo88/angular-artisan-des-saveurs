@@ -42,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getProductById(id).subscribe({
       next: (product: Product | undefined) => {
         if (product) {
+          console.log("[ProductDetails] Product loaded: ", product);
           this.product = product;
           this.originalPrice = product.price;
           this.discountedPrice = this.originalPrice * (1 - this.discountPercentage / 100);
