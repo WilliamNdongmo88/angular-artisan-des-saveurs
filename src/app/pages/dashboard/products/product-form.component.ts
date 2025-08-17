@@ -94,9 +94,9 @@ export class ProductFormComponent implements OnInit {
         console.log("product :::", product);
         this.myFile = {
           id: product.mainImage.id,
-          name: product.mainImage.name,
-          content: product.mainImage.content,
-          temp: product.mainImage.temp
+          name: product.mainImage?.name,
+          content: product.mainImage?.content,
+          temp: product.mainImage?.temp
         };
         console.log(" ::: test before :::");
         this.productForm.patchValue({
