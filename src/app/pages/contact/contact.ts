@@ -48,7 +48,6 @@ export class ContactComponent implements OnInit {
     // Si l'utilisateur est connecté, pré-remplir le formulaire
     if (data && data.token) {
       this.isUserConnected = true;
-      this.isSubmitting = true;
       this.authService.extractUserFromToken(data.token); // Recupère les informations de l'utilisateur depuis le token
       const userData = this.authService.getUser();
       console.log('[ContactComponent] userData :: ', userData);
@@ -129,7 +128,7 @@ export class ContactComponent implements OnInit {
           }, 5000);
         }
       });
-    } if (this.isUserConnected && this.isSubmitting) {
+    } if (this.isUserConnected) {
       this.isSubmitting = true;
       this.submitMessage = '';
 
