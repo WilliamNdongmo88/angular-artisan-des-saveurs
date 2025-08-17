@@ -106,7 +106,7 @@ export class ProductFormComponent implements OnInit {
           preparation: product.preparation,
           price: product.price,
           category: product.category,
-          imageUrl: product.mainImage?.content.substring(0, 100),
+          imageUrl: product?.mainImage?.content?.substring(0, 100) ?? '',//product?.name?.substring(0, 20) ?? ''
           available: product.available,
           stockQuantity: product.stockQuantity,
           unit: product.unit
