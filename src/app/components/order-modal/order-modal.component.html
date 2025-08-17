@@ -56,7 +56,7 @@
             [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
             placeholder="+230 59 45 67 89">
           <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
-            Le numéro de téléphone est requis
+            Veuillez entrer un numéro au format international, ex. : +230612345678.
           </div>
         </div>
       }
