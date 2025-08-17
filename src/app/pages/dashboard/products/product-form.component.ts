@@ -70,6 +70,7 @@ export class ProductFormComponent implements OnInit {
       category: ['', [Validators.maxLength(50)]],
       imageUrl: [''], //[Validators.maxLength(500)]
       available: [true],
+      featured: [false],
       stockQuantity: [0, [Validators.min(0)]],
       unit: ['', [Validators.maxLength(50)]]
     });
