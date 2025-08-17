@@ -78,7 +78,9 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('Form before submission:', this.contactForm.value);
     if (this.contactForm.valid && !this.isSubmitting) {
+      console.log('Form submitted:::');
       this.isSubmitting = true;
       this.submitMessage = '';
 
