@@ -21,18 +21,42 @@ export class AppComponent implements OnInit {
   authService = inject(AuthService);
   readonly isDashboard = this.authService.isDashboard;
 
+  // constructor() {
+  //   this.router.events.subscribe(event => {
+  //     if (event instanceof NavigationEnd) {
+  //       const url = event.urlAfterRedirects;
+  //       console.log('[AppComponent] URL changée :', url);
+  //       if(url=="/"){
+  //         this.router.navigate(['/']);
+  //       }
+  //       this.isDashboard.set(url.startsWith('/dashboard'));
+  //     }
+  //   });
+  // }
   constructor() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const url = event.urlAfterRedirects;
-        console.log('[AppComponent] URL changée :', url);
-        if(url=="/"){
-          this.router.navigate(['/']);
-        }
-        this.isDashboard.set(url.startsWith('/dashboard'));
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      const url = event.urlAfterRedirects;
+      console.log('[AppComponent] URL changée :', url);
+
+      // Vérifier l'authentification
+      if (!this.authService.isAuthenticated()) {
+        console.warn('[AppComponent] Utilisateur non authentifié, redirection vers /login');
+        this.router.navigate(['/login']);
+        return; // On sort pour éviter d'exécuter le reste
       }
-    });
-  }
+
+      // Redirection inutile à la racine
+      if (url === "/") {
+        this.router.navigate(['/']);
+      }
+
+      // Mettre à jour l'état "dashboard"
+      this.isDashboard.set(url.startsWith('/dashboard'));
+    }
+  });
+}
+
 
   ngOnInit(): void {
     console.log('AppComponent initialized this.isDashboard() :: ', this.isDashboard());
