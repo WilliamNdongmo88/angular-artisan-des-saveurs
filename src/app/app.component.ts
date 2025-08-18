@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('AppComponent initialized this.isDashboard() :: ', this.isDashboard());
     console.log('[AuthGuard] isAuthenticated ::', this.authService.isAuthenticated());
-    if(!this.authService.isAuthenticated()) {
+    if(this.authService.isAuthenticated() === false) {
       this.router.navigate(['/login']);
     }
     //this.isDashboard = window.location.pathname.includes('/dashboard');
