@@ -38,6 +38,12 @@ export class AppComponent implements OnInit {
     console.log('AppComponent initialized this.isDashboard() :: ', this.isDashboard());
     console.log('[AppComponent] isAuthenticated ::', this.authService.isAuthenticated());
     if (this.authService.isAuthenticated() === false) {
+      console.log('[AppComponent] Token expiré ou non présent, redirection vers /login');
+      // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+      this.authService.user.set(null);
+      this.authService.isDashboard.set(false);
+      localStorage.removeItem('currentUser');
+      this.authService.logout();
       this.router.navigate(['/login']);
     } 
     //this.isDashboard = window.location.pathname.includes('/dashboard');
