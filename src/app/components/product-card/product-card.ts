@@ -28,7 +28,7 @@ export class ProductCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("product :::: ", this.product)
+    //console.log("product :::: ", this.product)
     this.showActions = this.authService.currentUserValue !== null;
     // Vérifier si l'utilisateur est connecté pour afficher les actions
     if (this.authService.currentUserValue) {
