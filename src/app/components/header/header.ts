@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUser: AuthUser | null = null;
   private cartSubscription?: Subscription;
   private authSubscription?: Subscription;
+  authService = inject(AuthService);
 
   constructor(
     private router: Router, 
-    private cartService: CartService,
-    private authService: AuthService
+    private cartService: CartService
   ) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))

@@ -45,6 +45,13 @@
             Dashboard
           </a>
         </li>
+
+        <!-- Profil utilisateur -->
+        <li class="nav-item" *ngIf="currentUser && this.authService.isAuthenticated()">
+          <a class="nav-link admin-link" routerLink="/profil" routerLinkActive="active" (click)="closeMenu()">
+            Profil
+          </a>
+        </li>
       </ul>
       
       <!-- Menu utilisateur -->
