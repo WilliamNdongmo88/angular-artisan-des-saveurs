@@ -20,6 +20,7 @@ import { ActiveAccountComponent } from './pages/auth/active-account/active-accou
 import { NewActivatioComponent } from './pages/auth/new-activation/new-activation.component';
 import { EmailComponent } from './pages/auth/email-component/email.component';
 import { DummyComponent } from './pages/dummy-component';
+import { ProfilComponent } from './pages/profil/profil';
 
 export const routes: Routes = [
   // Routes d'authentification
@@ -36,6 +37,7 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'profil', component: ProfilComponent },
   { path: 'product/:id', component: ProductDetailsComponent},//, canActivate: [AuthGuard], data: { roles: [] } 
   { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
   

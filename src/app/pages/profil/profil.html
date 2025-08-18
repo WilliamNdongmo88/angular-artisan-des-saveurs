@@ -1,0 +1,385 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img [src]="userAvatar || 'assets/images/default-avatar.png'" alt="Avatar utilisateur" class="avatar-image">
+      <button class="avatar-edit-btn" (click)="changeAvatar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L19 5L17 7V9C17 10.1 16.1 11 15 11V13C16.1 13 17 13.9 17 15V17L19 19L21 17V15C21 13.9 20.1 13 19 13V11C20.1 11 21 10.1 21 9ZM3 9C3 10.1 3.9 11 5 11V13C3.9 13 3 13.9 3 15V17L5 19L7 17V15C7 13.9 6.1 13 5 13V11C6.1 11 7 10.1 7 9V7L5 5L3 7V9Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="profile-info">
+      <h1 class="profile-name">{{ this.authService.getUser()?.firstName }} {{ this.authService.getUser()?.lastName }}</h1>
+      <p class="profile-email">{{ currentUser?.email }}</p>
+      <span class="profile-status" [class.active]="this.authService.getUser()?.actif">
+        {{ this.authService.getUser()?.actif ? 'Compte actif' : 'Compte inactif' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="profile-tabs">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'personal'" 
+      (click)="setActiveTab('personal')">
+      Informations personnelles
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'orders'" 
+      (click)="setActiveTab('orders')">
+      Historique des commandes
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'addresses'" 
+      (click)="setActiveTab('addresses')">
+      Adresses
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'preferences'" 
+      (click)="setActiveTab('preferences')">
+      Préférences
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'security'" 
+      (click)="setActiveTab('security')">
+      Sécurité
+    </button>
+  </div>
+
+  <div class="profile-content">
+    <!-- Onglet Informations personnelles -->
+    <div class="tab-content" *ngIf="activeTab === 'personal'">
+      <div class="section-header">
+        <h2>Informations personnelles</h2>
+        <button class="edit-toggle-btn" (click)="toggleEditMode('personal')" [class.editing]="editMode.personal">
+          <svg *ngIf="!editMode.personal" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.43739 22.1213 4.00001C22.1213 4.56263 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg *ngIf="editMode.personal" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ editMode.personal ? 'Annuler' : 'Modifier' }}
+        </button>
+      </div>
+
+      <form [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" class="profile-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">Prénom</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              formControlName="firstName"
+              [readonly]="!editMode.personal"
+              [class.readonly]="!editMode.personal">
+            <div class="error-message" *ngIf="personalInfoForm.get('firstName')?.invalid && personalInfoForm.get('firstName')?.touched">
+              Le prénom est requis
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Nom</label>
+            <input 
+              type="text" 
+              id="lastName" 
+              formControlName="lastName"
+              [readonly]="!editMode.personal"
+              [class.readonly]="!editMode.personal">
+            <div class="error-message" *ngIf="personalInfoForm.get('lastName')?.invalid && personalInfoForm.get('lastName')?.touched">
+              Le nom est requis
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Adresse e-mail</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email"
+              [readonly]="!editMode.personal"
+              [class.readonly]="!editMode.personal">
+            <div class="error-message" *ngIf="personalInfoForm.get('email')?.invalid && personalInfoForm.get('email')?.touched">
+              <span *ngIf="personalInfoForm.get('email')?.errors?.['required']">L'adresse e-mail est requise</span>
+              <span *ngIf="personalInfoForm.get('email')?.errors?.['email']">L'adresse e-mail n'est pas valide</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              formControlName="phone"
+              [readonly]="!editMode.personal"
+              [class.readonly]="!editMode.personal">
+            <div class="error-message" *ngIf="personalInfoForm.get('phone')?.invalid && personalInfoForm.get('phone')?.touched">
+              Le numéro de téléphone n'est pas valide
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions" *ngIf="editMode.personal">
+          <button type="button" class="btn-secondary" (click)="cancelEdit('personal')">Annuler</button>
+          <button type="submit" class="btn-primary" [disabled]="personalInfoForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="loading-spinner"></span>
+            {{ isLoading ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Onglet Historique des commandes -->
+    <div class="tab-content" *ngIf="activeTab === 'orders'">
+      <div class="section-header">
+        <h2>Historique des commandes</h2>
+      </div>
+      
+      <div class="orders-list" *ngIf="orders.length > 0; else noOrders">
+        <div class="order-card" *ngFor="let order of orders">
+          <div class="order-header">
+            <div class="order-info">
+              <h3>Commande #{{ order.id }}</h3>
+              <span class="order-date">{{ order.date | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="order-status" [class]="order.status">
+              {{ getOrderStatusText(order.status) }}
+            </div>
+          </div>
+          <div class="order-items">
+            <div class="order-item" *ngFor="let item of order.items">
+              <img [src]="item.image" [alt]="item.name" class="item-image">
+              <div class="item-details">
+                <h4>{{ item.name }}</h4>
+                <p>Quantité: {{ item.quantity }}</p>
+              </div>
+              <div class="item-price">{{ item.price | currency:'EUR':'symbol':'1.2-2' }}</div>
+            </div>
+          </div>
+          <div class="order-total">
+            <strong>Total: {{ order.total | currency:'EUR':'symbol':'1.2-2' }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noOrders>
+        <div class="empty-state">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Aucune commande</h3>
+          <p>Vous n'avez pas encore passé de commande.</p>
+          <button class="btn-primary" routerLink="/catalog">Découvrir nos produits</button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Onglet Adresses -->
+    <div class="tab-content" *ngIf="activeTab === 'addresses'">
+      <div class="section-header">
+        <h2>Mes adresses</h2>
+        <button class="btn-primary" (click)="addNewAddress()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Ajouter une adresse
+        </button>
+      </div>
+
+      <!-- <div class="addresses-grid" *ngIf="addresses.length > 0; else noAddresses">
+        <div class="address-card" *ngFor="let address of addresses">
+          <div class="address-header">
+            <h3>{{ address.label }}</h3>
+            <div class="address-actions">
+              <button class="btn-icon" (click)="editAddress(address)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.43739 22.1213 4.00001C22.1213 4.56263 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="btn-icon delete" (click)="deleteAddress(address.id!)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="address-content">
+            <p>{{ address.street }}</p>
+            <p>{{ address.city }}, {{ address.postalCode }}</p>
+            <p>{{ address.country }}</p>
+            <span class="address-type" *ngIf="address.isDefault">Adresse par défaut</span>
+          </div>
+        </div>
+      </div> -->
+
+      <ng-template #noAddresses>
+        <div class="empty-state">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Aucune adresse enregistrée</h3>
+          <p>Ajoutez une adresse pour faciliter vos commandes.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Onglet Préférences -->
+    <div class="tab-content" *ngIf="activeTab === 'preferences'">
+      <div class="section-header">
+        <h2>Préférences</h2>
+      </div>
+
+      <form [formGroup]="preferencesForm" (ngSubmit)="updatePreferences()" class="preferences-form">
+        <div class="preference-section">
+          <h3>Notifications par e-mail</h3>
+          <div class="preference-item">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="emailPromotions">
+              <span class="checkmark"></span>
+              Recevoir les offres promotionnelles
+            </label>
+          </div>
+          <div class="preference-item">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="emailOrderUpdates">
+              <span class="checkmark"></span>
+              Recevoir les mises à jour de commande
+            </label>
+          </div>
+          <div class="preference-item">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="emailNewProducts">
+              <span class="checkmark"></span>
+              Être informé des nouveaux produits
+            </label>
+          </div>
+        </div>
+
+        <div class="preference-section">
+          <h3>Préférences d'affichage</h3>
+          <div class="preference-item">
+            <label for="language">Langue</label>
+            <select id="language" formControlName="language">
+              <option value="fr">Français</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </div>
+          <div class="preference-item">
+            <label for="currency">Devise</label>
+            <select id="currency" formControlName="currency">
+              <option value="EUR">Euro (€)</option>
+              <option value="USD">Dollar US ($)</option>
+              <option value="GBP">Livre Sterling (£)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="preferencesForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="loading-spinner"></span>
+            {{ isLoading ? 'Enregistrement...' : 'Enregistrer les préférences' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Onglet Sécurité -->
+    <div class="tab-content" *ngIf="activeTab === 'security'">
+      <div class="section-header">
+        <h2>Sécurité du compte</h2>
+      </div>
+
+      <div class="security-section">
+        <h3>Changer le mot de passe</h3>
+        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="password-form">
+          <div class="form-group">
+            <label for="currentPassword">Mot de passe actuel</label>
+            <input 
+              type="password" 
+              id="currentPassword" 
+              formControlName="currentPassword"
+              placeholder="Entrez votre mot de passe actuel">
+            <div class="error-message" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
+              Le mot de passe actuel est requis
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">Nouveau mot de passe</label>
+            <input 
+              type="password" 
+              id="newPassword" 
+              formControlName="newPassword"
+              placeholder="Entrez votre nouveau mot de passe">
+            <div class="error-message" *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+              <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">Le nouveau mot de passe est requis</span>
+              <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              formControlName="confirmPassword"
+              placeholder="Confirmez votre nouveau mot de passe">
+            <div class="error-message" *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched">
+              <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">La confirmation du mot de passe est requise</span>
+              <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['mismatch']">Les mots de passe ne correspondent pas</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="passwordForm.invalid || isLoading">
+              <span *ngIf="isLoading" class="loading-spinner"></span>
+              {{ isLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="security-section danger-zone">
+        <h3>Zone de danger</h3>
+        <p>Les actions suivantes sont irréversibles. Procédez avec prudence.</p>
+        <button class="btn-danger" (click)="confirmDeleteAccount()">
+          Supprimer mon compte
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal d'adresse -->
+  <!-- <app-address-modal
+    [isVisible]="isAddressModalVisible"
+    [address]="selectedAddress"
+    (close)="onAddressModalClose()"
+    (addressSaved)="onAddressSaved($event)">
+  </app-address-modal> -->
+
+  <!-- Messages de notification -->
+  <div class="notification" *ngIf="notification" [class]="notification.type">
+    <div class="notification-content">
+      <svg *ngIf="notification.type === 'success'" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg *ngIf="notification.type === 'error'" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>{{ notification.message }}</span>
+    </div>
+    <button class="notification-close" (click)="closeNotification()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
