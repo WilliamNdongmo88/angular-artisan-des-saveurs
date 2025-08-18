@@ -47,7 +47,7 @@
         </li>
 
         <!-- Profil utilisateur -->
-        <li class="nav-item" *ngIf="currentUser && this.authService.isAuthenticated()">
+        <li class="nav-item" *ngIf="currentUser && this.authService.isAuthenticated() && !isAdmin()">
           <a class="nav-link admin-link" routerLink="/profil" routerLinkActive="active" (click)="closeMenu()">
             Profil
           </a>
