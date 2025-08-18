@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
       // }
 
       // Mettre à jour l'état "dashboard"
-      this.isDashboard.set(url.startsWith('/dashboard'));
+      //this.isDashboard.set(url.startsWith('/dashboard'));
     }
   });
 }
