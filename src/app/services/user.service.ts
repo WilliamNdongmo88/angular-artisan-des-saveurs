@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Orders } from '../models/order';
 
 // Interfaces pour les données utilisateur
 export interface PersonalInfo {
@@ -38,7 +39,7 @@ export interface Address {
 })
 export class UserService {
   //private apiUrl = 'http://localhost:8070/api/users';
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/users';
+  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -59,7 +60,7 @@ export class UserService {
   // Mettre à jour les informations personnelles
   updatePersonalInfo(personalInfo: PersonalInfo): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.put(`${this.apiUrl}/personal-info`, personalInfo, this.httpOptions)
+      this.http.put(`${this.apiUrl+'users'}/personal-info`, personalInfo, this.httpOptions)
         .subscribe({
           next: (response) => {
             this.userDataSubject.next(response);
@@ -190,8 +191,8 @@ export class UserService {
   }
 
   // Récupérer l'historique des commandes
-  getOrderHistory(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/orders`, this.httpOptions);
+  getOrderHistory(id: number): Observable<Orders[]> {
+    return this.http.get<Orders[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions);
   }
 
   // Supprimer le compte utilisateur

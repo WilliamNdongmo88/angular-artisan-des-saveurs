@@ -3,17 +3,15 @@
 import { ProductCategory } from "./product";
 import { User } from "./user";
 
-// export interface Product {
-//   id: string;
-//   name: string;
-//   category: string;
-//   description: string;
-//   imageUrl: string;
-//   origin: string;
-//   price: number;
-//   unit: string;
-//   featured: boolean;
-// }
+export interface Orders {
+  subtotal: number;
+  discount: number;
+  total: number;
+  freeShipping: boolean;
+  userId: number;
+  products: Product;
+}
+
 export interface Product {
   id: number;
   name: string;

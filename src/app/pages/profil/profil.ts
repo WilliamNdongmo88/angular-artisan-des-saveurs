@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService, Address } from '../../services/user.service';
 import { AuthUser } from '../../models/auth.models';
 import { AddressModalComponent } from '../../components/address-modal/address.component';
+import { Orders } from '../../models/order';
 
 // Interfaces pour les données
 interface Order {
@@ -56,6 +57,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   // Données
   orders: Order[] = [];
+  //orders: Orders[] = [];
   addresses: Address[] = [];
 
   // Modal d'adresse
@@ -172,6 +174,18 @@ export class ProfilComponent implements OnInit, OnDestroy {
   private loadOrders() {
     // Simuler le chargement des commandes
     // En réalité, cela viendrait d'un service de commandes
+    if (this.currentUser){
+        this.userService.getOrderHistory(this.currentUser.id).subscribe({
+            next: (orders) => {
+                console.log('[ProfilComponent] Orders loaded :: ', orders);
+            },
+            error: (error) => {
+            console.error('Erreur lors du chargement des commandes:', error);
+            // Données de fallback pour la démo
+            this.orders = [];
+            }
+        });
+    }
     this.orders = [
       {
         id: 'CMD-001',
