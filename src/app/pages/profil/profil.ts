@@ -37,7 +37,7 @@ interface Notification {
   templateUrl: './profil.html',
   styleUrl: './profil.scss'
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfilComponent implements OnInit, OnDestroy {
   currentUser: AuthUser | null = null;
   activeTab: string = 'personal';
   isLoading = false;
