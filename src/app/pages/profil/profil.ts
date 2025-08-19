@@ -180,7 +180,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
                 console.log('[ProfilComponent] Orders loaded :: ', orders);
             },
             error: (error) => {
-            console.error('Erreur lors du chargement des commandes:', error);
+            console.error('Erreur lors du chargement des commandes:: ', error);
             // Données de fallback pour la démo
             this.orders = [];
             }
@@ -235,7 +235,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
           this.addresses = addresses;
         },
         error: (error) => {
-          console.error('Erreur lors du chargement des adresses:', error);
+          console.error('Erreur lors du chargement des adresses:: ', error);
           // Données de fallback pour la démo
           this.addresses = [
             {
