@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { UserService, Address } from '../../services/user.service';
 import { AuthUser } from '../../models/auth.models';
+import { AddressModalComponent } from '../../components/address-modal/address.component';
 
 // Interfaces pour les données
 interface Order {
@@ -29,16 +31,13 @@ interface Notification {
 }
 
 @Component({
-  selector: 'app-profil',
+  selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],//AddressModalComponent
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, AddressModalComponent],
   templateUrl: './profil.html',
   styleUrl: './profil.scss'
 })
-export class ProfilComponent implements OnInit, OnDestroy {
-confirmDeleteAccount() {
-throw new Error('Method not implemented.');
-}
+export class ProfileComponent implements OnInit, OnDestroy {
   currentUser: AuthUser | null = null;
   activeTab: string = 'personal';
   isLoading = false;
@@ -57,32 +56,31 @@ throw new Error('Method not implemented.');
 
   // Données
   orders: Order[] = [];
-  //addresses: Address[] = [];
+  addresses: Address[] = [];
 
   // Modal d'adresse
   isAddressModalVisible = false;
-  //selectedAddress: Address | null = null;
+  selectedAddress: Address | null = null;
 
   private authSubscription?: Subscription;
-  public authService = inject(AuthService);
-  //private userService = inject(UserService);
+  private authService = inject(AuthService);
+  private userService = inject(UserService);
+  public userData: any = {}; // Pour stocker les données utilisateur
 
   constructor(private formBuilder: FormBuilder) {
     this.initializeForms();
   }
 
   ngOnInit() {
-    this.authSubscription = this.authService.currentUser.subscribe(user => {
-      this.currentUser = user;
-      if (user) {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser) {
         this.loadUserData();
         this.populatePersonalInfoForm();
-      }
-    });
+    }
 
     // Charger les données utilisateur
     this.loadOrders();
-    //this.loadAddresses();
+    this.loadAddresses();
   }
 
   ngOnDestroy() {
@@ -130,21 +128,28 @@ throw new Error('Method not implemented.');
   }
 
   private populatePersonalInfoForm() {
-    const userData = this.authService.getUser();
-    if (userData) {
-      this.personalInfoForm.patchValue({
-        firstName: userData.firstName || '',
-        lastName: userData.lastName || '',
-        email: userData.email || '',
-        phone: userData.phone || ''
-      });
+    if (this.currentUser && this.currentUser.token) {
+      this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
+      const userData = this.authService.getUser();
+      if (userData) {
+        this.personalInfoForm.patchValue({
+            firstName: userData.firstName || '',
+            lastName: userData.lastName || '',
+            email: userData.email || '',
+            phone: userData.phone || ''
+        });
+      }
     }
   }
 
   private loadUserData() {
     if (this.currentUser) {
+      this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
+      const userData = this.authService.getUser();
       // Charger l'avatar utilisateur
-      //this.userAvatar = this.currentUser.avatar || null;
+      if (userData) {
+        this.userAvatar = userData.avatar || null;
+      }
       
       // Charger les préférences utilisateur
       this.loadUserPreferences();
@@ -154,6 +159,7 @@ throw new Error('Method not implemented.');
   private loadUserPreferences() {
     // Simuler le chargement des préférences depuis l'API
     // En réalité, cela viendrait du service utilisateur
+    console.log("[ProfileComponent] Simuler le chargement des préférences depuis l'API");
     this.preferencesForm.patchValue({
       emailPromotions: true,
       emailOrderUpdates: true,
@@ -207,45 +213,44 @@ throw new Error('Method not implemented.');
     ];
   }
 
-//   private async loadAddresses() {
-//     try {
-//       // En réalité, cela viendrait du service utilisateur
-//       this.userService.getAddresses().subscribe({
-//         next: (addresses) => {
-//           this.addresses = addresses;
-//         },
-//         error: (error) => {
-//           console.error('Erreur lors du chargement des adresses:', error);
-//           // Données de fallback pour la démo
-//           this.addresses = [
-//             {
-//               id: '1',
-//               label: 'Domicile',
-//               street: '123 Rue de la Paix',
-//               city: 'Paris',
-//               postalCode: '75001',
-//               country: 'France',
-//               isDefault: true
-//             },
-//             {
-//               id: '2',
-//               label: 'Bureau',
-//               street: '456 Avenue des Champs-Élysées',
-//               city: 'Paris',
-//               postalCode: '75008',
-//               country: 'France',
-//               isDefault: false
-//             }
-//           ];
-//         }
-//       });
-//     } catch (error) {
-//       console.error('Erreur lors du chargement des adresses:', error);
-//     }
-//   }
+  private async loadAddresses() {
+    try {
+      // En réalité, cela viendrait du service utilisateur
+      this.userService.getAddresses().subscribe({
+        next: (addresses) => {
+          this.addresses = addresses;
+        },
+        error: (error) => {
+          console.error('Erreur lors du chargement des adresses:', error);
+          // Données de fallback pour la démo
+          this.addresses = [
+            {
+              id: '1',
+              label: 'Domicile',
+              street: '123 Rue de la Paix',
+              city: 'Paris',
+              postalCode: '75001',
+              country: 'France',
+              isDefault: true
+            },
+            {
+              id: '2',
+              label: 'Bureau',
+              street: '456 Avenue des Champs-Élysées',
+              city: 'Paris',
+              postalCode: '75008',
+              country: 'France',
+              isDefault: false
+            }
+          ];
+        }
+      });
+    } catch (error) {
+      console.error('Erreur lors du chargement des adresses:', error);
+    }
+  }
 
   // Gestion des onglets
-  
   setActiveTab(tab: string) {
     this.activeTab = tab;
     // Réinitialiser les modes d'édition lors du changement d'onglet
@@ -276,18 +281,21 @@ throw new Error('Method not implemented.');
         const formData = this.personalInfoForm.value;
         
         // Appel au service pour mettre à jour les informations
-        //await this.userService.updatePersonalInfo(formData);
+        await this.userService.updatePersonalInfo(formData);
         
         // Mettre à jour l'utilisateur actuel
-        // if (this.currentUser) {
-        //   this.currentUser = {
-        //     ...this.currentUser,
-        //     firstName: formData.firstName,
-        //     lastName: formData.lastName,
-        //     email: formData.email,
-        //     phone: formData.phone
-        //   };
-        // }
+        if (this.currentUser && this.currentUser.token) {
+          this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
+          //console.log('[OrderModalComponent] currentUser :: ', this.authService.getUser());
+          const userData = this.authService.getUser();
+          this.userData = {
+            ...this.userData,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone
+          };
+        }
 
         this.editMode.personal = false;
         this.showNotification('success', 'Informations personnelles mises à jour avec succès');
@@ -309,7 +317,7 @@ throw new Error('Method not implemented.');
         const formData = this.passwordForm.value;
         
         // Appel au service pour changer le mot de passe
-       // await this.userService.updatePassword(formData.currentPassword, formData.newPassword);
+        await this.userService.updatePassword(formData.currentPassword, formData.newPassword);
         
         this.passwordForm.reset();
         this.showNotification('success', 'Mot de passe mis à jour avec succès');
@@ -331,7 +339,7 @@ throw new Error('Method not implemented.');
         const formData = this.preferencesForm.value;
         
         // Appel au service pour mettre à jour les préférences
-        //await this.userService.updatePreferences(formData);
+        await this.userService.updatePreferences(formData);
         
         this.showNotification('success', 'Préférences mises à jour avec succès');
       } catch (error) {
@@ -363,8 +371,8 @@ throw new Error('Method not implemented.');
 
     try {
       // Appel au service pour uploader l'avatar
-      //const avatarUrl = await this.userService.uploadAvatar(file);
-      //this.userAvatar = avatarUrl;
+      const avatarUrl = await this.userService.uploadAvatar(file);
+      this.userAvatar = avatarUrl;
       
       this.showNotification('success', 'Avatar mis à jour avec succès');
     } catch (error) {
@@ -377,88 +385,88 @@ throw new Error('Method not implemented.');
 
   // Gestion des adresses
   addNewAddress() {
-    //this.selectedAddress = null;
+    this.selectedAddress = null;
     this.isAddressModalVisible = true;
   }
 
-//   editAddress(address: Address) {
-//     this.selectedAddress = address;
-//     this.isAddressModalVisible = true;
-//   }
+  editAddress(address: Address) {
+    this.selectedAddress = address;
+    this.isAddressModalVisible = true;
+  }
 
-//   onAddressModalClose() {
-//     this.isAddressModalVisible = false;
-//     this.selectedAddress = null;
-//   }
+  onAddressModalClose() {
+    this.isAddressModalVisible = false;
+    this.selectedAddress = null;
+  }
 
-//   onAddressSaved(address: Address) {
-//     if (this.selectedAddress) {
-//       // Modifier l'adresse existante
-//       const index = this.addresses.findIndex(addr => addr.id === this.selectedAddress!.id);
-//       if (index !== -1) {
-//         this.addresses[index] = address;
-//       }
-//       this.showNotification('success', 'Adresse modifiée avec succès');
-//     } else {
-//       // Ajouter la nouvelle adresse
-//       this.addresses.push(address);
-//       this.showNotification('success', 'Adresse ajoutée avec succès');
-//     }
+  onAddressSaved(address: Address) {
+    if (this.selectedAddress) {
+      // Modifier l'adresse existante
+      const index = this.addresses.findIndex(addr => addr.id === this.selectedAddress!.id);
+      if (index !== -1) {
+        this.addresses[index] = address;
+      }
+      this.showNotification('success', 'Adresse modifiée avec succès');
+    } else {
+      // Ajouter la nouvelle adresse
+      this.addresses.push(address);
+      this.showNotification('success', 'Adresse ajoutée avec succès');
+    }
 
-//     // Si cette adresse est définie comme par défaut, retirer le statut des autres
-//     if (address.isDefault) {
-//       this.addresses.forEach(addr => {
-//         if (addr.id !== address.id) {
-//           addr.isDefault = false;
-//         }
-//       });
-//     }
-//   }
+    // Si cette adresse est définie comme par défaut, retirer le statut des autres
+    if (address.isDefault) {
+      this.addresses.forEach(addr => {
+        if (addr.id !== address.id) {
+          addr.isDefault = false;
+        }
+      });
+    }
+  }
 
-//   async deleteAddress(addressId: string) {
-//     if (confirm('Êtes-vous sûr de vouloir supprimer cette adresse ?')) {
-//       try {
-//         await this.userService.deleteAddress(addressId);
-//         this.addresses = this.addresses.filter(addr => addr.id !== addressId);
-//         this.showNotification('success', 'Adresse supprimée avec succès');
-//       } catch (error) {
-//         console.error('Erreur lors de la suppression de l\'adresse:', error);
-//         this.showNotification('error', 'Erreur lors de la suppression de l\'adresse');
-//       }
-//     }
-//   }
+  async deleteAddress(addressId: string) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette adresse ?')) {
+      try {
+        await this.userService.deleteAddress(addressId);
+        this.addresses = this.addresses.filter(addr => addr.id !== addressId);
+        this.showNotification('success', 'Adresse supprimée avec succès');
+      } catch (error) {
+        console.error('Erreur lors de la suppression de l\'adresse:', error);
+        this.showNotification('error', 'Erreur lors de la suppression de l\'adresse');
+      }
+    }
+  }
 
   // Suppression du compte
-//   confirmDeleteAccount() {
-//     const confirmation = confirm(
-//       'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
-//     );
+  confirmDeleteAccount() {
+    const confirmation = confirm(
+      'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
+    );
     
-//     if (confirmation) {
-//       const doubleConfirmation = confirm(
-//         'Cette action supprimera définitivement toutes vos données. Confirmez-vous ?'
-//       );
+    if (confirmation) {
+      const doubleConfirmation = confirm(
+        'Cette action supprimera définitivement toutes vos données. Confirmez-vous ?'
+      );
       
-//       if (doubleConfirmation) {
-//         this.deleteAccount();
-//       }
-//     }
-//   }
+      if (doubleConfirmation) {
+        this.deleteAccount();
+      }
+    }
+  }
 
-//   private async deleteAccount() {
-//     this.isLoading = true;
+  private async deleteAccount() {
+    this.isLoading = true;
 
-//     try {
-//       await this.userService.deleteAccount();
-//       this.authService.logout();
-//       this.showNotification('success', 'Compte supprimé avec succès');
-//     } catch (error) {
-//       console.error('Erreur lors de la suppression du compte:', error);
-//       this.showNotification('error', 'Erreur lors de la suppression du compte');
-//     } finally {
-//       this.isLoading = false;
-//     }
-//   }
+    try {
+      await this.userService.deleteAccount();
+      this.authService.logout();
+      this.showNotification('success', 'Compte supprimé avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la suppression du compte:', error);
+      this.showNotification('error', 'Erreur lors de la suppression du compte');
+    } finally {
+      this.isLoading = false;
+    }
+  }
 
   // Utilitaires
   getOrderStatusText(status: string): string {

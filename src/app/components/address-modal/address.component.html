@@ -1,0 +1,99 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onOverlayClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Modifier l\'adresse' : 'Ajouter une adresse' }}</h2>
+      <button class="modal-close" (click)="closeModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="address-form">
+      <div class="form-group">
+        <label for="label">Nom de l'adresse *</label>
+        <input 
+          type="text" 
+          id="label" 
+          formControlName="label"
+          placeholder="Ex: Domicile, Bureau, Chez mes parents...">
+        <div class="error-message" *ngIf="addressForm.get('label')?.invalid && addressForm.get('label')?.touched">
+          Le nom de l'adresse est requis
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="street">Adresse *</label>
+        <textarea 
+          id="street" 
+          formControlName="street"
+          rows="2"
+          placeholder="Numéro et nom de rue, bâtiment, étage..."></textarea>
+        <div class="error-message" *ngIf="addressForm.get('street')?.invalid && addressForm.get('street')?.touched">
+          L'adresse est requise
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="postalCode">Code postal *</label>
+          <input 
+            type="text" 
+            id="postalCode" 
+            formControlName="postalCode"
+            placeholder="75001">
+          <div class="error-message" *ngIf="addressForm.get('postalCode')?.invalid && addressForm.get('postalCode')?.touched">
+            <span *ngIf="addressForm.get('postalCode')?.errors?.['required']">Le code postal est requis</span>
+            <span *ngIf="addressForm.get('postalCode')?.errors?.['pattern']">Le code postal n'est pas valide</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">Ville *</label>
+          <input 
+            type="text" 
+            id="city" 
+            formControlName="city"
+            placeholder="Paris">
+          <div class="error-message" *ngIf="addressForm.get('city')?.invalid && addressForm.get('city')?.touched">
+            La ville est requise
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Pays *</label>
+        <select id="country" formControlName="country">
+          <option value="">Sélectionner un pays</option>
+          <option value="France">France</option>
+          <option value="Belgique">Belgique</option>
+          <option value="Suisse">Suisse</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Canada">Canada</option>
+          <option value="Autre">Autre</option>
+        </select>
+        <div class="error-message" *ngIf="addressForm.get('country')?.invalid && addressForm.get('country')?.touched">
+          Le pays est requis
+        </div>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="isDefault">
+          <span class="checkmark"></span>
+          Définir comme adresse par défaut
+        </label>
+        <small class="help-text">Cette adresse sera utilisée par défaut pour vos commandes</small>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="btn-primary" [disabled]="addressForm.invalid || isLoading">
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+          {{ isLoading ? 'Enregistrement...' : (isEditMode ? 'Modifier' : 'Ajouter') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

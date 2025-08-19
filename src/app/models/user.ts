@@ -18,4 +18,5 @@ export class Users {
 	phone!: string;
  	actif: boolean = false;
 	role: string = '';
+	avatar: string = '';
 }

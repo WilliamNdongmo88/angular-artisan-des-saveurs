@@ -9,10 +9,10 @@
       </button>
     </div>
     <div class="profile-info">
-      <h1 class="profile-name">{{ this.authService.getUser()?.firstName }} {{ this.authService.getUser()?.lastName }}</h1>
+      <h1 class="profile-name">{{ this.userData?.firstName }} {{ this.userData?.lastName }}</h1>
       <p class="profile-email">{{ currentUser?.email }}</p>
-      <span class="profile-status" [class.active]="this.authService.getUser()?.actif">
-        {{ this.authService.getUser()?.actif ? 'Compte actif' : 'Compte inactif' }}
+      <span class="profile-status" [class.active]="this.userData?.actif">
+        {{ this.userData?.actif ? 'Compte actif' : 'Compte inactif' }}
       </span>
     </div>
   </div>
@@ -190,7 +190,7 @@
         </button>
       </div>
 
-      <!-- <div class="addresses-grid" *ngIf="addresses.length > 0; else noAddresses">
+      <div class="addresses-grid" *ngIf="addresses.length > 0; else noAddresses">
         <div class="address-card" *ngFor="let address of addresses">
           <div class="address-header">
             <h3>{{ address.label }}</h3>
@@ -215,7 +215,7 @@
             <span class="address-type" *ngIf="address.isDefault">Adresse par défaut</span>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <ng-template #noAddresses>
         <div class="empty-state">
@@ -357,12 +357,12 @@
   </div>
 
   <!-- Modal d'adresse -->
-  <!-- <app-address-modal
+  <app-address-modal
     [isVisible]="isAddressModalVisible"
     [address]="selectedAddress"
     (close)="onAddressModalClose()"
     (addressSaved)="onAddressSaved($event)">
-  </app-address-modal> -->
+  </app-address-modal>
 
   <!-- Messages de notification -->
   <div class="notification" *ngIf="notification" [class]="notification.type">

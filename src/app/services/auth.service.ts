@@ -130,7 +130,8 @@ export class AuthService {
         phone: payload.phone,
         email: payload.email,
         actif: true,
-        role: payload.role
+        role: payload.role,
+        avatar: payload.avatar,
       };
       this.user.set(newLocal);
       console.log('[AuthService] this.userGoogle '+  JSON.stringify(this.user()));
