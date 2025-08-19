@@ -142,12 +142,12 @@ export class UserService {
 
   // Gestion des adresses
   getAddresses(): Observable<Address[]> {
-    return this.http.get<Address[]>(`${this.apiUrl}/addresses`, this.httpOptions);
+    return this.http.get<Address[]>(`${this.apiUrl}addresses`, this.httpOptions);
   }
 
   addAddress(address: Address): Promise<Address> {
     return new Promise((resolve, reject) => {
-      this.http.post<Address>(`${this.apiUrl}/addresses`, address, this.httpOptions)
+      this.http.post<Address>(`${this.apiUrl}addresses`, address, this.httpOptions)
         .subscribe({
           next: (response) => {
             resolve(response);
