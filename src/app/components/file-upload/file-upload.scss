@@ -1,0 +1,31 @@
+.file-upload-container {
+  border: 1px solid #ddd;
+  padding: 15px;
+  max-width: 400px;
+  border-radius: 8px;
+  background: #fafafa;
+
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  input[type="file"] {
+    margin-bottom: 15px;
+  }
+
+  .loading {
+    color: blue;
+    font-weight: bold;
+  }
+
+  .preview {
+    margin-top: 15px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+  }
+}

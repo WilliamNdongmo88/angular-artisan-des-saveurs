@@ -21,6 +21,7 @@ import { NewActivatioComponent } from './pages/auth/new-activation/new-activatio
 import { EmailComponent } from './pages/auth/email-component/email.component';
 import { DummyComponent } from './pages/dummy-component';
 import { ProfilComponent } from './pages/profil/profil';
+import { FileUploadComponent } from './components/file-upload/file-upload';
 
 export const routes: Routes = [
   // Routes d'authentification
@@ -38,6 +39,7 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'cart', component: CartComponent },
   { path: 'profil', component: ProfilComponent },
+  { path: 'file-upload', component: FileUploadComponent },
   { path: 'product/:id', component: ProductDetailsComponent},//, canActivate: [AuthGuard], data: { roles: [] } 
   { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
   
