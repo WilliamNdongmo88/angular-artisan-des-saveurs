@@ -1,19 +1,5 @@
-<div class="file-upload-container">
-  <h3>Uploader une image</h3>
+<input type="file" (change)="onFileSelected($event)" />
 
-  <!-- Input fichier -->
-  <input type="file" accept="image/*" (change)="onFileSelected($event)" />
-
-  <!-- Loader -->
-  <div *ngIf="isUploading" class="loading">
-    Upload en cours...
-  </div>
-
-  <!-- Aperçu de l’image -->
-  <div *ngIf="uploadedFile" class="preview">
-    <p><strong>Nom original :</strong> {{ uploadedFile?.name }}</p>
-    <p><strong>Nom stocké :</strong> {{ uploadedFile?.temp }}</p>
-
-    <img [src]="uploadedFile?.content" alt="Aperçu image" />
-  </div>
-</div>
+<img *ngIf="product?.mainImage?.filePath" 
+     [src]="product.mainImage.filePath" 
+     alt="Image produit" width="150" />
