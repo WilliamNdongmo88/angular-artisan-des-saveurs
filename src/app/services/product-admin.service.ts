@@ -31,7 +31,7 @@ export class ProductAdminService {
     const formData = new FormData();
     formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
 
-    return this.http.post<FileDTO>(`${PRODUCTS_API}/files-upload`, formData);
+    return this.http.post<FileDTO>(`${PRODUCTS_API}files-upload`, formData);
   }
 
 
