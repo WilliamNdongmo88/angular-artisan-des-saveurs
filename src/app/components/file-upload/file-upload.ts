@@ -14,47 +14,27 @@ interface FileDTO {
   styleUrls: ['./file-upload.scss']
 })
 export class FileUploadComponent {
-  product: any = {};
-  uploadedFile?: FileDTO;
-  isUploading = false;
 
-  constructor(private http: HttpClient, private productService: ProductAdminService,) {}
+  uploadedFile?: FileDTO;  // stocke le fichier uploadé
+  uploadError?: string;
 
-//   // méthode d'upload
-//   uploadFile(file: File) {
-//     const formData = new FormData();
-//     formData.append("file", file);
-//     this.isUploading = true;
+  constructor(private productService: ProductAdminService) {}
 
-//     this.http.post<FileDTO>("https://artisan-des-saveurs-production.up.railway.app/api/products/files-upload", formData)
-//       .subscribe({
-//         next: (res) => {
-//           this.uploadedFile = res;
-//           this.isUploading = false;
-//           console.log("Fichier uploadé:", res);
-//         },
-//         error: (err) => {
-//           console.error("Erreur upload:", err);
-//           this.isUploading = false;
-//         }
-//       });
-//   }
-
-  // méthode déclenchée par l'input
-    
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
 
     this.productService.uploadFile(file).subscribe({
-        next: (res) => {
-        console.log("Uploaded file:", res);
-        this.product.mainImage = res; // res doit contenir filePath ou url
-        },
-        error: (err) => {
-        console.error("Erreur upload:", err);
-        }
+      next: (res: FileDTO) => {
+        console.log("Fichier uploadé :", res);
+        this.uploadedFile = res;
+        this.uploadError = undefined;
+      },
+      error: (err) => {
+        console.error("Erreur upload :", err);
+        this.uploadError = err?.error?.message || 'Erreur lors de l\'upload';
+      }
     });
-    }
-
+  }
 }
+
