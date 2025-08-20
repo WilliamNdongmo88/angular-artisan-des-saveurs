@@ -2,7 +2,7 @@
   <input type="file" (change)="onFileSelected($event)" />
 
   <div *ngIf="uploadedFile" class="preview">
-    <p>Fichier uploadé : {{ uploadedFile?.name }}</p>
+    <p>Fichier uploadé : {{ uploadedFile?.fileName }}</p>
     <img *ngIf="uploadedFile.filePath" [src]="uploadedFile?.filePath" alt="Aperçu" width="150" />
   </div>
 

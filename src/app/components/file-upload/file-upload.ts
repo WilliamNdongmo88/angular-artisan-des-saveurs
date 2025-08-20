@@ -4,7 +4,7 @@ import { ProductAdminService } from '../../services/product-admin.service';
 import { FileService } from '../../services/fileService';
 
 interface FileDTO {
-  name: string;
+  fileName: string;
   temp: string;
   filePath: string; // URL publique Nginx
 }

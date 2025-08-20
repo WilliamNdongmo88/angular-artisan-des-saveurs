@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 interface FileDTO {
-  name: string;
+  fileName: string;
   temp: string;
   filePath: string; // URL publique Nginx
 }
