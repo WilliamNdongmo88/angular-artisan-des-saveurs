@@ -58,7 +58,8 @@
     <div *ngIf="!loading && filteredProducts.length > 0" class="products-grid">
       <div *ngFor="let product of filteredProducts" class="product-card">
         <div class="product-image">
-          <img [src]="product.mainImage?.content" (error)="handleImageError($event)" [alt]="product.name" />
+          <!-- <img [src]="product.mainImage.content" (error)="handleImageError($event)" [alt]="product.name" /> -->
+          <img *ngIf="product.mainImage" [src]="product.mainImage.content" alt="{{product.name}}" class="product-image">
           <div class="product-status" [class.available]="product.available" [class.unavailable]="!product.available">
             {{ product.available ? 'Disponible' : 'Indisponible' }}
           </div>
