@@ -7,10 +7,10 @@ export interface MyFile {
   temp: string;
 }
 
-export interface ProductToSend{
-  productImage: MyFile,
-  productRequest: ProductRequest
-}
+// export interface ProductToSend{
+//   productImage: MyFile,
+//   productRequest: ProductRequest
+// }
 
 export interface Product {
   id: number;
