@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
-import { Product, ProductRequest, ProductResponse, ProductToSend } from '../models/product.models';
+import { Product, ProductDto, ProductResponse, ProductToSend } from '../models/product.models';
 import { MessageResponse } from '../models/auth.models';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
@@ -22,7 +22,7 @@ export class ProductAdminService {
   constructor(private http: HttpClient) { }
 
   /** Ajout d'un produit */
-  createProduct(product: ProductToSend): Observable<ProductResponse> {
+  createProduct(product: ProductDto): Observable<ProductResponse> {
     return this.http.post<ProductResponse>(PRODUCTS_API + 'create', product, httpOptions)
       .pipe(
         tap((newProduct) => {
@@ -47,7 +47,7 @@ export class ProductAdminService {
 
 
   /** Mise à jour d'un produit */
-  updateProduct(id: number, product: ProductToSend): Observable<ProductResponse> {
+  updateProduct(id: number, product: ProductDto): Observable<ProductResponse> {
     return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, product, httpOptions)
       .pipe(
         tap((updated) => {

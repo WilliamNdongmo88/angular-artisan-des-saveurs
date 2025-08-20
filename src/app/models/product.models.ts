@@ -26,17 +26,21 @@ export interface Product {
   updatedAt: string;
 }
 
-export interface ProductRequest {
+export interface ProductDto {
+  id: number;
   name: string;
-  description: string;
   price: number;
-  origin: string;
-  category: string;
-  imageUrl: string;
+  description: string;
+  preparation?: string;
+  category?: string;
   available: boolean;
-  stockQuantity: number;
-  unit: string;
+  origin?: string;
+  unit?: string;
+  stockQuantity?: number;
+  featured?: boolean;
+  mainImage?: MyFile;
 }
+
 
 export interface ProductResponse {
   id: number;

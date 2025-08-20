@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductAdminService } from '../../../services/product-admin.service';
-import { MyFile, ProductRequest, ProductResponse } from '../../../models/product.models';
+import { MyFile, ProductDto, ProductResponse } from '../../../models/product.models';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header";
@@ -33,7 +33,20 @@ export class ProductFormComponent implements OnInit {
     content: '',
     temp: ''
   };
-  productToSend!: { productImage: MyFile; productRequest: ProductRequest; };
+  productDto : ProductDto = {
+    id: 0,
+    name: '',
+    price: 0,
+    description: '',
+    preparation: '',
+    category: '',
+    available: true,
+    origin: '',
+    unit: '',
+    stockQuantity: 0,
+    featured: false,
+    mainImage: this.myFile
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -133,7 +146,7 @@ onSubmit() {
 
   this.loading = true;
 
-  const productData: ProductRequest = this.productForm.value;
+  const productData: ProductDto = this.productForm.value;
   console.log("productData :: ", productData);
   let productImageToSend: MyFile;
   console.log("this.imageFile :: ", this.imageFile);
@@ -159,13 +172,13 @@ onSubmit() {
     //console.log("productImageToSend :: ", productImageToSend);
   }
 
-  this.productToSend = {
-    productImage: productImageToSend,
-    productRequest: productData
+  this.productDto = {
+    ...productData,
+    mainImage: productImageToSend
   };
-  console.log("this.productToSend :: ", this.productToSend);
+  console.log("this.productDto :: ", this.productDto);
   if (this.isEditMode && this.productId) {
-    this.productService.updateProduct(this.productId, this.productToSend).subscribe({
+    this.productService.updateProduct(this.productId, this.productDto).subscribe({
       next: () => {
         this.toastr.success('Produit modifié avec succès', 'Succès');
         this.router.navigate(['/dashboard/products']);
@@ -176,7 +189,7 @@ onSubmit() {
       }
     });
   } else {
-    this.productService.createProduct(this.productToSend).subscribe({
+    this.productService.createProduct(this.productDto).subscribe({
       next: () => {
         this.toastr.success('Produit créé avec succès', 'Succès');
         this.router.navigate(['/dashboard/products']);
