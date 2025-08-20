@@ -6,7 +6,7 @@ import { FileService } from '../../services/fileService';
 interface FileDTO {
   name: string;
   temp: string;
-  content: string; // URL publique Nginx
+  filePath: string; // URL publique Nginx
 }
 
 @Component({

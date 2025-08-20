@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 interface FileDTO {
   name: string;
   temp: string;
-  content: string; // URL publique Nginx
+  filePath: string; // URL publique Nginx
 }
 
 @Injectable({

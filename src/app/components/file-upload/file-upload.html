@@ -3,7 +3,7 @@
 
   <div *ngIf="uploadedFile" class="preview">
     <p>Fichier uploadé : {{ uploadedFile?.name }}</p>
-    <img *ngIf="uploadedFile.content" [src]="uploadedFile?.content" alt="Aperçu" width="150" />
+    <img *ngIf="uploadedFile.filePath" [src]="uploadedFile?.filePath" alt="Aperçu" width="150" />
   </div>
 
   <div *ngIf="uploadError" class="error">
