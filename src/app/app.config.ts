@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       FormsModule,
       ReactiveFormsModule,
       ToastrModule.forRoot({
-        timeOut: 3000,
+        timeOut: 300000,
         positionClass: 'toast-top-right',
         preventDuplicates: true,
         progressBar: true,
