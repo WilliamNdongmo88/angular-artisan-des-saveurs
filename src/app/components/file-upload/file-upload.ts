@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductAdminService } from '../../services/product-admin.service';
+import { FileService } from '../../services/fileService';
 
 interface FileDTO {
   name: string;
@@ -18,13 +19,13 @@ export class FileUploadComponent {
   uploadedFile?: FileDTO;  // stocke le fichier uploadé
   uploadError?: string;
 
-  constructor(private productService: ProductAdminService) {}
+  constructor(private fileService: FileService) {}
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
 
-    this.productService.uploadFile(file).subscribe({
+    this.fileService.uploadFile(file).subscribe({
       next: (res: FileDTO) => {
         console.log("Fichier uploadé :", res);
         this.uploadedFile = res;

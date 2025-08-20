@@ -11,12 +11,6 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-interface FileDTO {
-  name: string;
-  temp: string;
-  content: string; // URL publique Nginx
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,14 +20,6 @@ export class ProductAdminService {
   products$ = this.productsSubject.asObservable();
 
   constructor(private http: HttpClient) { }
-
-  uploadFile(file: File): Observable<FileDTO> {
-    const formData = new FormData();
-    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
-
-    return this.http.post<FileDTO>(`${PRODUCTS_API}files-upload`, formData);
-  }
-
 
   /** Ajout d'un produit */
   createProduct(product: ProductDto): Observable<ProductResponse> {
