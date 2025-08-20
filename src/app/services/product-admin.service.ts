@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
-import { Product, ProductDto, ProductResponse, ProductToSend } from '../models/product.models';
+import { Product, ProductDto, ProductResponse } from '../models/product.models';
 import { MessageResponse } from '../models/auth.models';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
