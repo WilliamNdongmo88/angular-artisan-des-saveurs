@@ -29,7 +29,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // N'ajoute pas d'en-tête Authorization pour la requête de connexion
   if (req.url.includes('/login') || req.url.includes('/register')) {
-    console.log('req.url :', req.url);
+    console.log('req.url ::: ', req.url);
     return next(req);
   }
   if (currentUser.token) {
