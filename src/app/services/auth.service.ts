@@ -15,7 +15,7 @@ import {
 import { Users } from '../models/user';
 
 //const AUTH_API = 'http://localhost:8070/api/auth/';
-const AUTH_API = 'https://artisan-des-saveurs-production.up.railway.app/auth/';
+const AUTH_API = 'https://artisan-des-saveurs-production.up.railway.app/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
