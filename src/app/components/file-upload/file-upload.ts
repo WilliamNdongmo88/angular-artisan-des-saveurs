@@ -29,6 +29,7 @@ export class FileUploadComponent {
       next: (res: FileDTO) => {
         console.log("Fichier uploadé :", res);
         this.uploadedFile = res;
+        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
         this.uploadError = undefined;
       },
       error: (err) => {
