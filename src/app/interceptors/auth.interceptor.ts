@@ -28,10 +28,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   //console.log('[Interceptor] Token actuel dans localStorage <<-- Important:', currentUser.token);
 
   // N'ajoute pas d'en-tête Authorization pour la requête de connexion
-  if (req.url.includes('/login') || req.url.includes('/register')) {
-    console.log('req.url ::: ', req.url);
-    return next(req);
-  }
+  // if (req.url.includes('/login') || req.url.includes('/register')) {
+  //   console.log('req.url ::: ', req.url);
+  //   return next(req);
+  // }
   if (currentUser.token) {
     // 👉 Vérifie si c'est un FormData (upload fichier)
     const isFormData = req.body instanceof FormData;
