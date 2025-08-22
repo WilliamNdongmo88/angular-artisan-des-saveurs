@@ -69,9 +69,25 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
   /** Mise à jour d'un produit */
   updateProduct(id: number, product: ProductDto, file: File): Observable<ProductResponse> {
     const formData = new FormData();
-    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
-    formData.append('product', new Blob([JSON.stringify(product)]));
-    return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, formData)
+
+    // fichier
+    formData.append('file', file);
+
+    // JSON -> Blob avec type application/json
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(product)], { type: 'application/json' })
+    );
+    return this.http.put<ProductResponse>(
+      `${PRODUCTS_API}${id}` + 'create',
+      formData,
+      {
+        headers: {
+          // ⚠️ NE PAS mettre "Content-Type": multipart/form-data ici,
+          // HttpClient le gère automatiquement
+        }
+      }
+    )
       .pipe(
         tap((updated) => {
           const currentProducts = this.productsSubject.value;
