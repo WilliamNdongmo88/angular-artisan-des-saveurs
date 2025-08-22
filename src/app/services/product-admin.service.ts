@@ -71,33 +71,30 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
     const formData = new FormData();
 
     // fichier
-    formData.append('file', file);
+    if (file) {
+      formData.append('file', file);
+    }
 
     // JSON -> Blob avec type application/json
     formData.append(
       'product',
       new Blob([JSON.stringify(product)], { type: 'application/json' })
     );
+
     return this.http.put<ProductResponse>(
-      `${PRODUCTS_API}${id}` + 'create',
-      formData,
-      {
-        headers: {
-          // ⚠️ NE PAS mettre "Content-Type": multipart/form-data ici,
-          // HttpClient le gère automatiquement
-        }
-      }
-    )
-      .pipe(
-        tap((updated) => {
-          const currentProducts = this.productsSubject.value;
-          const newList = currentProducts.map(p =>
-            p.id === updated.id ? { ...p, ...updated } : p
-          );
-          this.productsSubject.next(newList);
-        })
-      );
+      `${PRODUCTS_API}${id}`,  // 👈 Corrigé
+      formData
+    ).pipe(
+      tap((updated) => {
+        const currentProducts = this.productsSubject.value;
+        const newList = currentProducts.map(p =>
+          p.id === updated.id ? { ...p, ...updated } : p
+        );
+        this.productsSubject.next(newList);
+      })
+    );
   }
+
   // updateProduct(id: number, product: ProductToSend): Observable<ProductResponse> {
   //   return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, product, httpOptions);
   // }
