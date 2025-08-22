@@ -3,6 +3,8 @@
 
   <div *ngIf="uploadedFile" class="preview">
     <p>Fichier uploadé : {{ uploadedFile?.fileName }}</p>
+    <!-- AJOUTEZ CETTE LIGNE -->
+    <p>Chemin de l'image : {{ uploadedFile?.filePath }}</p>
     <img *ngIf="uploadedFile.filePath" [src]="uploadedFile?.filePath" alt="Aperçu" width="150" />
   </div>
 
