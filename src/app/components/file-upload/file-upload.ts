@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductAdminService } from '../../services/product-admin.service';
 import { FileService } from '../../services/fileService';
@@ -18,8 +18,6 @@ export class FileUploadComponent {
 
   uploadedFile?: FileDTO;  // stocke le fichier uploadé
   uploadError?: string;
-
-    import { Component, NgZone } from '@angular/core';
 
     constructor(private fileService: FileService, private zone: NgZone) {}
 
