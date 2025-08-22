@@ -25,7 +25,7 @@ export class ProductAdminService {
   createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
     const formData = new FormData();
     formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
-    formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    formData.append('product', new Blob([JSON.stringify(product)]));
     return this.http.post<ProductResponse>(PRODUCTS_API + 'create', formData)
       .pipe(
         tap((newProduct) => {
@@ -53,7 +53,7 @@ export class ProductAdminService {
   updateProduct(id: number, product: ProductDto, file: File): Observable<ProductResponse> {
     const formData = new FormData();
     formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
-    formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    formData.append('product', new Blob([JSON.stringify(product)]));
     return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, formData)
       .pipe(
         tap((updated) => {
