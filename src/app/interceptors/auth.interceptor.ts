@@ -35,7 +35,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (currentUser.token) {
     // 👉 Vérifie si c'est un FormData (upload fichier)
     const isFormData = req.body instanceof FormData;
-    //console.log('authInterceptor token :', currentUser.token);
+    console.log('authInterceptor | isFormData : ', isFormData);
     const headers: Record<string, string> = {
       Authorization: `Bearer ${currentUser.token.trim()}`
     };
