@@ -19,27 +19,28 @@ export class FileUploadComponent {
   uploadedFile?: FileDTO;  // stocke le fichier uploadé
   uploadError?: string;
 
-  constructor(private fileService: FileService) {}
+    import { Component, NgZone } from '@angular/core';
 
-  onFileSelected(event: any) {
+    constructor(private fileService: FileService, private zone: NgZone) {}
+
+    onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
 
     this.fileService.uploadFile(file).subscribe({
-      next: (res: FileDTO) => {
-        console.log("Fichier uploadé :", res);
-        this.uploadedFile = res;
-        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
-        this.uploadError = undefined;
-        console.log("Réponse backend :", res);
-        console.log("Chemin image :", res.filePath);
-
-      },
-      error: (err) => {
-        console.error("Erreur upload :", err);
-        this.uploadError = err?.error?.message || 'Erreur lors de l\'upload';
-      }
+        next: (res: FileDTO) => {
+        this.zone.run(() => {
+            this.uploadedFile = res;
+            this.uploadError = undefined;
+        });
+        },
+        error: (err) => {
+        this.zone.run(() => {
+            this.uploadError = err?.error?.message || 'Erreur lors de l\'upload';
+        });
+        }
     });
-  }
+    }
+
 }
 
