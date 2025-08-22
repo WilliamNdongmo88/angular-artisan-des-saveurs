@@ -22,17 +22,34 @@ export class ProductAdminService {
   constructor(private http: HttpClient) { }
 
   /** Ajout d'un produit */
-  createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
-    const formData = new FormData();
-    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
-    formData.append('product', new Blob([JSON.stringify(product)]));
-    return this.http.post<ProductResponse>(PRODUCTS_API + 'create', formData)
-      .pipe(
-        tap((newProduct) => {
-          this.productsSubject.next([...this.productsSubject.value, newProduct]);
-        })
-      );
-  }
+createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
+  const formData = new FormData();
+
+  // fichier
+  formData.append('file', file);
+
+  // JSON -> Blob avec type application/json
+  formData.append(
+    'product',
+    new Blob([JSON.stringify(product)], { type: 'application/json' })
+  );
+
+  return this.http.post<ProductResponse>(
+    PRODUCTS_API + 'create',
+    formData,
+    {
+      headers: {
+        // ⚠️ NE PAS mettre "Content-Type": multipart/form-data ici,
+        // HttpClient le gère automatiquement
+      }
+    }
+  ).pipe(
+    tap((newProduct) => {
+      this.productsSubject.next([...this.productsSubject.value, newProduct]);
+    })
+  );
+}
+
   // createProduct(product: ProductToSend): Observable<ProductResponse> {
   //   return this.http.post<ProductResponse>(PRODUCTS_API + 'create', product, httpOptions);
   // }
