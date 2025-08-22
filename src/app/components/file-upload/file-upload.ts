@@ -31,6 +31,9 @@ export class FileUploadComponent {
         this.uploadedFile = res;
         console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
         this.uploadError = undefined;
+        console.log("Réponse backend :", res);
+        console.log("Chemin image :", res.filePath);
+
       },
       error: (err) => {
         console.error("Erreur upload :", err);
