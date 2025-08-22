@@ -22,8 +22,11 @@ export class ProductAdminService {
   constructor(private http: HttpClient) { }
 
   /** Ajout d'un produit */
-  createProduct(product: ProductDto): Observable<ProductResponse> {
-    return this.http.post<ProductResponse>(PRODUCTS_API + 'create', product, httpOptions)
+  createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
+    const formData = new FormData();
+    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
+    formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    return this.http.post<ProductResponse>(PRODUCTS_API + 'create', formData)
       .pipe(
         tap((newProduct) => {
           this.productsSubject.next([...this.productsSubject.value, newProduct]);
@@ -47,8 +50,11 @@ export class ProductAdminService {
 
 
   /** Mise à jour d'un produit */
-  updateProduct(id: number, product: ProductDto): Observable<ProductResponse> {
-    return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, product, httpOptions)
+  updateProduct(id: number, product: ProductDto, file: File): Observable<ProductResponse> {
+    const formData = new FormData();
+    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
+    formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, formData)
       .pipe(
         tap((updated) => {
           const currentProducts = this.productsSubject.value;

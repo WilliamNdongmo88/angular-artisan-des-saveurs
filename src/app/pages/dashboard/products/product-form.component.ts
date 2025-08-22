@@ -7,6 +7,12 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header";
 
+interface FileDTO {
+  fileName: string;
+  content: string;
+  filePath: string; // URL publique Nginx
+}
+
 @Component({
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
@@ -29,9 +35,9 @@ export class ProductFormComponent implements OnInit {
   imagePreview: string | null = null;
   myFile: MyFile = {
     id: 0,
-    name: '',
-    content: '',
-    temp: ''
+    fileName: '',
+    filePath: '',
+    content: ''
   };
   productDto : ProductDto = {
     id: 0,
@@ -47,6 +53,9 @@ export class ProductFormComponent implements OnInit {
     featured: false,
     mainImage: this.myFile
   };
+
+  uploadedFile?: FileDTO;  // stocke le fichier uploadé
+  uploadError?: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -108,9 +117,9 @@ export class ProductFormComponent implements OnInit {
         console.log("product :::", product);
         this.myFile = {
           id: product.mainImage.id,
-          name: product.mainImage?.name,
-          content: product.mainImage?.content,
-          temp: product.mainImage?.temp
+          fileName: product.mainImage?.fileName,
+          filePath: product.mainImage?.filePath,
+          content: product.mainImage?.content
         };
         console.log(" ::: test before :::");
         this.productForm.patchValue({
@@ -155,9 +164,9 @@ onSubmit() {
     console.log(":: Nouvelle image choisie");
     productImageToSend = {
       id: 0,
-      name: this.fileName,
-      content: this.convertImageToBase64,
-      temp: ''
+      fileName: this.fileName,
+      filePath: '',
+      content: 'updated_image_content',
     };
     console.log("productImageToSend :: ", productImageToSend);
   } else {
@@ -165,9 +174,9 @@ onSubmit() {
     console.log(":: Pas de nouvelle image → conserver l’ancienne");
     productImageToSend = {
       id: this.myFile.id,
-      name: this.myFile.name,
-      content: this.myFile.content,
-      temp: this.myFile.temp
+      fileName: this.myFile.fileName,
+      filePath: this.myFile.filePath,
+      content: this.myFile.content
     };
     //console.log("productImageToSend :: ", productImageToSend);
   }
@@ -177,9 +186,12 @@ onSubmit() {
     mainImage: productImageToSend
   };
   console.log("this.productDto :: ", this.productDto);
+  if (this.imageFile) {
   if (this.isEditMode && this.productId) {
-    this.productService.updateProduct(this.productId, this.productDto).subscribe({
-      next: () => {
+    this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
+      next: (res : ProductResponse) => {
+        this.uploadedFile = res.mainImage;
+        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
         this.toastr.success('Produit modifié avec succès', 'Succès');
         this.router.navigate(['/dashboard/products']);
       },
@@ -189,8 +201,10 @@ onSubmit() {
       }
     });
   } else {
-    this.productService.createProduct(this.productDto).subscribe({
-      next: () => {
+    this.productService.createProduct(this.productDto, this.imageFile).subscribe({
+      next: (res : ProductResponse) => {
+        this.uploadedFile = res.mainImage;
+        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
         this.toastr.success('Produit créé avec succès', 'Succès');
         this.router.navigate(['/dashboard/products']);
       },
@@ -199,6 +213,7 @@ onSubmit() {
         this.loading = false;
       }
     });
+  }
   }
 }
 
@@ -215,34 +230,51 @@ onSubmit() {
     this.router.navigate(['/dashboard/products']);
   }
 
-  onProductImageSelected(event: Event): void {
-    console.log("[ProductFormComponent] onProductImageSelected called");
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      this.imageFile = file;
-      this.fileName = file.name;
-      this.myFile.temp = '';
-      const reader = new FileReader();
-      console.log('file : ', file);
-      console.log('this.fileName : ', this.fileName);
-      reader.onload = () => {
-        this.convertImageToBase64 = reader.result?.slice(22) as string
-        this.productImageBase64 = reader.result as string;
-        this.f['imageUrl'].setValue(`${this.productImageBase64}`);
-        //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
-      };
-      reader.onerror = (error) => {
-        console.error('Erreur de lecture du fichier:', error);
-        this.productImageBase64 = null;
-      };
-      //this.f['imageUrl'].setValue(`img/produits/${this.fileName}`);
-      reader.readAsDataURL(file);
-    } else {
-      this.productImageBase64 = null;
-    }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+    this.imageFile = file;
+    // this.fileService.uploadFile(file).subscribe({
+    //   next: (res: FileDTO) => {
+    //     console.log("Fichier uploadé :", res);
+    //     this.uploadedFile = res;
+    //     console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
+    //     this.uploadError = undefined;
 
+    //   },
+    //   error: (err) => {
+    //     console.error("Erreur upload :", err);
+    //     this.uploadError = err?.error?.message || 'Erreur lors de l\'upload';
+    //   }
+    // });
   }
+  
+  // onProductImageSelected(event: Event): void {
+  //   console.log("[ProductFormComponent] onProductImageSelected called");
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files[0]) {
+  //     const file = input.files[0];
+  //     this.imageFile = file;
+  //     this.fileName = file.name;
+  //     const reader = new FileReader();
+  //     console.log('file : ', file);
+  //     console.log('this.fileName : ', this.fileName);
+  //     reader.onload = () => {
+  //       this.convertImageToBase64 = reader.result?.slice(22) as string
+  //       this.productImageBase64 = reader.result as string;
+  //       this.f['imageUrl'].setValue(`${this.productImageBase64}`);
+  //       //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
+  //     };
+  //     reader.onerror = (error) => {
+  //       console.error('Erreur de lecture du fichier:', error);
+  //       this.productImageBase64 = null;
+  //     };
+  //     //this.f['imageUrl'].setValue(`img/produits/${this.fileName}`);
+  //     reader.readAsDataURL(file);
+  //   } else {
+  //     this.productImageBase64 = null;
+  //   }
+  // }
 
   slugify(text: string): string {
   return text

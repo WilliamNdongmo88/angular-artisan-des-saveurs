@@ -2,9 +2,9 @@ import { ProductCategory } from "./product";
 
 export interface MyFile {
   id: number;
-  name: string;
+  fileName: string;
+  filePath: string; // URL publique Nginx
   content: string;
-  temp: string;
 }
 
 // export interface ProductToSend{

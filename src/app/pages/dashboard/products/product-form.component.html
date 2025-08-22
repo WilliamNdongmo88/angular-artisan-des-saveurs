@@ -160,7 +160,7 @@
               placeholder="img/produits/">
               <button type="button" class="btn btn-outline btn-sm">
                 <label for="productImageUpload" class="upload-box">
-                  <input type="file" id="productImageUpload" accept="image/*" (change)="onProductImageSelected($event)" style="display: none;" />
+                  <input type="file" id="productImageUpload" accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
                   <i class="fas fa-plus"></i>
                   Ajouter une image
                 </label>
@@ -172,10 +172,10 @@
         </div>
 
         <!-- Aperçu de l'image -->
-        <div class="form-group full-width" *ngIf="productImageBase64">
+        <div class="form-group full-width" *ngIf="uploadedFile?.filePath">
           <label>Aperçu de l'image</label>
           <div class="image-preview">
-                <img [src]="productImageBase64" alt="Product Image Preview" />
+                <img [src]="uploadedFile?.filePath" alt="Product Image Preview" />
           </div>
         </div>
 
