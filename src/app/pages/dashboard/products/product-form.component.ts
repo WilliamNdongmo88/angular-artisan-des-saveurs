@@ -187,34 +187,48 @@ onSubmit() {
   };
   console.log("this.productDto :: ", this.productDto);
   if (this.imageFile) {
-  if (this.isEditMode && this.productId) {
-    this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
-      next: (res : ProductResponse) => {
-        this.uploadedFile = res.mainImage;
-        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
-        this.toastr.success('Produit modifié avec succès', 'Succès');
-        this.router.navigate(['/dashboard/products']);
-      },
-      error: (error) => {
-        this.toastr.error(error.error?.message || 'Erreur lors de la modification', 'Erreur');
-        this.loading = false;
-      }
-    });
-  } else {
-    this.productService.createProduct(this.productDto, this.imageFile).subscribe({
-      next: (res : ProductResponse) => {
-        this.uploadedFile = res.mainImage;
-        console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
-        this.toastr.success('Produit créé avec succès', 'Succès');
-        this.router.navigate(['/dashboard/products']);
-      },
-      error: (error) => {
-        this.toastr.error(error.error?.message || 'Erreur lors de la création', 'Erreur');
-        this.loading = false;
-      }
-    });
-  }
-  }
+    if (this.isEditMode && this.productId) {
+      this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
+        next: (res : ProductResponse) => {
+          this.uploadedFile = res.mainImage;
+          console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
+          this.toastr.success('Produit modifié avec succès', 'Succès');
+          this.router.navigate(['/dashboard/products']);
+        },
+        error: (error) => {
+          this.toastr.error(error.error?.message || 'Erreur lors de la modification', 'Erreur');
+          this.loading = false;
+        }
+      });
+    } else {
+      this.productService.createProduct(this.productDto, this.imageFile).subscribe({
+        next: (res : ProductResponse) => {
+          this.uploadedFile = res.mainImage;
+          console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
+          this.toastr.success('Produit créé avec succès', 'Succès');
+          this.router.navigate(['/dashboard/products']);
+        },
+        error: (error) => {
+          this.toastr.error(error.error?.message || 'Erreur lors de la création', 'Erreur');
+          this.loading = false;
+        }
+      });
+    }
+  } else if (this.isEditMode && this.productId) {
+      this.imageFile = new File([], ''); // Fichier vide pour indiquer pas de changement
+      this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
+        next: (res : ProductResponse) => {
+          this.uploadedFile = res.mainImage;
+          console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
+          this.toastr.success('Produit modifié avec succès', 'Succès');
+          this.router.navigate(['/dashboard/products']);
+        },
+        error: (error) => {
+          this.toastr.error(error.error?.message || 'Erreur lors de la modification', 'Erreur');
+          this.loading = false;
+        }
+      });
+    }
 }
 
 
