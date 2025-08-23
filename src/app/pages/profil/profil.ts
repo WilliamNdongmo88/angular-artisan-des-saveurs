@@ -178,8 +178,9 @@ export class ProfilComponent implements OnInit, OnDestroy {
             next: (orders) => {
               this.orders = orders;
               for(let order of this.orders) { 
-                const dateObj = new Date(order.createdAt);
+                const dateObj = new Date(order.createdAt + 'Z');
                 console.log('Order createdAt :: ', dateObj.toLocaleString());
+
                 console.log('Order delivered :: ', order.delivered);
               }
               console.log('[ProfilComponent] Orders loaded :: ', orders);
