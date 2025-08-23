@@ -171,8 +171,8 @@
           </div>
         </div>
 
-        <!-- Aperçu de l'image -->
-        <div class="form-group full-width" *ngIf="uploadedFile?.filePath">
+        <!-- Aperçu de l'image *ngIf="uploadedFile?.filePath" -->
+        <div class="form-group full-width" >
           <label>Aperçu de l'image</label>
           <div class="image-preview">
                 <img [src]="uploadedFile?.filePath" alt="Product Image Preview" />
