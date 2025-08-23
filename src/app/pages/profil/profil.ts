@@ -166,7 +166,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
       emailOrderUpdates: true,
       emailNewProducts: false,
       language: 'fr',
-      currency: 'EUR'
+      currency: 'Rs'
     });
   }
 
@@ -177,7 +177,11 @@ export class ProfilComponent implements OnInit, OnDestroy {
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
               this.orders = orders;
-                console.log('[ProfilComponent] Orders loaded :: ', orders);
+              for(let order of this.orders) { 
+                console.log('Order createdAt :: ', order.createdAt);
+                console.log('Order delivered :: ', order.delivered);
+              }
+              console.log('[ProfilComponent] Orders loaded :: ', orders);
             },
             error: (error) => {
             console.error('Erreur lors du chargement des commandes:: ', error);
