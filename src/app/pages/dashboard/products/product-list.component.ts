@@ -55,6 +55,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getAvailableProducts().subscribe({
       next: (products) => {
         console.log("[productService] : ", products);
+        console.log("[productService] Chemin image :", products[0].mainImage.filePath);
         this.products = products;
         this.filteredProducts = products;
         this.loading = false;

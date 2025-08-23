@@ -219,7 +219,7 @@ onSubmit() {
       this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
         next: (res : ProductResponse) => {
           this.uploadedFile = res.mainImage;
-          console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
+          console.log("Chemin image :", res.mainImage.filePath);
           this.toastr.success('Produit modifié avec succès', 'Succès');
           this.router.navigate(['/dashboard/products']);
         },
