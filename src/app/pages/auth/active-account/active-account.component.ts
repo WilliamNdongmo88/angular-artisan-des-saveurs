@@ -41,6 +41,7 @@ export class ActiveAccountComponent implements OnInit {
       this.authService.activateAccount(token).subscribe({
         next: (res: MessageResponse) => {
           this.message = res.message;
+          console.log("message :: ", this.message);
         },
         error: (err) => {
           this.error = err.error.message || 'Erreur lors de l’activation';
@@ -57,7 +58,7 @@ export class ActiveAccountComponent implements OnInit {
       email: ['', Validators.required],
     });
     // Récupérer l'URL de retour depuis les paramètres de route ou par défaut '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
+    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
   }
 
   // Getter pour un accès facile aux champs du formulaire
