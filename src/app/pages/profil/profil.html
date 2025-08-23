@@ -143,8 +143,8 @@
         <div class="order-card" *ngFor="let order of orders">
           <div class="order-header">
             <div class="order-info">
-              <h3>Commande #{{ order.id }}</h3>
-              <span class="order-date">{{ order.createdAt | date:'dd/MM/yyyy' }}</span>
+              <h3>Commande #{{ order.id || 'CMD-001'}}</h3>
+              <span class="order-date">{{ order.createdAt | date:'23/08/2025' }}</span>
             </div>
             <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
               {{ getOrderStatusText(order.delivered) }}
@@ -157,11 +157,11 @@
                 <h4>{{ order.productItem.product.name }}</h4>
                 <p>Quantité: {{ order.productItem.quantity }}</p>
               </div>
-              <div class="item-price">{{ order.productItem.product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
+              <div class="item-price">{{ order.productItem.product.price | currency:'Rs':'symbol':'1.2-2' }}</div>
             </div>
           </div>
           <div class="order-total">
-            <strong>Total: {{ order.total | currency:'EUR':'symbol':'1.2-2' }}</strong>
+            <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
           </div>
         </div>
       </div>
@@ -274,9 +274,9 @@
           <div class="preference-item">
             <label for="currency">Devise</label>
             <select id="currency" formControlName="currency">
+              <option value="RS">Roupee (Rs)</option>
               <option value="EUR">Euro (€)</option>
               <option value="USD">Dollar US ($)</option>
-              <option value="GBP">Livre Sterling (£)</option>
             </select>
           </div>
         </div>

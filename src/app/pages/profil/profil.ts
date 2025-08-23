@@ -186,45 +186,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
             }
         });
     }
-    // this.orders = [
-    //   {
-    //     id: 'CMD-001',
-    //     date: new Date('2024-01-15'),
-    //     status: 'delivered',
-    //     items: [
-    //       {
-    //         id: '1',
-    //         name: 'Fromage de chèvre artisanal',
-    //         image: 'assets/images/cheese.jpg',
-    //         quantity: 2,
-    //         price: 15.99
-    //       },
-    //       {
-    //         id: '2',
-    //         name: 'Miel de lavande',
-    //         image: 'assets/images/honey.jpg',
-    //         quantity: 1,
-    //         price: 12.50
-    //       }
-    //     ],
-    //     total: 44.48
-    //   },
-    //   {
-    //     id: 'CMD-002',
-    //     date: new Date('2024-01-20'),
-    //     status: 'processing',
-    //     items: [
-    //       {
-    //         id: '3',
-    //         name: 'Confiture de fraises',
-    //         image: 'assets/images/jam.jpg',
-    //         quantity: 3,
-    //         price: 8.99
-    //       }
-    //     ],
-    //     total: 26.97
-    //   }
-    // ];
+  
   }
 
   private async loadAddresses() {
