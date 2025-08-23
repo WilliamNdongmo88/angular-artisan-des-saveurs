@@ -219,7 +219,7 @@ export class ProductService implements OnInit {
             price: product.price,
             unit: product.unit,
             category: product.category,
-            image: product.mainImage.content,
+            image: product.mainImage.filePath,
             origin: product.origin,
             preparation: product.preparation,
             featured: product.featured,

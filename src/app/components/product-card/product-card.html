@@ -1,7 +1,7 @@
 <div class="product-card slide-up" [class.featured]="featured">
   <div class="product-image slide-up">
     <img
-      [src]="product.image"
+      [src]="product.imageUrl"
       [alt]="product.name"
       (error)="onImageError($event)"
       loading="lazy">
