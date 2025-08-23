@@ -51,7 +51,8 @@ export class ProductFormComponent implements OnInit {
     unit: '',
     stockQuantity: 0,
     featured: false,
-    mainImage: this.myFile
+    mainImage: this.myFile,
+    imageUrl: ''
   };
 
   uploadedFile?: FileDTO;  // stocke le fichier uploadé

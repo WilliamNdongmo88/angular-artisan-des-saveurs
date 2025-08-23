@@ -56,3 +56,21 @@ export interface OrdersResponse {
 }
 
 
+export interface ProductResponse {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: ProductCategory;
+  imageUrl: string;
+  mainImage: MyFile;
+  available: boolean;
+  featured: boolean;
+  stockQuantity: number;
+  unit: string;
+  createdAt: string;
+  updatedAt: string;
+  origin: string;
+  preparation: string;
+}
+
