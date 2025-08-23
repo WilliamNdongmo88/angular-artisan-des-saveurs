@@ -253,7 +253,7 @@ onSubmit() {
     reader.onload = () => {
       this.convertImageToBase64 = reader.result?.slice(22) as string
       this.productImageBase64 = reader.result as string;
-      this.f['imageUrl'].setValue(`${this.productImageBase64}`);
+      //this.f['imageUrl'].setValue(`${this.productImageBase64}`);
       //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
     };
     reader.onerror = (error) => {
