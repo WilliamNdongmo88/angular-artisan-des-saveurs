@@ -39,15 +39,15 @@
           </a>
         </li>
         
-        <!-- Menu admin && isAdmin()-->
-        <li class="nav-item" *ngIf="currentUser ">
+        <!-- Menu admin -->
+        <li class="nav-item" *ngIf="currentUser && isAdmin()">
           <a class="nav-link admin-link" routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">
             Dashboard
           </a>
         </li>
 
-        <!-- Profil utilisateur && this.authService.isAuthenticated() && !isAdmin()-->
-        <li class="nav-item" *ngIf="currentUser ">
+        <!-- Profil utilisateur -->
+        <li class="nav-item" *ngIf="currentUser && this.authService.isAuthenticated() && !isAdmin()">
           <a class="nav-link admin-link" routerLink="/profil" routerLinkActive="active" (click)="closeMenu()">
             Profil
           </a>
