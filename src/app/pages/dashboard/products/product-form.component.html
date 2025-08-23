@@ -171,11 +171,11 @@
           </div>
         </div>
 
-        <!-- Aperçu de l'image *ngIf="uploadedFile?.filePath" -->
-        <div class="form-group full-width" >
+        <!-- Aperçu de l'image -->
+        <div class="form-group full-width" *ngIf="productImageBase64">
           <label>Aperçu de l'image</label>
           <div class="image-preview">
-                <img [src]="uploadedFile?.filePath" alt="Product Image Preview" />
+                <img [src]="productImageBase64" alt="Product Image Preview" />
           </div>
         </div>
 

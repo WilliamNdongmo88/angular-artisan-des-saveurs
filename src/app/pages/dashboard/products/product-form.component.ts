@@ -248,47 +248,47 @@ onSubmit() {
     const file = event.target.files[0];
     if (!file) return;
     this.imageFile = file;
-    // this.fileService.uploadFile(file).subscribe({
-    //   next: (res: FileDTO) => {
-    //     console.log("Fichier uploadé :", res);
-    //     this.uploadedFile = res;
-    //     console.log("Fichier uploadé this.uploadedFile:", this.uploadedFile);
-    //     this.uploadError = undefined;
-
-    //   },
-    //   error: (err) => {
-    //     console.error("Erreur upload :", err);
-    //     this.uploadError = err?.error?.message || 'Erreur lors de l\'upload';
-    //   }
-    // });
+    const reader = new FileReader();
+    console.log('file : ', file);
+    reader.onload = () => {
+      this.convertImageToBase64 = reader.result?.slice(22) as string
+      this.productImageBase64 = reader.result as string;
+      this.f['imageUrl'].setValue(`${this.productImageBase64}`);
+      //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
+    };
+    reader.onerror = (error) => {
+      console.error('Erreur de lecture du fichier:', error);
+      this.productImageBase64 = null;
+    };
+    reader.readAsDataURL(file);
   }
   
-  // onProductImageSelected(event: Event): void {
-  //   console.log("[ProductFormComponent] onProductImageSelected called");
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files[0]) {
-  //     const file = input.files[0];
-  //     this.imageFile = file;
-  //     this.fileName = file.name;
-  //     const reader = new FileReader();
-  //     console.log('file : ', file);
-  //     console.log('this.fileName : ', this.fileName);
-  //     reader.onload = () => {
-  //       this.convertImageToBase64 = reader.result?.slice(22) as string
-  //       this.productImageBase64 = reader.result as string;
-  //       this.f['imageUrl'].setValue(`${this.productImageBase64}`);
-  //       //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
-  //     };
-  //     reader.onerror = (error) => {
-  //       console.error('Erreur de lecture du fichier:', error);
-  //       this.productImageBase64 = null;
-  //     };
-  //     //this.f['imageUrl'].setValue(`img/produits/${this.fileName}`);
-  //     reader.readAsDataURL(file);
-  //   } else {
-  //     this.productImageBase64 = null;
-  //   }
-  // }
+  onProductImageSelected(event: Event): void {
+    console.log("[ProductFormComponent] onProductImageSelected called");
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.imageFile = file;
+      this.fileName = file.name;
+      const reader = new FileReader();
+      console.log('file : ', file);
+      console.log('this.fileName : ', this.fileName);
+      reader.onload = () => {
+        this.convertImageToBase64 = reader.result?.slice(22) as string
+        this.productImageBase64 = reader.result as string;
+        this.f['imageUrl'].setValue(`${this.productImageBase64}`);
+        //console.log('Image principale encodée en Base64:', this.convertImageToBase64.substring(0, 100) + '...'); // Log partiel pour ne pas inonder
+      };
+      reader.onerror = (error) => {
+        console.error('Erreur de lecture du fichier:', error);
+        this.productImageBase64 = null;
+      };
+      //this.f['imageUrl'].setValue(`img/produits/${this.fileName}`);
+      reader.readAsDataURL(file);
+    } else {
+      this.productImageBase64 = null;
+    }
+  }
 
   slugify(text: string): string {
   return text
