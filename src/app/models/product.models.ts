@@ -7,11 +7,6 @@ export interface MyFile {
   content: string;
 }
 
-// export interface ProductToSend{
-//   productImage: MyFile,
-//   productRequest: ProductRequest
-// }
-
 export interface Product {
   id: number;
   name: string;
@@ -38,25 +33,26 @@ export interface ProductDto {
   unit?: string;
   stockQuantity?: number;
   featured?: boolean;
+  imageUrl: string;
   mainImage?: MyFile;
 }
 
-
-export interface ProductResponse {
+export interface ProductItemDTO {
   id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: ProductCategory;
-  imageUrl: string;
-  mainImage: MyFile;
-  available: boolean;
-  featured: boolean;
-  stockQuantity: number;
-  unit: string;
-  createdAt: string;
-  updatedAt: string;
-  origin: string;
-  preparation: string;
+  quantity: number;
+  product: ProductDto;
 }
+
+export interface OrdersResponse {
+  id: number | null;
+  subtotal: number;
+  discount: number;
+  total: number;
+  freeShipping: boolean;
+  createdAt: Date;
+  delivered: string;
+  userid: number;
+  productItem: ProductItemDTO;
+}
+
 

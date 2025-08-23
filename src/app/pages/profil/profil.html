@@ -144,20 +144,20 @@
           <div class="order-header">
             <div class="order-info">
               <h3>Commande #{{ order.id }}</h3>
-              <span class="order-date">{{ order.date | date:'dd/MM/yyyy' }}</span>
+              <span class="order-date">{{ order.createdAt | date:'dd/MM/yyyy' }}</span>
             </div>
-            <div class="order-status" [class]="order.status">
-              {{ getOrderStatusText(order.status) }}
+            <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
+              {{ getOrderStatusText(order.delivered) }}
             </div>
           </div>
           <div class="order-items">
-            <div class="order-item" *ngFor="let item of order.items">
-              <img [src]="item.image" [alt]="item.name" class="item-image">
+            <div class="order-item"  *ngFor="let order of orders">
+              <img [src]="order.productItem.product.imageUrl" [alt]="order.productItem.product.name" class="item-image">
               <div class="item-details">
-                <h4>{{ item.name }}</h4>
-                <p>Quantité: {{ item.quantity }}</p>
+                <h4>{{ order.productItem.product.name }}</h4>
+                <p>Quantité: {{ order.productItem.quantity }}</p>
               </div>
-              <div class="item-price">{{ item.price | currency:'EUR':'symbol':'1.2-2' }}</div>
+              <div class="item-price">{{ order.productItem.product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
             </div>
           </div>
           <div class="order-total">

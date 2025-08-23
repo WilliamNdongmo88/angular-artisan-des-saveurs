@@ -3,15 +3,6 @@
 import { ProductCategory } from "./product";
 import { User } from "./user";
 
-export interface Orders {
-  subtotal: number;
-  discount: number;
-  total: number;
-  freeShipping: boolean;
-  userId: number;
-  products: Product;
-}
-
 export interface Product {
   id: number;
   name: string;

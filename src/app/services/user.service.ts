@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, map } from 'rxjs';
-import { Orders } from '../models/order';
+import { OrdersResponse } from '../models/product.models';
 
 // Interfaces pour les données utilisateur
 export interface PersonalInfo {
@@ -191,11 +191,11 @@ export class UserService {
   }
 
   // Récupérer l'historique des commandes
-  getOrderHistory(id: number): Observable<Orders[]> {
-    return this.http.get<Orders[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions).pipe(
+  getOrderHistory(id: number): Observable<OrdersResponse[]> {
+    return this.http.get<OrdersResponse[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions).pipe(
       map(response => {
         console.log('Historique des commandes:', response);
-        return response as Orders[];
+        return response as OrdersResponse[];
       })
     );
   }
