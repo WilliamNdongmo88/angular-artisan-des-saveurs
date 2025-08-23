@@ -89,7 +89,7 @@ export class ActiveAccountComponent implements OnInit {
       });
   }
 
-  goToLogin() {
-    this.router.navigate(['/login']);
-  }
+  // goToLogin() {
+  //   this.router.navigate(['/login']);
+  // }
 }
