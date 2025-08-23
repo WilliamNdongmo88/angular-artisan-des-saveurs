@@ -178,7 +178,9 @@ export class ProfilComponent implements OnInit, OnDestroy {
             next: (orders) => {
               this.orders = orders;
               for(let order of this.orders) { 
-                const dateObj = new Date(order.createdAt + 'Z');
+                const isoDate = order.createdAt + 'Z'; // devient "2025-08-23T21:40:31Z"
+                const dateObj = new Date(isoDate);
+
                 console.log('Order createdAt :: ', dateObj.toLocaleString());
 
                 console.log('Order delivered :: ', order.delivered);
