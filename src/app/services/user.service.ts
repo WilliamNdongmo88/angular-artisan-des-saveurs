@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, map } from 'rxjs';
 import { Orders } from '../models/order';
 
 // Interfaces pour les données utilisateur
@@ -192,7 +192,12 @@ export class UserService {
 
   // Récupérer l'historique des commandes
   getOrderHistory(id: number): Observable<Orders[]> {
-    return this.http.get<Orders[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions);
+    return this.http.get<Orders[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions).pipe(
+      map(response => {
+        console.log('Historique des commandes:', response);
+        return response as Orders[];
+      })
+    );
   }
 
   // Supprimer le compte utilisateur
