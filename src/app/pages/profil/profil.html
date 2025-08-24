@@ -143,7 +143,7 @@
         <div class="order-card" *ngFor="let order of orders">
           <div class="order-header">
             <div class="order-info">
-              <h3>Commande #{{ order.id || 'CMD-001'}}</h3>
+              <h3>Commande #{{'CMD-00'+ order.id || 'CMD-001'}}</h3>
               <span class="order-date">{{ order.createdAt | date:'23/08/2025' }}</span>
             </div>
             <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
@@ -161,6 +161,13 @@
             </div>
           </div>
           <div class="order-total">
+            <p>Sous-total: {{ order.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</p>
+            <p>Réduction: -{{ order.discount | currency:'Rs ':'symbol':'1.2-2' }}</p>
+            @if(order.freeShipping){
+              <p>Livraison gratuite</p>
+            }@else{
+              <p>Frais de livraison: {{ 100 | currency:'Rs ':'symbol':'1.2-2' }}</p>
+            }
             <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
           </div>
         </div>
