@@ -165,10 +165,11 @@
             <p>Réduction: -{{ order.discount | currency:'Rs ':'symbol':'1.2-2' }}</p>
             @if(order.freeShipping){
               <p>Livraison gratuite</p>
+              <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
             }@else{
               <p>Frais de livraison: {{ 100 | currency:'Rs ':'symbol':'1.2-2' }}</p>
+              <strong>Total: {{ order.total+100 | currency:'Rs':'symbol':'1.2-2' }}</strong>
             }
-            <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
           </div>
         </div>
       </div>
