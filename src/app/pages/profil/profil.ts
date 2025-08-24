@@ -171,8 +171,6 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   private loadOrders() {
-    // Simuler le chargement des commandes
-    // En réalité, cela viendrait d'un service de commandes
     if (this.currentUser){
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
@@ -185,7 +183,6 @@ export class ProfilComponent implements OnInit, OnDestroy {
             }
         });
     }
-  
   }
 
   private async loadAddresses() {

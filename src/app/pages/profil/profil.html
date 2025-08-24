@@ -141,54 +141,35 @@
       
       <div class="orders-list" *ngIf="orders.length >= 0; else noOrders">
         <div class="order-card" *ngFor="let order of orders">
-          
-          <!-- En-tête commande -->
           <div class="order-header">
             <div class="order-info">
               <h3>Commande #{{ order.id || 'CMD-001'}}</h3>
-              <span class="order-date">{{ order.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
+              <span class="order-date">{{ order.createdAt | date:'23/08/2025' }}</span>
             </div>
-            <div class="order-status" [ngClass]="order.delivered">
+            <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
               {{ getOrderStatusText(order.delivered) }}
             </div>
           </div>
-
-          <!-- Liste des produits -->
           <div class="order-items">
-            <div class="order-item" *ngFor="let item of order.productItems">
-              <img 
-                [src]="item.product.imageUrl" 
-                [alt]="item.product.name" 
-                class="item-image"
-              >
+            <div class="order-item"  *ngFor="let item of order.productItems">
+              <img [src]="item.product.imageUrl" [alt]="item.product.name" class="item-image">
               <div class="item-details">
                 <h4>{{ item.product.name }}</h4>
                 <p>Quantité: {{ item.quantity }}</p>
-                <p class="unit-price">Prix unitaire: {{ item.product.price | currency:'Rs ':'symbol':'1.2-2' }}</p>
               </div>
-              <div class="item-subtotal">
-                {{ (item.product.price * item.quantity) | currency:'Rs ':'symbol':'1.2-2' }}
-              </div>
+              <div class="item-price">{{ item.product.price | currency:'Rs':'symbol':'1.2-2' }}</div>
             </div>
           </div>
-
-          <!-- Totaux commande -->
-          <div class="order-summary">
-            <p>Sous-total: {{ order.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</p>
-            <p>Réduction: -{{ order.discount | currency:'Rs ':'symbol':'1.2-2' }}</p>
-            <p *ngIf="order.freeShipping">Livraison gratuite</p>
-            <strong>Total: {{ order.total | currency:'Rs ':'symbol':'1.2-2' }}</strong>
+          <div class="order-total">
+            <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
           </div>
         </div>
       </div>
 
-      <!-- Cas aucune commande -->
       <ng-template #noOrders>
         <div class="empty-state">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path 
-              d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" 
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <h3>Aucune commande</h3>
           <p>Vous n'avez pas encore passé de commande.</p>
@@ -196,7 +177,6 @@
         </div>
       </ng-template>
     </div>
-
 
     <!-- Onglet Adresses -->
     <div class="tab-content" *ngIf="activeTab === 'addresses'">
