@@ -125,7 +125,7 @@ export class UserService {
         })
       };
 
-      this.http.post(`${this.apiUrl}/avatar`, formData, uploadOptions)
+      this.http.post(`${this.apiUrl}/users/avatar`, formData, uploadOptions)
         .subscribe({
           next: (response: any) => {
             const avatarUrl = response.avatarUrl || response.url;

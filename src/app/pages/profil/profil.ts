@@ -73,6 +73,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log("[ProfileComponent] ngOnInit - userData :: ", this.userData);
     this.currentUser = this.authService.currentUserValue;
     if (this.currentUser) {
         this.loadUserData();
@@ -265,7 +266,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
-            phone: formData.phone
+            phone: formData.phone,
           };
         }
 
