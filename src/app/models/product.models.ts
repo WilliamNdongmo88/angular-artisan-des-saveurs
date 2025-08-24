@@ -52,7 +52,7 @@ export interface OrdersResponse {
   createdAt: string;
   delivered: string;
   userid: number;
-  productItem: ProductItemDTO;
+  productItems: ProductItemDTO[];
 }
 
 
