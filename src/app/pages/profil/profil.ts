@@ -178,7 +178,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
             next: (orders) => {
               this.orders = orders;
               for(let order of this.orders) {
-                console.log('Order createdAt :: ', order.createdAt);
+                console.log('Order createdAt :: ', order.createdAt.replace('T', ' '));
                 console.log('Order delivered :: ', order.delivered);
               }
               console.log('[ProfilComponent] Orders loaded :: ', orders);

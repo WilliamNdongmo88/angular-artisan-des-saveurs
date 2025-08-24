@@ -49,7 +49,7 @@ export interface OrdersResponse {
   discount: number;
   total: number;
   freeShipping: boolean;
-  createdAt: Date;
+  createdAt: string;
   delivered: string;
   userid: number;
   productItem: ProductItemDTO;
