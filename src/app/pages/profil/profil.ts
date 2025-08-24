@@ -176,12 +176,8 @@ export class ProfilComponent implements OnInit, OnDestroy {
     if (this.currentUser){
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
-              this.orders = orders;
-              for(let order of this.orders) {
-                console.log('Order createdAt :: ', order.createdAt);
-                console.log('Order delivered :: ', order.delivered);
-              }
-              console.log('[ProfilComponent] Orders loaded :: ', orders);
+              this.orders = orders[0];
+              console.log('[ProfilComponent] Orders loaded :: ', orders[0]);
             },
             error: (error) => {
             console.error('Erreur lors du chargement des commandes:: ', error);
