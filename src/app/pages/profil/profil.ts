@@ -355,6 +355,12 @@ export class ProfilComponent implements OnInit, OnDestroy {
     }
   }
 
+  onAvatarError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'img/hero/avatar.webp';
+  }
+
+
   // Gestion des adresses
   addNewAddress() {
     this.selectedAddress = null;
