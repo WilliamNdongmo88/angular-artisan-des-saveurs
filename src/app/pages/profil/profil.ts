@@ -81,10 +81,10 @@ export class ProfilComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    console.log('[OrderModalComponent] data :: ', data);
+    console.log('[ProfilComponent] data :: ', data);
     if (data && data.token) {
       this.authService.extractUserFromToken(data.token); // Restaure le user en mémoire
-      console.log('[OrderModalComponent] currentUser :: ', this.authService.getUser());
+      console.log('[ProfilComponent] currentUser :: ', this.authService.getUser());
       const userData = this.authService.getUser();
       if (userData) {
         this.userData = {

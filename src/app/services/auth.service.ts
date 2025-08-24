@@ -58,7 +58,7 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(user));
         // Mettre à jour le BehaviorSubject avec l'utilisateur connecté
         this.currentUserSubject.next(user);
-        console.log('[AuthService] currentUser :: ', this.currentUserValue);
+        //console.log('[AuthService] currentUser :: ', this.currentUserValue);
         return response;
       }));
   }
@@ -122,7 +122,7 @@ export class AuthService {
   extractUserFromToken(token: string) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log('[AuthService] payload '+  JSON.stringify(payload));
+    //console.log('[AuthService] payload '+  JSON.stringify(payload));
       const newLocal = {
         id:payload.id,
         firstName: payload.firstname,
@@ -134,7 +134,7 @@ export class AuthService {
         avatar: payload.avatar,
       };
       this.user.set(newLocal);
-      console.log('[AuthService] this.userGoogle '+  JSON.stringify(this.user()));
+      //console.log('[AuthService] this.userGoogle '+  JSON.stringify(this.user()));
       } catch (e) {
         console.error('Erreur de décodage du token', e);
       }
