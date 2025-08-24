@@ -139,7 +139,7 @@
         <h2>Historique des commandes</h2>
       </div>
       
-      <div class="orders-list" *ngIf="orders.length > 0; else noOrders">
+      <div class="orders-list" *ngIf="orders.length >= 0; else noOrders">
         <div class="order-card" *ngFor="let order of orders">
           
           <!-- En-tête commande -->
