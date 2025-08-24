@@ -135,11 +135,11 @@
 
     <!-- Onglet Historique des commandes -->
     <div class="tab-content" *ngIf="activeTab === 'orders'">
-      <div class="section-header">s
+      <div class="section-header">
         <h2>Historique des commandes</h2>
       </div>
       
-      <div class="orders-list" *ngIf="orders.length > 0 else noOrders">
+      <div class="orders-list" *ngIf="orders.length > 0; else noOrders">
         <div class="order-card" *ngFor="let order of orders">
           <div class="order-header">
             <div class="order-info">
