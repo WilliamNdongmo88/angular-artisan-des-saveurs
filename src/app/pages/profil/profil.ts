@@ -73,7 +73,25 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    console.log('[OrderModalComponent] data :: ', data);
+    if (data && data.token) {
+      this.authService.extractUserFromToken(data.token); // Restaure le user en mémoire
+      console.log('[OrderModalComponent] currentUser :: ', this.authService.getUser());
+      const userData = this.authService.getUser();
+      if (userData) {
+        this.userData = {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          phone: userData.phone,
+          actif: userData.actif,
+        };
+      }
+    }
     console.log("[ProfileComponent] ngOnInit - userData :: ", this.userData);
+
     this.currentUser = this.authService.currentUserValue;
     if (this.currentUser) {
         this.loadUserData();
