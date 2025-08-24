@@ -175,6 +175,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
       // Charger l'avatar utilisateur
       if (userData) {
         this.userAvatar = userData.avatar || null;
+        console.log(" userAvatar :: ", this.userAvatar);
       }
       
       // Charger les préférences utilisateur
