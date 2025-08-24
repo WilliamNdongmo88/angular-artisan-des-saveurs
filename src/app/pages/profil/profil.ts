@@ -215,35 +215,35 @@ export class ProfilComponent implements OnInit, OnDestroy {
   private async loadAddresses() {
     try {
       // En réalité, cela viendrait du service utilisateur
-      this.userService.getAddresses().subscribe({
-        next: (addresses) => {
-          this.addresses = addresses;
-        },
-        error: (error) => {
-          console.error('Erreur lors du chargement des adresses:: ', error);
-          // Données de fallback pour la démo
-          this.addresses = [
-            {
-              id: '1',
-              label: 'Domicile',
-              street: '123 Rue de la Paix',
-              city: 'Paris',
-              postalCode: '75001',
-              country: 'France',
-              isDefault: true
-            },
-            {
-              id: '2',
-              label: 'Bureau',
-              street: '456 Avenue des Champs-Élysées',
-              city: 'Paris',
-              postalCode: '75008',
-              country: 'France',
-              isDefault: false
-            }
-          ];
-        }
-      });
+      // this.userService.getAddresses().subscribe({
+      //   next: (addresses) => {
+      //     this.addresses = addresses;
+      //   },
+      //   error: (error) => {
+      //     console.error('Erreur lors du chargement des adresses:: ', error);
+      //     // Données de fallback pour la démo
+      //     this.addresses = [
+      //       {
+      //         id: '1',
+      //         label: 'Domicile',
+      //         street: '123 Rue de la Paix',
+      //         city: 'Paris',
+      //         postalCode: '75001',
+      //         country: 'France',
+      //         isDefault: true
+      //       },
+      //       {
+      //         id: '2',
+      //         label: 'Bureau',
+      //         street: '456 Avenue des Champs-Élysées',
+      //         city: 'Paris',
+      //         postalCode: '75008',
+      //         country: 'France',
+      //         isDefault: false
+      //       }
+      //     ];
+      //   }
+      // });
     } catch (error) {
       console.error('Erreur lors du chargement des adresses:', error);
     }
