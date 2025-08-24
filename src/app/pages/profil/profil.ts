@@ -177,12 +177,8 @@ export class ProfilComponent implements OnInit, OnDestroy {
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
               this.orders = orders;
-              for(let order of this.orders) { 
-                const isoDate = order.createdAt + 'Z'; // devient "2025-08-23T21:40:31Z"
-                const dateObj = new Date(isoDate);
-
-                console.log('Order createdAt :: ', dateObj.toLocaleString());
-
+              for(let order of this.orders) {
+                console.log('Order createdAt :: ', order.createdAt);
                 console.log('Order delivered :: ', order.delivered);
               }
               console.log('[ProfilComponent] Orders loaded :: ', orders);
