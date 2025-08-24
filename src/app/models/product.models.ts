@@ -17,7 +17,7 @@ export interface Product {
   available: boolean;
   stockQuantity: number;
   unit: string;
-  createdAt: string;
+  createdAt: Date;
   updatedAt: string;
 }
 
