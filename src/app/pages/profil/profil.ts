@@ -18,6 +18,12 @@ interface Order {
   total: number;
 }
 
+interface FileDTO {
+  fileName: string;
+  temp: string;
+  filePath: string; // URL publique Nginx
+}
+
 interface OrderItem {
   id: string;
   name: string;
@@ -343,35 +349,22 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   // Gestion de l'avatar
-  changeAvatar() {
-    // Créer un input file temporaire
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (event: any) => {
-      const file = event.target.files[0];
-      if (file) {
-        this.uploadAvatar(file);
-      }
-    };
-    input.click();
-  }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-  private async uploadAvatar(file: File) {
-    this.isLoading = true;
+    this.userService.uploadAvatar(file).subscribe({
+      next: (res: FileDTO) => {
+        console.log("Fichier uploadé :", res);
+        this.userAvatar = res.filePath;
+        console.log("Réponse backend :", res);
+        console.log("Chemin image :", res.filePath);
 
-    try {
-      // Appel au service pour uploader l'avatar
-      const avatarUrl = await this.userService.uploadAvatar(file);
-      this.userAvatar = avatarUrl;
-      
-      this.showNotification('success', 'Avatar mis à jour avec succès');
-    } catch (error) {
-      console.error('Erreur lors de l\'upload de l\'avatar:', error);
-      this.showNotification('error', 'Erreur lors de la mise à jour de l\'avatar');
-    } finally {
-      this.isLoading = false;
-    }
+      },
+      error: (err: { error: { message: string; }; }) => {
+        console.error("Erreur upload :", err);
+        this.showNotification('error', err?.error?.message || 'Erreur lors de l\'upload de l\'avatar');}
+    });
   }
 
   onAvatarError(event: Event) {

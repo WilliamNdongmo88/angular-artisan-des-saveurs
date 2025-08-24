@@ -11,6 +11,12 @@ export interface PersonalInfo {
   phone: string;
 }
 
+interface FileDTO {
+  fileName: string;
+  temp: string;
+  filePath: string; // URL publique Nginx
+}
+
 export interface UserPreferences {
   emailPromotions: boolean;
   emailOrderUpdates: boolean;
@@ -113,31 +119,11 @@ export class UserService {
   }
 
   // Upload de l'avatar
-  uploadAvatar(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('avatar', file);
+  uploadAvatar(file: File): Observable<FileDTO> {
+    const formData = new FormData();
+    formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
 
-      // Headers spéciaux pour l'upload de fichier
-      const uploadOptions = {
-        headers: new HttpHeaders({
-          // Ne pas définir Content-Type pour les FormData, le navigateur le fait automatiquement
-        })
-      };
-
-      this.http.post(`${this.apiUrl}users/avatar`, formData, uploadOptions)
-        .subscribe({
-          next: (response: any) => {
-            const avatarUrl = response.avatarUrl || response.url;
-            this.userDataSubject.next({ ...this.userDataSubject.value, avatar: avatarUrl });
-            resolve(avatarUrl);
-          },
-          error: (error) => {
-            console.error('Erreur lors de l\'upload de l\'avatar:', error);
-            reject(error);
-          }
-        });
-    });
+    return this.http.post<FileDTO>(`${this.apiUrl}users/avatar`, formData);
   }
 
   // Gestion des adresses
