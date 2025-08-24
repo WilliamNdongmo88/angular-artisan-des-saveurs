@@ -99,6 +99,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
     console.log("[ProfileComponent] ngOnInit - userData :: ", this.userData);
 
     this.currentUser = this.authService.currentUserValue;
+    console.log("[ProfileComponent] ngOnInit - currentUser :: ", this.currentUser);
     if (this.currentUser) {
         this.loadUserData();
         this.populatePersonalInfoForm();
