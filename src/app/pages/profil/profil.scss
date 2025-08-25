@@ -583,10 +583,76 @@
         max-width: 500px;
 
         .form-group {
-          margin-bottom: 1.5rem;
+          display: flex;
+          flex-direction: column;
+
+          label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+          }
+
+          input, select {
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+
+            &:focus {
+              outline: none;
+              border-color: #8B0000;
+              box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+            }
+
+            &.readonly {
+              background: #f8f9fa;
+              color: #666;
+              cursor: not-allowed;
+            }
+
+            &::placeholder {
+              color: #adb5bd;
+            }
+          }
+
+          .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+          }
+        }
+
+        .form-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: flex-end;
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 1px solid #e9ecef;
+
+          @media (max-width: 768px) {
+            flex-direction: column;
+          }
         }
       }
     }
+    // .profile-form {
+    //   .form-row {
+    //     display: grid;
+    //     grid-template-columns: 1fr 1fr;
+    //     gap: 2rem;
+    //     margin-bottom: 2rem;
+
+    //     @media (max-width: 768px) {
+    //       grid-template-columns: 1fr;
+    //       gap: 1rem;
+    //     }
+    //   }
+    // }
 
     // État vide
     .empty-state {
