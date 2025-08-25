@@ -13,6 +13,7 @@ import {
   AuthUser
 } from '../models/auth.models';
 import { Users } from '../models/user';
+import { MyFile } from '../models/product.models';
 
 //const AUTH_API = 'http://localhost:8070/api/auth/';
 const AUTH_API = 'https://artisan-des-saveurs-production.up.railway.app/api/auth/';
@@ -89,8 +90,8 @@ export class AuthService {
     return this.http.post<MessageResponse>(AUTH_API + 'reset-password', resetRequest, httpOptions);
   }
 
-  getAvatars(id: number): Observable<string[]> {
-    return this.http.get<string[]>(AUTH_API + `avatar/${id}`);
+  getAvatars(id: number): Observable<MyFile> {
+    return this.http.get<MyFile>(AUTH_API + `avatar/${id}`);
   }
 
   isLoggedIn(): boolean {
