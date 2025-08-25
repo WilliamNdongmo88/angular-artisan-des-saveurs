@@ -172,33 +172,41 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   private loadUserData() {
     if (this.currentUser) {
-      this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
+      // Reconstruire le user depuis le token
+      this.authService.extractUserFromToken(this.currentUser.token);
+
+      // Charger l'avatar depuis l'API
       this.authService.getAvatars(this.currentUser.id).subscribe({
         next: (res) => {
           this.avatar = res.filePath;
           console.log('[ProfileComponent] Avatars :: ', this.avatar);
+
+          const userData = this.authService.getUser();
+          if (userData) {
+            if (this.avatar !== userData.avatar) {
+              this.userAvatar = this.avatar || null;
+              console.log("this.avatar :: ", this.userAvatar);
+            } else {
+              this.userAvatar = userData.avatar || null;
+              console.log("userAvatar :: ", this.userAvatar);
+            }
+          }
+
+          // Charger les préférences utilisateur **après** avoir tout reconstruit
+          this.loadUserPreferences();
         },
         error: (error) => {
           console.error('Erreur lors de la récupération des avatars', error);
+
+          // Fallback si l'API avatar échoue
+          const userData = this.authService.getUser();
+          this.userAvatar = userData?.avatar || null;
+          this.loadUserPreferences();
         }
       });
-      const userData = this.authService.getUser();
-      // Charger l'avatar utilisateur
-      if (userData) {
-        if(this.avatar != userData.avatar){
-          this.userAvatar = this.avatar || null;
-          console.log(" this.avatar :: ", this.userAvatar);
-        }
-        else {
-          this.userAvatar = userData.avatar || null;
-          console.log(" userAvatar :: ", this.userAvatar);
-        }
-      }
-      
-      // Charger les préférences utilisateur
-      this.loadUserPreferences();
     }
   }
+
 
   private loadUserPreferences() {
     // Simuler le chargement des préférences depuis l'API
