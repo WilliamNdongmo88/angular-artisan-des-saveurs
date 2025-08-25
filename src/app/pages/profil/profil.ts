@@ -199,6 +199,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   private loadOrders() {
     if (this.currentUser){
+      console.log("[ProfileComponent] User Id :: ", this.currentUser.id);
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
               this.orders = orders;
