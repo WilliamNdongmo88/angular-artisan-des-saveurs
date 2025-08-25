@@ -32,5 +32,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  navigaToProfil() {
+    this.router.navigate(['/profil']);
+  }
+
 }
 

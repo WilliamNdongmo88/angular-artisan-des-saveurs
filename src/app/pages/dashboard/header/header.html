@@ -7,7 +7,10 @@
       <div class="user-info">
         <span class="welcome">Bienvenue, {{ currentUser?.username }}!</span>
         <button class="btn btn-primary" (click)="gotosite()">Voir le site</button>
-        <!-- <button class="btn btn-outline" (click)="logout()">Déconnexion</button> -->
+        <button class="btn btn-outline" (click)="navigaToProfil()">Profil</button>
+          <!-- <a class="nav-link admin-link" routerLink="/profil" routerLinkActive="active">
+            Profil
+          </a> -->
         <i class="fas fa-sign-out-alt logout-icon" (click)="logout()"></i>
       </div>
     </div>
