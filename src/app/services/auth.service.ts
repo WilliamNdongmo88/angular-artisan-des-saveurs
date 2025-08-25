@@ -89,6 +89,10 @@ export class AuthService {
     return this.http.post<MessageResponse>(AUTH_API + 'reset-password', resetRequest, httpOptions);
   }
 
+  getAvatars(id: number): Observable<string[]> {
+    return this.http.get<string[]>(AUTH_API + `avatar/${id}`);
+  }
+
   isLoggedIn(): boolean {
     return this.currentUserValue !== null;
   }

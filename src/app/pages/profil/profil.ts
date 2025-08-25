@@ -171,7 +171,16 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   private loadUserData() {
     if (this.currentUser) {
+      let avatar = '';
       this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
+      this.authService.getAvatars(this.currentUser.id).subscribe({
+        next: (avatars) => {
+          console.log('[ProfileComponent] Avatars :: ', avatars);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération des avatars', error);
+        }
+      });
       const userData = this.authService.getUser();
       // Charger l'avatar utilisateur
       if (userData) {
