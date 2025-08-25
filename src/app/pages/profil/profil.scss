@@ -589,7 +589,8 @@
           label {
             font-weight: 600;
             color: #333;
-            margin-bottom: 0.5rem;
+            margin-bottom: 2px;
+            margin-top: 10px;
             font-size: 0.95rem;
           }
 
@@ -621,7 +622,7 @@
           .error-message {
             color: #dc3545;
             font-size: 0.85rem;
-            margin-top: 0.5rem;
+            margin-top: 0px;
             font-weight: 500;
           }
         }
