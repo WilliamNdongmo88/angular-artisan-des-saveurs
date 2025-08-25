@@ -64,6 +64,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
   // Données
   orders: OrdersResponse[] = [];
   addresses: Address[] = [];
+  avatar = '';
 
   // Modal d'adresse
   isAddressModalVisible = false;
@@ -171,12 +172,11 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   private loadUserData() {
     if (this.currentUser) {
-      let avatar = '';
       this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
       this.authService.getAvatars(this.currentUser.id).subscribe({
         next: (res) => {
-          avatar = res.filePath;
-          console.log('[ProfileComponent] Avatars :: ', avatar);
+          this.avatar = res.filePath;
+          console.log('[ProfileComponent] Avatars :: ', this.avatar);
         },
         error: (error) => {
           console.error('Erreur lors de la récupération des avatars', error);
@@ -185,12 +185,13 @@ export class ProfilComponent implements OnInit, OnDestroy {
       const userData = this.authService.getUser();
       // Charger l'avatar utilisateur
       if (userData) {
-        if(avatar != userData.avatar){
-          this.userAvatar = avatar || null;
-          console.log(" userAvatar :: ", this.userAvatar);
+        if(this.avatar != userData.avatar){
+          this.userAvatar = this.avatar || null;
+          console.log(" this.avatar :: ", this.userAvatar);
         }
         else {
           this.userAvatar = userData.avatar || null;
+          console.log(" userAvatar :: ", this.userAvatar);
         }
       }
       
