@@ -174,8 +174,9 @@ export class ProfilComponent implements OnInit, OnDestroy {
       let avatar = '';
       this.authService.extractUserFromToken(this.currentUser.token); // Restaure le user en mémoire
       this.authService.getAvatars(this.currentUser.id).subscribe({
-        next: (avatars) => {
-          console.log('[ProfileComponent] Avatars :: ', avatars);
+        next: (res) => {
+          avatar = res.filePath;
+          console.log('[ProfileComponent] Avatars :: ', avatar);
         },
         error: (error) => {
           console.error('Erreur lors de la récupération des avatars', error);
@@ -184,8 +185,13 @@ export class ProfilComponent implements OnInit, OnDestroy {
       const userData = this.authService.getUser();
       // Charger l'avatar utilisateur
       if (userData) {
-        this.userAvatar = userData.avatar || null;
-        console.log(" userAvatar :: ", this.userAvatar);
+        if(avatar != userData.avatar){
+          this.userAvatar = avatar || null;
+          console.log(" userAvatar :: ", this.userAvatar);
+        }
+        else {
+          this.userAvatar = userData.avatar || null;
+        }
       }
       
       // Charger les préférences utilisateur
