@@ -73,13 +73,16 @@ function addTokenHeader(request: HttpRequest<unknown>, token: string) {
 
 function handle401Error(request: HttpRequest<unknown>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<unknown>> {
   if (!isRefreshing) {
+    console.log('[Interceptor] Tentative de rafraîchissement du token');
     isRefreshing = true;
     return authService.refreshToken().pipe(
       switchMap((token: string) => {
+        console.log('[Interceptor] Nouveau token obtenu après rafraîchissement:', token);
         isRefreshing = false;
         return next(addTokenHeader(request, token));
       }),
       catchError((error) => {
+        console.error('[Interceptor] Échec du rafraîchissement du token:', error);
         isRefreshing = false;
         authService.logout();
         return throwError(() => error);
