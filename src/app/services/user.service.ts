@@ -26,7 +26,7 @@ export interface UserPreferences {
 }
 
 export interface PasswordUpdate {
-  currentPassword: string;
+  currentEmail: string;
   newPassword: string;
 }
 
@@ -81,9 +81,9 @@ export class UserService {
   }
 
   // Changer le mot de passe
-  updatePassword(currentPassword: string, newPassword: string): Promise<any> {
+  updatePassword(currentEmail: string, newPassword: string): Promise<any> {
     const passwordData: PasswordUpdate = {
-      currentPassword,
+      currentEmail,
       newPassword
     };
     console.log('Données de mot de passe à envoyer:', passwordData);
