@@ -386,7 +386,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
         this.userAvatar = res.filePath;
         console.log("Réponse backend :", res);
         console.log("Chemin image :", res.filePath);
-
+        this.showNotification('success', 'Photo mis à jour avec succès');
       },
       error: (err: { error: { message: string; }; }) => {
         console.error("Erreur upload :", err);
