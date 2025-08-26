@@ -54,8 +54,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       console.error('[Interceptor] Erreur détectée dans la réponse HTTP:', error);
-      // Si l'erreur est 401 (Unauthorized), tenter de rafraîchir le token
-      if (error.status === 401 && !authReq.url.includes('signin') && !authReq.url.includes('refreshtoken')) {
+      // Si Token expiré ou non présent ou l'erreur est 401 (Unauthorized), tenter de rafraîchir le token
+      if (authService.isAuthenticated() === false) {
+        console.log('[Interceptor] Token expiré ou non présent, appel du refresh token');
+      }
+      else if (error.status === 401 && !authReq.url.includes('signin') && !authReq.url.includes('refreshtoken')) {
         return handle401Error(authReq, next, authService);
       }
       return throwError(() => error);
