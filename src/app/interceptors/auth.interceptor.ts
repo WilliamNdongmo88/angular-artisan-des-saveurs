@@ -1,3 +1,4 @@
+
 // import { HttpInterceptorFn } from '@angular/common/http';
 
 // export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -5,15 +6,26 @@
 //   //console.log('[Interceptor] Token actuel dans localStorage <<-- Important:', currentUser.token);
 
 //   // N'ajoute pas d'en-tête Authorization pour la requête de connexion
+//   // if (req.url.includes('/login') || req.url.includes('/register')) {
+//   //   console.log('req.url ::: ', req.url);
+//   //   return next(req);
+//   // }
 //   if (currentUser.token) {
-//     //console.log('authInterceptor token :', currentUser.token);
-//     const authReq = req.clone({
-//       setHeaders: {
-//         Authorization: `Bearer ${currentUser.token.trim()}`,
-//         'Content-Type': 'application/json'
-//       }
-//     });
-//    //console.log('Intercepteur appliqué à :', authReq.url);
+//     // 👉 Vérifie si c'est un FormData (upload fichier)
+//     const isFormData = req.body instanceof FormData;
+//     console.log('authInterceptor | isFormData : ', isFormData);
+//     const headers: Record<string, string> = {
+//       Authorization: `Bearer ${currentUser.token.trim()}`
+//     };
+
+//     if (!isFormData) {
+//       // Seulement si ce n'est pas un upload
+//       headers['Content-Type'] = 'application/json';
+//     }
+
+//     const authReq = req.clone({ setHeaders: headers });
+
+//     //console.log('Intercepteur appliqué à :', authReq.url);
 //     //console.log('[Interceptor] Token ajouté:', currentUser.token);
 //     return next(authReq);
 //   }
@@ -21,36 +33,70 @@
 //   return next(req);
 // };
 
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, Observable, throwError, switchMap } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+
+let isRefreshing = false;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  //console.log('[Interceptor] Token actuel dans localStorage <<-- Important:', currentUser.token);
+  const authService = inject(AuthService);
+  const currentUser = authService.currentUserValue;
 
-  // N'ajoute pas d'en-tête Authorization pour la requête de connexion
-  // if (req.url.includes('/login') || req.url.includes('/register')) {
-  //   console.log('req.url ::: ', req.url);
-  //   return next(req);
-  // }
-  if (currentUser.token) {
-    // 👉 Vérifie si c'est un FormData (upload fichier)
-    const isFormData = req.body instanceof FormData;
-    console.log('authInterceptor | isFormData : ', isFormData);
-    const headers: Record<string, string> = {
-      Authorization: `Bearer ${currentUser.token.trim()}`
-    };
-
-    if (!isFormData) {
-      // Seulement si ce n'est pas un upload
-      headers['Content-Type'] = 'application/json';
-    }
-
-    const authReq = req.clone({ setHeaders: headers });
-
-    //console.log('Intercepteur appliqué à :', authReq.url);
-    //console.log('[Interceptor] Token ajouté:', currentUser.token);
-    return next(authReq);
+  let authReq = req;
+  if (currentUser && currentUser.token) {
+    authReq = addTokenHeader(req, currentUser.token);
   }
 
-  return next(req);
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 && !authReq.url.includes('signin') && !authReq.url.includes('refreshtoken')) {
+        return handle401Error(authReq, next, authService);
+      }
+      return throwError(() => error);
+    })
+  );
 };
+
+function addTokenHeader(request: HttpRequest<unknown>, token: string) {
+  const isFormData = request.body instanceof FormData;
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${token.trim()}`
+  };
+
+  if (!isFormData) {
+    headers['Content-Type'] = 'application/json';
+  }
+  return request.clone({ setHeaders: headers });
+}
+
+function handle401Error(request: HttpRequest<unknown>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<unknown>> {
+  if (!isRefreshing) {
+    isRefreshing = true;
+    return authService.refreshToken().pipe(
+      switchMap((token: string) => {
+        isRefreshing = false;
+        return next(addTokenHeader(request, token));
+      }),
+      catchError((error) => {
+        isRefreshing = false;
+        authService.logout();
+        return throwError(() => error);
+      })
+    );
+  } else {
+    // Si une requête de rafraîchissement est déjà en cours, attendre qu'elle se termine
+    // et rejouer la requête originale avec le nouveau token
+    return new Observable(subscriber => {
+      authService.currentUser.subscribe(user => {
+        if (user && user.token) {
+          //subscriber.next(next(addTokenHeader(request, user.token)));
+          subscriber.complete();
+        } else {
+          subscriber.error('No user or token after refresh attempt');
+        }
+      });
+    });
+  }
+}

@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { last, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   LoginRequest,
   SignupRequest,
@@ -54,9 +54,11 @@ export class AuthService {
           username: response.username,
           email: response.email,
           roles: response.roles,
-          token: response.accessToken
+          token: response.accessToken,
+          refreshToken: response.refreshToken // <-- Ajout du refresh token
         };
         localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('refreshToken', response.refreshToken); // <-- Stocker le refresh token séparément
         // Mettre à jour le BehaviorSubject avec l'utilisateur connecté
         this.currentUserSubject.next(user);
         //console.log('[AuthService] currentUser :: ', this.currentUserValue);
@@ -71,6 +73,7 @@ export class AuthService {
   logout(): void {
     // Supprimer l'utilisateur du localStorage et mettre à jour le currentUser
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('refreshToken'); // <-- Supprimer le refresh token
     this.currentUserSubject.next(null);
   }
 
@@ -112,6 +115,10 @@ export class AuthService {
     return user ? user.token : null;
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refreshToken');
+  }
+
   isAuthenticated(): boolean {
     const token = this.getToken();
 
@@ -121,6 +128,36 @@ export class AuthService {
 
     // Vérifie si le token est expiré
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  // Méthode pour rafraîchir le token
+  refreshToken(): Observable<any> {
+    const refreshToken = this.getRefreshToken();
+    if (refreshToken) {
+      return this.http.post<JwtResponse>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
+        map(response => {
+          const user: AuthUser = {
+            id: response.id,
+            username: response.username,
+            email: response.email,
+            roles: response.roles,
+            token: response.accessToken,
+            refreshToken: response.refreshToken
+          };
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('refreshToken', response.refreshToken);
+          this.currentUserSubject.next(user);
+          return response.accessToken;
+        }),
+        catchError(error => {
+          this.logout();
+          return throwError(() => error);
+        })
+      );
+    } else {
+      this.logout();
+      return throwError(() => new Error('No refresh token available'));
+    }
   }
 
   // Méthode helper pour extraire les infos utilisateur du TOKEN
@@ -149,5 +186,3 @@ export class AuthService {
     return this.user();
   }
 }
-
-

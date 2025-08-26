@@ -14,6 +14,7 @@ export interface SignupRequest {
 
 export interface JwtResponse {
   accessToken: string;
+  refreshToken: string;
   tokenType: string;
   id: number;
   username: string;
@@ -40,5 +41,6 @@ export interface AuthUser {
   email: string;
   roles: string[];
   token: string;
+  refreshToken: string;
 }
 
