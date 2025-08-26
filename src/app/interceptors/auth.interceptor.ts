@@ -41,16 +41,20 @@ import { AuthService } from '../services/auth.service';
 let isRefreshing = false;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  console.log('[Interceptor] authInterceptor appelé pour :', req.url);
   const authService = inject(AuthService);
   const currentUser = authService.currentUserValue;
 
   let authReq = req;
   if (currentUser && currentUser.token) {
+    console.log('[Interceptor] Token trouvé, ajout de l\'en-tête Authorization');
     authReq = addTokenHeader(req, currentUser.token);
   }
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
+      console.error('[Interceptor] Erreur détectée dans la réponse HTTP:', error);
+      // Si l'erreur est 401 (Unauthorized), tenter de rafraîchir le token
       if (error.status === 401 && !authReq.url.includes('signin') && !authReq.url.includes('refreshtoken')) {
         return handle401Error(authReq, next, authService);
       }
