@@ -16,6 +16,7 @@ export class AuthGuard implements CanActivate {
     
     // S'il n'y a pas de rôles requis dans la route, autoriser l'accès (route publique)
     const requiredRoles = route.data['roles'];
+    console.log("requiredRoles ::: ", requiredRoles)
     console.log("requiredRoles ::: ", route.data['roles'])
     if (!requiredRoles || requiredRoles.length === 0) {
       console.log('[AuthGuard] Route publique, accès autorisé');
