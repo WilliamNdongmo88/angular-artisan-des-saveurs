@@ -1,54 +1,74 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) {console.log('[AuthGuard] 🔐 Guard instancié');}
+  ) {
+    console.log('[AuthGuard] 🔐 Guard instancié');
+  }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     console.log('[AuthGuard] Appelé pour la route ::', state.url);
     const currentUser = this.authService.currentUserValue;
     console.log('[AuthGuard] currentUser :: ', currentUser);
-    
-    // S'il n'y a pas de rôles requis dans la route, autoriser l'accès (route publique)
+
     const requiredRoles = route.data['roles'];
-    console.log("requiredRoles ::: ", route.data['roles'])
+    console.log("requiredRoles ::: ", route.data['roles']);
+
+    // Si aucune restriction de rôle → accès autorisé
     if (!requiredRoles || requiredRoles.length === 0) {
       console.log('[AuthGuard] Route publique, accès autorisé');
-      return true;
+      return of(true);
     }
 
-    // Si l'utilisateur est connecté
     if (currentUser) {
-      const hasRole = currentUser.roles.some((role: string) =>
-        requiredRoles.includes(role)
-      );
+      // Vérification si token valide
+      if (this.authService.isAuthenticated()) {
+        const hasRole = currentUser.roles.some((role: string) =>
+          requiredRoles.includes(role)
+        );
+        console.log('[AuthGuard] currentUser has valid role ::', hasRole);
 
-      console.log('[AuthGuard] currentUser has valid role ::', hasRole);
-      console.log('[AuthGuard] isAuthenticated ::', this.authService.isAuthenticated());
+        if (hasRole) {
+          return of(true); // accès autorisé
+        } else {
+          console.log('[AuthGuard] Rôle non autorisé, redirection');
+          this.router.navigate(['/']);
+          return of(false);
+        }
+      } else {
+        // Token expiré → tentative de refresh
+        console.log('[AuthGuard] Token expiré, tentative de refresh...');
 
-      if (hasRole && this.authService.isAuthenticated()) {
-        return true; // accès autorisé
-      } else if(this.authService.isAuthenticated()){
-        // Rôle invalide
-        console.log('[AuthGuard] Rôle non autorisé, redirection');
-        this.router.navigate(['/']);
-        return false;
-      }else {
-        // L'utilisateur n'est pas authentifié
-        console.log('[AuthGuard] Token expiré, redirection vers /login');
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        return false;
+        return this.authService.refreshToken().pipe(
+          switchMap((success: boolean) => {
+            if (success) {
+              console.log('[AuthGuard] ✅ Refresh réussi, accès autorisé');
+              return of(true);
+            } else {
+              console.log('[AuthGuard] ❌ Refresh échoué, redirection login');
+              this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+              return of(false);
+            }
+          }),
+          catchError((err) => {
+            console.log('[AuthGuard] ⚠️ Erreur refresh, redirection login');
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            return of(false);
+          })
+        );
       }
     }
 
-    // Pas connecté et route protégée
+    // Si pas de user → redirection login
     console.log('[AuthGuard] Non connecté, redirection vers /login');
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    return false;
+    return of(false);
   }
 }
