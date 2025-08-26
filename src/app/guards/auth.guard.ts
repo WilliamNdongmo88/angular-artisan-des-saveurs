@@ -37,7 +37,6 @@ export class AuthGuard implements CanActivate {
         // Rôle invalide
         console.log('[AuthGuard] Rôle non autorisé, redirection');
         localStorage.removeItem('currentUser');
-        localStorage.removeItem('refreshToken');
         this.router.navigate(['/']);
         return false;
       }else {
