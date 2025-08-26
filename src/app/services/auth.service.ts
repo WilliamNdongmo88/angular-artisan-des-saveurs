@@ -134,8 +134,10 @@ export class AuthService {
 
   // Méthode pour rafraîchir le token
   refreshToken(): Observable<any> {
+    console.log('[AuthService] Tentative de rafraîchissement du token');
     const refreshToken = this.getRefreshToken();
     if (refreshToken) {
+      console.log('[AuthService] Refresh token trouvé, appel API pour rafraîchir le token');
       return this.http.post<JwtResponse>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
         map(response => {
           const user: AuthUser = {
