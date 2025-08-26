@@ -140,6 +140,8 @@ export class AuthService {
       console.log('[AuthService] Refresh token trouvé, appel API pour rafraîchir le token');
       return this.http.post<JwtResponse>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
         map(response => {
+          console.log('[AuthService] Nouveau token reçu du serveur après rafraîchissement');
+          // Mettre à jour le token et le refresh token dans le localStorage
           const user: AuthUser = {
             id: response.id,
             username: response.username,
@@ -151,9 +153,12 @@ export class AuthService {
           localStorage.setItem('currentUser', JSON.stringify(user));
           localStorage.setItem('refreshToken', response.refreshToken);
           this.currentUserSubject.next(user);
+          console.log('[AuthService] currentUser mis à jour après rafraîchissement :: ', this.currentUserValue);
           return response.accessToken;
         }),
         catchError(error => {
+          console.error('[AuthService] Échec du rafraîchissement du token:', error);
+          // En cas d'erreur (ex: refresh token invalide), déconnecter l'utilisateur
           this.logout();
           return throwError(() => error);
         })
