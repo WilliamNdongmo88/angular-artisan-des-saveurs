@@ -164,6 +164,8 @@ export class AuthService {
         })
       );
     } else {
+      console.warn('[AuthService] Aucun refresh token disponible, impossible de rafraîchir le token');
+      // Pas de refresh token, déconnecter l'utilisateur
       this.logout();
       return throwError(() => new Error('No refresh token available'));
     }
