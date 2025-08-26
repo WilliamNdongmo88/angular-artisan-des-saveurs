@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     const requiredRoles = route.data['roles'];
     console.log("requiredRoles ::: ", requiredRoles)
     console.log("requiredRoles ::: ", route.data['roles'])
-    if (!requiredRoles || requiredRoles.length === 0) {
+    if (requiredRoles.length === 0) {
       console.log('[AuthGuard] Route publique, accès autorisé');
       return true;
     }
