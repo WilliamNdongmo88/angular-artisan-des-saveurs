@@ -86,7 +86,7 @@ export class UserService {
       currentPassword,
       newPassword
     };
-
+    console.log('Données de mot de passe à envoyer:', passwordData);
     return new Promise((resolve, reject) => {
       this.http.put(`${this.apiUrl}/password`, passwordData, this.httpOptions)
         .subscribe({
