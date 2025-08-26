@@ -319,14 +319,14 @@
         <h3>Changer le mot de passe</h3>
         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="password-form">
           <div class="form-group">
-            <label for="currentPassword">Mot de passe actuel</label>
+            <label for="currentEmail">Email</label>
             <input 
-              type="password" 
-              id="currentPassword" 
-              formControlName="currentPassword"
+              type="email" 
+              id="currentEmail" 
+              formControlName="currentEmail"
               placeholder="Entrez votre mot de passe actuel">
-            <div class="error-message" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
-              Le mot de passe actuel est requis
+            <div class="error-message" *ngIf="passwordForm.get('currentEmail')?.invalid && passwordForm.get('currentEmail')?.touched">
+              L'email est requis
             </div>
           </div>
 

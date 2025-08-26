@@ -128,7 +128,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
     // Formulaire de changement de mot de passe
     this.passwordForm = this.formBuilder.group({
-      currentPassword: ['', [Validators.required]],
+      currentEmail: ['', [Validators.required]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
@@ -341,7 +341,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
         const formData = this.passwordForm.value;
         
         // Appel au service pour changer le mot de passe
-        await this.userService.updatePassword(formData.currentPassword, formData.newPassword);
+        await this.userService.updatePassword(formData.currentEmail, formData.newPassword);
         
         this.passwordForm.reset();
         this.showNotification('success', 'Mot de passe mis à jour avec succès');
