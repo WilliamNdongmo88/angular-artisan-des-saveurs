@@ -45,6 +45,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const currentUser = authService.currentUserValue;
 
+  // 🚨 Exclure refresh-token de l’interceptor
+  if (req.url.includes('/auth/refresh-token')) {
+    console.log('[Interceptor] Requête refresh-token → on laisse passer sans interception');
+    return next(req);
+  }
+
   let authReq = req;
   if (currentUser && currentUser.token) {
       // Si Token expiré ou non présent ou l'erreur est 401 (Unauthorized), tenter de rafraîchir le token
