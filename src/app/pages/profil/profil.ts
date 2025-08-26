@@ -345,9 +345,11 @@ export class ProfilComponent implements OnInit, OnDestroy {
         
         this.passwordForm.reset();
         this.showNotification('success', 'Mot de passe mis à jour avec succès');
-      } catch (error) {
+      } catch (error: any) {
         console.error('Erreur lors du changement de mot de passe:', error);
-        this.showNotification('error', 'Erreur lors du changement de mot de passe');
+        let rawMessage = error.error?.message || error.message || "Erreur inconnue";
+        let userMessage = rawMessage.replace("Erreur de traitement : java.lang.RuntimeException: ", "").trim();
+        this.showNotification('error', userMessage);
       } finally {
         this.isLoading = false;
       }
