@@ -50,7 +50,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       // Si Token expiré ou non présent ou l'erreur est 401 (Unauthorized), tenter de rafraîchir le token
       if (authService.isAuthenticated() === false) {
         console.log('[Interceptor] Token expiré ou non présent, appel du refresh token');
-        handle401Error(authReq, next, authService);
+        return handle401Error(authReq, next, authService);
       }else{
         console.log('[Interceptor] Token valide, pas besoin de rafraîchir');
         console.log('[Interceptor] Token trouvé, ajout de l\'en-tête Authorization');
