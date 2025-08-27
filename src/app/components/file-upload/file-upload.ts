@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductAdminService } from '../../services/product-admin.service';
 import { FileService } from '../../services/fileService';
+import { CommonModule } from '@angular/common';
 
 interface FileDTO {
   fileName: string;
@@ -11,6 +12,8 @@ interface FileDTO {
 
 @Component({
   selector: 'app-file-upload',
+  imports: [CommonModule],
+  standalone: true,
   templateUrl: './file-upload.html',
   styleUrls: ['./file-upload.scss']
 })

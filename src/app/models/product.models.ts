@@ -72,5 +72,8 @@ export interface ProductResponse {
   updatedAt: string;
   origin: string;
   preparation: string;
+  baseUnit: 'kg' | 'g' | 'piece'; // Unité de base du produit
+  pricePerBaseUnit: number; // Prix par unité de base (ex: prix par kg)
+  allowedUnits: ('kg' | 'g' | 'piece')[]; // Unités autorisées pour ce produit
 }
 
