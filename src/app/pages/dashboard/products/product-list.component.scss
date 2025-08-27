@@ -949,6 +949,14 @@ $desktop-width: 1024px;
     flex: 1;
     min-width: auto;
   }
+    .search-icon {
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $text-color-light;
+      pointer-events: none;
+    }
 }
 
 /* Par défaut, on cache le texte mobile */
@@ -986,6 +994,14 @@ $desktop-width: 1024px;
   .view-icon {
     font-size: 14px;
   }
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $text-color-light;
+      pointer-events: none;
+    }
 }
 
 /* Animation de transition entre les vues */
