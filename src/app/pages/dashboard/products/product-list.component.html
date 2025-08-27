@@ -84,47 +84,48 @@
   <!-- Affichage conditionnel selon le mode sélectionné -->
 
   <!-- AFFICHAGE EN GRILLE-->
-  <div *ngIf="viewMode === 'grid' && !loading && filteredProducts.length > 0" class="products-grid">
-    <div *ngFor="let product of filteredProducts" class="product-card">
-      <div class="product-image">
-        <img [src]="product.mainImage.filePath" (error)="handleImageError($event)" [alt]="product.mainImage.fileName" />
-        <div class="product-status" [class.available]="product.available" [class.unavailable]="!product.available">
-          {{ product.available ? 'Disponible' : 'Indisponible' }}
+    <div *ngIf="!loading && filteredProducts.length > 0" class="products-grid">
+      <div *ngFor="let product of filteredProducts" class="product-card">
+        <div class="product-image">
+          <img [src]="product.mainImage.filePath" (error)="handleImageError($event)" [alt]="product.mainImage.fileName" />
+          <div class="product-status" [class.available]="product.available" [class.unavailable]="!product.available">
+            {{ product.available ? 'Disponible' : 'Indisponible' }}
+          </div>
         </div>
-      </div>
 
-      <div class="product-info">
-        <h3 class="product-name">{{ product.name }}</h3>
-        <p class="product-category">{{ product.category }}</p>
-        <p class="product-description">{{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '...' : '' }}</p>
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-category">{{ product.category }}</p>
+          <p class="product-description">{{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '...' : '' }}</p>
 
-        <div class="product-details">
-          <div class="price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
-          <div class="stock">Stock: {{ product.stockQuantity }} {{ product.unit }}</div>
+          <div class="product-details">
+            <div class="price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
+            <div class="stock">Stock: {{ product.stockQuantity }} {{ product.unit }}</div>
+          </div>
         </div>
-      </div>
 
-      <div class="product-actions">
-        <button class="btn btn-sm btn-outline" (click)="viewProduct(product.id)" title="Voir">
-          👁️
-        </button>
-        <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
-          ✏️
-        </button>
-        <button
-          class="btn btn-sm"
-          [class.btn-success]="!product.available"
-          [class.btn-warning]="product.available"
-          (click)="toggleAvailability(product)"
-          [title]="product.available ? 'Désactiver' : 'Activer'">
-          {{ product.available ? '🔒' : '🔓' }}
-        </button>
-        <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
-          🗑️
-        </button>
+        <div class="product-actions">
+          <button class="btn btn-sm btn-outline" (click)="viewProduct(product.id)" title="Voir">
+            👁️
+          </button>
+          <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
+            ✏️
+          </button>
+          <button
+            class="btn btn-sm"
+            [class.btn-success]="!product.available"
+            [class.btn-warning]="product.available"
+            (click)="toggleAvailability(product)"
+            [title]="product.available ? 'Désactiver' : 'Activer'">
+            {{ product.available ? '🔒' : '🔓' }}
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
+            🗑️
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+
 
   <!-- AFFICHAGE EN TABLEAU -->
   <div *ngIf="viewMode === 'table' && !loading && filteredProducts.length > 0" class="products-table-container">
@@ -232,4 +233,3 @@
   </div>
   </div>
 </div>
-
