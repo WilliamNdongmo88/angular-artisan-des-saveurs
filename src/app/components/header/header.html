@@ -70,7 +70,11 @@
 
     <!-- Icône profil (click)="toggleProfileMenu()" -->
     <div class="profile-icon" *ngIf="currentUser && this.authService.isAuthenticated() && !isAdmin()">
-      <img src="img/hero/profil.webp" alt="Profil" routerLink="/profil" routerLinkActive="active" class="profile-image" />
+      <img [src]="userAvatar || 'img/hero/profil.webp'"
+      alt="Profil" 
+      routerLink="/profil" 
+      routerLinkActive="active" 
+      class="profile-image" />
     </div>
 
     

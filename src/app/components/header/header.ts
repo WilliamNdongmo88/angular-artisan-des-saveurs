@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private cartSubscription?: Subscription;
   private authSubscription?: Subscription;
   authService = inject(AuthService);
+  userAvatar: string | null = null;
 
   constructor(
     private router: Router, 
@@ -40,6 +41,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSubscription = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
+    if(this.currentUser)
+    this.authService.extractUserFromToken(this.currentUser.token);
+    const userData = this.authService.getUser();
+    if (userData) {
+      this.userAvatar = userData.avatar || null;
+    }
   }
 
   ngOnDestroy() {
