@@ -3,7 +3,8 @@
   <!-- Sélecteur de vue -->
   <div class="view-selector-container">
     <div class="view-selector">
-      <h1 class="products-title">Gestion des produits</h1>
+      <div class="header-content">
+      <h1>Gestion des produits</h1>
       <div class="view-controls">
         <span class="view-label">Affichage :</span>
         <div class="view-buttons">
@@ -24,15 +25,11 @@
             Tableau
           </button>
         </div>
-        
-        <div class="page-header">
-          <div class="header-content">
-            <button class="btn btn-primary" (click)="createProduct()">
+        <button class="btn btn-primary" (click)="createProduct()">
               <i class="icon-plus"></i>
               Nouveau Produit
-            </button>
-          </div>
-        </div>
+        </button>
+      </div>
       </div>
     </div>
   </div>
