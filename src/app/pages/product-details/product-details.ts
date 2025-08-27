@@ -141,7 +141,7 @@ export class ProductDetailsComponent implements OnInit {
   getMinQuantity(): number {
     switch (this.selectedUnit) {
       case 'kg':
-        return 0.1; // Minimum 100g
+        return 1; // Minimum 1kg
       case 'g':
         return 50; // Minimum 50g
       default:

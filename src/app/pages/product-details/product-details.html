@@ -95,14 +95,15 @@
           <div class="quantity-info">
             <span class="quantity-display">{{ quantity }} {{ selectedUnit }}</span>
             <span class="price-per-unit" *ngIf="product">
-              {{ getPricePerUnit() | currency:'EUR':'symbol':'1.2-2' }} / {{ selectedUnit }}
+              <!-- {{ getPricePerUnit() | currency:currency:'symbol':'1.2-2' }} / {{ selectedUnit }} -->
+              {{ getPricePerUnit() | currency:'Rs ':'symbol':'1.2-2' }} / {{ selectedUnit }}
             </span>
           </div>
           
           <!-- Total price display -->
           <div class="total-price" *ngIf="product && quantity > 0">
             <span class="total-label">Prix total :</span>
-            <span class="total-amount">{{ getTotalPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
+            <span class="total-amount">{{ getTotalPrice() | currency:'Rs ':'symbol':'1.2-2' }}</span>
           </div>
         </div>
 
