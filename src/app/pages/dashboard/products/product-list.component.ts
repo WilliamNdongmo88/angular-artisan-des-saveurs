@@ -40,6 +40,9 @@ export class ProductListComponent implements OnInit {
   searchTerm = '';
   selectedCategory = '';
 
+  // Nouvelle propriété pour gérer le mode d'affichage
+  viewMode: 'grid' | 'table' = 'grid'; // Mode par défaut : grille
+
   constructor(
     private productService: ProductAdminService,
     private router: Router,
@@ -49,11 +52,44 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.loadProducts();
     this.loadCategories();
+    this.loadViewModeFromStorage();
+  }
+
+  //Change le mode d'affichage (grille ou tableau)
+  setViewMode(mode: 'grid' | 'table'): void {
+    this.viewMode = mode;
+    this.saveViewModeToStorage();
+    
+    // Optionnel : Analytics ou logging
+    console.log(`Mode d'affichage changé vers : ${mode}`);
+  }
+
+  /**
+   * Sauvegarde le mode d'affichage dans le localStorage
+   */
+  private saveViewModeToStorage(): void {
+    try {
+      localStorage.setItem('products-view-mode', this.viewMode);
+    } catch (error) {
+      console.warn('Impossible de sauvegarder le mode d\'affichage:', error);
+    }
+  }
+
+  //Charge le mode d'affichage depuis le localStorage
+  private loadViewModeFromStorage(): void {
+    try {
+      const savedMode = localStorage.getItem('products-view-mode') as 'grid' | 'table';
+      if (savedMode && (savedMode === 'grid' || savedMode === 'table')) {
+        this.viewMode = savedMode;
+      }
+    } catch (error) {
+      console.warn('Impossible de charger le mode d\'affichage:', error);
+      this.viewMode = 'grid'; // Valeur par défaut
+    }
   }
 
   loadProducts() {
     this.loading = true;
-
     // Charge les produits disponibles
     this.productService.getAvailableProducts().subscribe({
       next: (products) => {
