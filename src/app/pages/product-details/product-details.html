@@ -1,101 +1,183 @@
 <div class="product-details-container">
-  <!-- Loading state -->
+  <!-- Loading State -->
   <div *ngIf="loading" class="loading-container">
     <div class="loading-spinner"></div>
     <p>Chargement du produit...</p>
   </div>
 
-  <!-- Error state -->
-  <div *ngIf="error && !loading" class="error-container">
+  <!-- Error State -->
+  <div *ngIf="error" class="error-container">
     <h2>Produit non trouvé</h2>
     <p>Le produit que vous recherchez n'existe pas ou n'est plus disponible.</p>
     <button class="btn btn-primary" (click)="goBack()">Retour au catalogue</button>
   </div>
 
-  <!-- Product details -->
-  <div *ngIf="product && !loading && !error" class="product-details">
+  <!-- Product Details -->
+  <div *ngIf="!loading && !error && product" class="product-details">
     <!-- Breadcrumb -->
     <nav class="breadcrumb">
-      <a routerLink="/">Accueil</a>
-      <span class="separator">></span>
-      <a routerLink="/catalogue">Catalogue</a>
+      <a (click)="goBack()">Catalogue</a>
       <span class="separator">></span>
       <span class="current">{{ product.name }}</span>
     </nav>
 
-    <!-- Product content -->
     <div class="product-content">
-      <!-- Product image -->
+      <!-- Product Image Section -->
       <div class="product-image-section">
         <div class="product-image">
           <img 
-            [src]="product.image || product.imageUrl" 
+            [src]="product.imageUrl" 
             [alt]="product.name"
             (error)="onImageError($event)"
-            loading="lazy">
-          <div class="product-origin-badge">{{ product.origin }}</div>
+          />
+          <div *ngIf="product.origin" class="product-origin-badge">
+            {{ product.origin }}
+          </div>
         </div>
       </div>
 
-      <!-- Product info -->
+      <!-- Product Info Section -->
       <div class="product-info-section">
         <h1 class="product-title">{{ product.name }}</h1>
-        <p class="product-description">{{ product.description }}</p>
         
-        <!-- Preparation info if available -->
+        <p class="product-description">{{ product.description }}</p>
+
+        <!-- Preparation Info -->
         <div *ngIf="product.preparation" class="preparation-info">
-          <h3>Préparation recommandée</h3>
+          <h3>Informations de préparation</h3>
           <p>{{ product.preparation }}</p>
         </div>
 
-        <!-- Discount offer -->
-        <div class="discount-offer">
+        <!-- Price Display -->
+        <div class="price-display-section">
+          <div class="base-price-info">
+            <span class="price-label">Prix de base :</span>
+            <span class="base-price">{{ product.pricePerBaseUnit | currency:'EUR':'symbol':'1.2-2' }} / {{ getUnitLabel(product.baseUnit) }}</span>
+          </div>
+          
+          <!-- Prix calculé en temps réel -->
+          <div class="calculated-price" *ngIf="selectedQuantity.value > 0">
+            <div class="unit-price">
+              <span class="price-label">Prix unitaire :</span>
+              <span class="price-value">{{ priceCalculation.unitPrice | currency:'EUR':'symbol':'1.2-2' }} / {{ getUnitLabel(selectedQuantity.unit) }}</span>
+            </div>
+            <div class="total-price">
+              <span class="price-label">Prix total :</span>
+              <span class="price-value total">{{ priceCalculation.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discount Offer (si applicable) -->
+        <div *ngIf="discountPercentage > 0" class="discount-offer">
           <div class="discount-badge">
-            <span class="discount-text">Offre spéciale -{{ discountPercentage }}%</span>
+            <span class="discount-text">-{{ discountPercentage }}% de réduction !</span>
           </div>
           <div class="price-section">
-            <span class="original-price">Rs {{ originalPrice | number:'1.2-2' }}/{{ product.unit }}</span>
-            <span class="discounted-price">Rs {{ discountedPrice | number:'1.2-2' }}/{{ product.unit }}</span>
+            <span class="original-price">{{ priceCalculation.originalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+            <span class="discounted-price">{{ priceCalculation.discountedPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
           </div>
           <p class="discount-description">
-            Profitez de notre offre spéciale ! Commandez maintenant et économisez {{ discountPercentage }}% sur ce produit de qualité artisanale.
+            Économisez {{ priceCalculation.discount | currency:'EUR':'symbol':'1.2-2' }} sur votre commande !
           </p>
         </div>
 
-        <!-- Quantity selector -->
-        <div class="quantity-section">
-          <label for="quantity">Quantité :</label>
-          <div class="quantity-controls">
-            <button class="quantity-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
-            <span class="quantity-display">{{ quantity }}</span>
-            <button class="quantity-btn" (click)="increaseQuantity()">+</button>
+        <!-- Quantity and Unit Selection -->
+        <div class="quantity-unit-section">
+          <!-- Unit Selection -->
+          <div class="unit-selection" *ngIf="product.allowedUnits && product.allowedUnits.length > 1">
+            <label for="unit-select">Unité :</label>
+            <select 
+              id="unit-select"
+              class="unit-select"
+              [(ngModel)]="selectedQuantity.unit"
+              (ngModelChange)="onUnitChange()">
+              <option *ngFor="let unit of product.allowedUnits" [value]="unit">
+                {{ getUnitLabel(unit) }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Quantity Input -->
+          <div class="quantity-section">
+            <label for="quantity-input">Quantité :</label>
+            <div class="quantity-controls">
+              <button 
+                class="quantity-btn"
+                (click)="decreaseQuantity()"
+                [disabled]="selectedQuantity.value <= getMinQuantity()">
+                -
+              </button>
+              
+              <input 
+                id="quantity-input"
+                type="number"
+                class="quantity-input"
+                [(ngModel)]="selectedQuantity.value"
+                (ngModelChange)="onQuantityChange()"
+                [step]="getQuantityStep()"
+                [min]="getMinQuantity()"
+                [max]="getMaxQuantity()"
+                [placeholder]="getQuantityPlaceholder()"
+              />
+              
+              <button 
+                class="quantity-btn"
+                (click)="increaseQuantity()"
+                [disabled]="selectedQuantity.value >= getMaxQuantity()">
+                +
+              </button>
+            </div>
+            
+            <div class="quantity-info">
+              <small class="quantity-hint">
+                {{ getQuantityHint() }}
+              </small>
+            </div>
+          </div>
+
+          <!-- Stock Information -->
+          <div class="stock-info">
+            <span class="stock-label">Stock disponible :</span>
+            <span class="stock-value" [class.low-stock]="isLowStock()">
+              {{ product.stockQuantity }} {{ getUnitLabel(product.baseUnit) }}
+            </span>
           </div>
         </div>
 
-        <!-- Action buttons -->
+        <!-- Action Buttons -->
         <div class="action-buttons">
-          <button class="btn btn-primary add-to-cart-btn" (click)="addToCart()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <button 
+            class="btn btn-primary add-to-cart-btn"
+            (click)="addToCart()"
+            [disabled]="!canAddToCart()">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/>
             </svg>
             Ajouter au panier
+            <span class="cart-quantity" *ngIf="selectedQuantity.value > 0">
+              ({{ selectedQuantity.value }} {{ getUnitLabel(selectedQuantity.unit) }})
+            </span>
           </button>
-          <button class="btn btn-outline" (click)="goBack()">Retour au catalogue</button>
+          
+          <button class="btn btn-outline" (click)="goBack()">
+            Retour au catalogue
+          </button>
         </div>
 
-        <!-- Information livraison gratuite -->
+        <!-- Shipping Info -->
         <div class="shipping-info">
           <div class="shipping-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 3H5C3.9 3 3 3.9 3 5V16C3 17.1 3.9 18 5 18H16C17.1 18 18 17.1 18 16V5C18 3.9 17.1 3 16 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M18 8H21L19 13H18V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="7.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
-              <circle cx="17" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20,8H17V4H3C1.89,4 1,4.89 1,6V18A2,2 0 0,0 3,20H4A3,3 0 0,0 7,23A3,3 0 0,0 10,20H14A3,3 0 0,0 17,23A3,3 0 0,0 20,20H21A2,2 0 0,0 23,18V12L20,8M19,9.5L21.5,12H17V9.5H19M7,21A1,1 0 0,1 6,20A1,1 0 0,1 7,19A1,1 0 0,1 8,20A1,1 0 0,1 7,21M17,21A1,1 0 0,1 16,20A1,1 0 0,1 17,19A1,1 0 0,1 18,20A1,1 0 0,1 17,21Z"/>
             </svg>
           </div>
           <div class="shipping-text">
             <h4>Livraison gratuite</h4>
-            <p>Profitez de la livraison gratuite pour toute commande à partir de <strong>Rs 3,000</strong></p>
+            <p>
+              Livraison <strong>gratuite</strong> pour toute commande supérieure à 
+              <strong>50€</strong>. Livraison sous 24-48h.
+            </p>
           </div>
         </div>
       </div>
