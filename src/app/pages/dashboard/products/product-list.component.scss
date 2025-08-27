@@ -950,7 +950,24 @@ $desktop-width: 1024px;
   }
 }
 
+/* Par défaut, on cache le texte mobile */
+.texte-mobile {
+  display: none;
+}
+
+/* Par défaut, on montre le texte desktop */
+.texte-desktop {
+  display: block;
+}
+
 @media (max-width: 480px) {
+  .texte-mobile {
+    display: block;   /* on l'affiche */
+  }
+  .texte-desktop {
+    display: none;    /* on le cache */
+  }
+
   .view-selector-container {
     padding: 16px;
     margin-bottom: 16px;
@@ -1016,3 +1033,6 @@ $desktop-width: 1024px;
 .view-btn {
   position: relative;
 }
+
+
+
