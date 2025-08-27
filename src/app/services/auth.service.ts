@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
   LoginRequest,
   SignupRequest,
@@ -138,8 +138,8 @@ export class AuthService {
     const refreshToken = this.getRefreshToken();
     if (refreshToken) {
       console.log('[AuthService] Refresh token trouvé, appel API pour rafraîchir le token');
-      return this.http.post<JwtResponse>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
-        map(response => {
+      return this.http.post<any>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
+        tap(response => {
           console.log('[AuthService] Nouveau token reçu du serveur après rafraîchissement');
           // Mettre à jour le token et le refresh token dans le localStorage
           const user: AuthUser = {
@@ -154,8 +154,8 @@ export class AuthService {
           localStorage.setItem('refreshToken', response.refreshToken);
           this.currentUserSubject.next(user);
           console.log('[AuthService] currentUser mis à jour après rafraîchissement :: ', this.currentUserValue);
-          return response.accessToken;
         }),
+        map(() => true),
         catchError(error => {
           console.error('[AuthService] Échec du rafraîchissement du token:', error);
           // En cas d'erreur (ex: refresh token invalide), déconnecter l'utilisateur
