@@ -62,13 +62,47 @@
           </p>
         </div>
 
-        <!-- Quantity selector -->
+        <!-- Quantity selector with unit selection -->
         <div class="quantity-section">
           <label for="quantity">Quantité :</label>
+          
+          <!-- Unit selector -->
+          <div class="unit-selector">
+            <select [(ngModel)]="selectedUnit" (ngModelChange)="onUnitChange()" class="unit-select">
+              <option value="kg">Kilogrammes (kg)</option>
+              <option value="g">Grammes (g)</option>
+            </select>
+          </div>
+          
+          <!-- Quantity controls -->
           <div class="quantity-controls">
-            <button class="quantity-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
-            <span class="quantity-display">{{ quantity }}</span>
+            <button class="quantity-btn" (click)="decreaseQuantity()" [disabled]="quantity <= getMinQuantity()">-</button>
+            
+            <input 
+              type="number" 
+              [(ngModel)]="quantity" 
+              (ngModelChange)="onQuantityChange()"
+              [step]="getQuantityStep()"
+              [min]="getMinQuantity()"
+              class="quantity-input"
+              placeholder="0"
+            />
+            
             <button class="quantity-btn" (click)="increaseQuantity()">+</button>
+          </div>
+          
+          <!-- Unit display and price calculation -->
+          <div class="quantity-info">
+            <span class="quantity-display">{{ quantity }} {{ selectedUnit }}</span>
+            <span class="price-per-unit" *ngIf="product">
+              {{ getPricePerUnit() | currency:'EUR':'symbol':'1.2-2' }} / {{ selectedUnit }}
+            </span>
+          </div>
+          
+          <!-- Total price display -->
+          <div class="total-price" *ngIf="product && quantity > 0">
+            <span class="total-label">Prix total :</span>
+            <span class="total-amount">{{ getTotalPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
           </div>
         </div>
 
