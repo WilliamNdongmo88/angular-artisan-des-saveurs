@@ -94,10 +94,18 @@ function handle401Error(request: HttpRequest<unknown>, next: HttpHandlerFn, auth
     console.log('[Interceptor] Tentative de rafraîchissement du token');
     isRefreshing = true;
     return authService.refreshToken().pipe(
-      switchMap((token: string) => {
-        console.log('[Interceptor] Nouveau token obtenu après rafraîchissement:', token);
-        isRefreshing = false;
-        return next(addTokenHeader(request, token));
+      switchMap((isToken: boolean) => {
+        console.log('[Interceptor] Nouveau token obtenu après rafraîchissement:', isToken);
+        if (isToken) {
+          const token = authService.getToken();
+          if (token) {
+            console.log('[Interceptor] Nouveau token obtenu après rafraîchissement:', token);
+            isRefreshing = false;
+            return next(addTokenHeader(request, token));
+          }
+        }
+        return throwError(() => new Error('No token after refresh attempt'));
+        
       }),
       catchError((error) => {
         console.error('[Interceptor] Échec du rafraîchissement du token:', error);
