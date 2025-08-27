@@ -132,7 +132,7 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  // Méthode pour rafraîchir le token
+  // Méthode pour rafraîchir le token; Utilisé dans l'[interceptor] et le [guard]
   refreshToken(): Observable<any> {
     console.log('[AuthService] Tentative de rafraîchissement du token');
     const refreshToken = this.getRefreshToken();
@@ -155,7 +155,7 @@ export class AuthService {
           this.currentUserSubject.next(user);
           console.log('[AuthService] currentUser mis à jour après rafraîchissement :: ', this.currentUserValue);
         }),
-        map(() => true),
+        map(() => true),//
         catchError(error => {
           console.error('[AuthService] Échec du rafraîchissement du token:', error);
           // En cas d'erreur (ex: refresh token invalide), déconnecter l'utilisateur
