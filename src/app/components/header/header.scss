@@ -606,9 +606,11 @@
 }
 
 .profile-image {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
   border-radius: 50%; /* rond */
+  color: #8B0000;
   object-fit: cover;
   cursor: pointer;
 }
