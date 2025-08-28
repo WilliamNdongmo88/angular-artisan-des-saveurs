@@ -119,6 +119,7 @@ export class CartService {
 
   // Méthode pour envoyer le panier à un serveur ou une API
   submitOrder(order: OrderPayload): Observable<{ success: boolean; message: string }> {
+    console.log("[CartService] Envoi de la commande à l'API : ", order);
     return this.http.post<{ success: boolean; message: string }>(this.apiUrl+"/place-order", order, httpOptions).pipe(
       tap((response) => console.log('Produit créé avec succès par l\'API :', response),
     ),
