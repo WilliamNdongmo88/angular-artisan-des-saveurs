@@ -27,6 +27,11 @@ export interface ProductItem {
   quantity: number;
 }
 
+interface Notification {
+  type: 'success' | 'error';
+  message: string;
+}
+
 @Component({
   selector: 'app-order-modal',
   standalone: true,
@@ -53,6 +58,7 @@ export class OrderModalComponent implements OnInit {
     email: '',
     phone: '',
   };
+  notification: Notification | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -134,15 +140,16 @@ export class OrderModalComponent implements OnInit {
         next: (response) => {
           this.isResponse = true;
           const message = response.message;
-          this.toastr.success(
-            `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`,
-            'Commande confirmée !',
-            {
-              timeOut: 5000,
-              progressBar: true,
-              closeButton: true
-            }
-          );
+          this.showNotification('success', `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`);
+          // this.toastr.success(
+          //   `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`,
+          //   'Commande confirmée !',
+          //   {
+          //     timeOut: 5000,
+          //     progressBar: true,
+          //     closeButton: true
+          //   }
+          // );
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
           // Vider le panier après la commande
@@ -153,11 +160,12 @@ export class OrderModalComponent implements OnInit {
         error: (error) => {
           this.isSubmitting = false;
           this.closeModal();
-          this.toastr.error(
-            `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`,
-            'Erreur',
-            { timeOut: 4000 }
-          );
+          this.showNotification('error', `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`);
+          // this.toastr.error(
+          //   `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`,
+          //   'Erreur',
+          //   { timeOut: 4000 }
+          // );
           console.error('Erreur lors de la soumission de la commande:', error.error.message);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -196,15 +204,16 @@ export class OrderModalComponent implements OnInit {
         next: (response) => {
           this.isResponse = true;
           const message = response.message;
-          this.toastr.success(
-            `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`,
-            'Commande confirmée !',
-            {
-              timeOut: 5000,
-              progressBar: true,
-              closeButton: true
-            }
-          );
+          this.showNotification('success', `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`);
+          // this.toastr.success(
+          //   `Merci ${formData.firstName} ! Votre commande de ${this.orderData.total.toFixed(2)}€ a été envoyée avec succès.`,
+          //   'Commande confirmée !',
+          //   {
+          //     timeOut: 5000,
+          //     progressBar: true,
+          //     closeButton: true
+          //   }
+          // );
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
           // Vider le panier après la commande
@@ -215,17 +224,31 @@ export class OrderModalComponent implements OnInit {
         error: (error) => {
           this.isSubmitting = false;
           this.closeModal();
-          this.toastr.error(
-            `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`,
-            'Erreur',
-            { timeOut: 4000 }
-          );
+          this.showNotification('error', `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`);
+          // this.toastr.error(
+          //   `Une erreur est survenue. Veuillez rafréchir la page et réessayer svp.`,
+          //   'Erreur',
+          //   { timeOut: 4000 }
+          // );
           console.error('Erreur lors de la soumission de la commande:', error.error.message);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
     }
   }
+  
+  // Gestion des notifications
+  private showNotification(type: 'success' | 'error', message: string) {
+    this.notification = { type, message };
+    
+    // Auto-fermeture après 5 secondes
+    setTimeout(() => {
+      this.closeNotification();
+    }, 5000);
+  }
 
+  closeNotification() {
+    this.notification = null;
+  }
 }
 
