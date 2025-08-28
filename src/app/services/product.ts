@@ -44,9 +44,6 @@ export class ProductService implements OnInit {
             imageUrl: product.imageUrl,
             available: product.available,
             stockQuantity: product.stockQuantity,
-            baseUnit: product.baseUnit,
-            pricePerBaseUnit: product.pricePerBaseUnit,
-            allowedUnits: product.allowedUnits,
           }))
         ),
         tap(products => {
@@ -98,9 +95,6 @@ export class ProductService implements OnInit {
         imageUrl: product.imageUrl,
         available: product.available,
         stockQuantity: product.stockQuantity,
-        baseUnit: product.baseUnit,
-        pricePerBaseUnit: product.pricePerBaseUnit,
-        allowedUnits: product.allowedUnits,
       })),
       tap(product => {
         // Optionnel : on peut aussi mettre à jour le tableau global si on veut
