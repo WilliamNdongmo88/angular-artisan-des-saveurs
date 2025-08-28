@@ -64,13 +64,16 @@ export class OrderModalComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    console.log('[OrderModalComponent] data :: ', data);
-    if (data && data.token) {
+    //const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const currentUser = this.authService.currentUserValue;
+    //this.authService.isAuthenticated(); // Vérifie si le token est encore valide
+    console.log('[OrderModalComponent] currentUser :: ', currentUser);
+    if(currentUser)
+    if (currentUser && currentUser.token) {
       this.isUserConnected = true;
       this.isDisabled = true; // Activer le mode désactivé si l'utilisateur est connecté
       console.log('[OrderModalComponent] isDisabled :: ', this.isDisabled);
-      this.authService.extractUserFromToken(data.token); // Restaure le user en mémoire
+      this.authService.extractUserFromToken(currentUser.token); // Restaure le user en mémoire
       console.log('[OrderModalComponent] currentUser :: ', this.authService.getUser());
       const userData = this.authService.getUser();
       if (userData) {

@@ -242,7 +242,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   continueShopping() {
-    this.router.navigate(['/catalogue']);
+    this.router.navigate(['/catalog']);
   }
 
   submitOrder() {
