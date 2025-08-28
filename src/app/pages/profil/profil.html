@@ -166,7 +166,7 @@
               <img [src]="item.product.imageUrl" [alt]="item.product.name" class="item-image">
               <div class="item-details">
                 <h4>{{ item.product.name }}</h4>
-                <p>Quantité: {{ item.quantity }}</p>
+                <p>Quantité: {{ item.displayQuantity }}</p>
               </div>
               <div class="item-price">{{ item.product.price | currency:'Rs':'symbol':'1.2-2' }}</div>
             </div>
