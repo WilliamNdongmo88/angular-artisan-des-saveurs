@@ -47,21 +47,61 @@
             <h3 class="item-name">{{ item.product.name }}</h3>
             <p class="item-description">{{ item.product.description }}</p>
             <div class="item-price">
-              <span class="unit-price">Rs {{ item.product.price | number:'1.2-2' }}/{{ item.product.unit }}</span>
+              <span class="unit-price">Rs {{ item.product.price | number:'1.2-2' }}/kg</span>
             </div>
           </div>
           
+          <!-- Section quantité mise à jour avec unités -->
           <div class="item-quantity">
             <label>Quantité</label>
+            
+            <!-- Sélecteur d'unité pour chaque article -->
+            <div class="unit-selector">
+              <select 
+                [(ngModel)]="item.selectedUnit" 
+                (ngModelChange)="onItemUnitChange(item)"
+                class="unit-select">
+                <option value="kg">kg</option>
+                <option value="g">g</option>
+              </select>
+            </div>
+            
+            <!-- Contrôles de quantité décimale -->
             <div class="quantity-controls">
-              <button class="quantity-btn" (click)="updateQuantity(item.product.id, item.quantity - 1)">-</button>
-              <span class="quantity-display">{{ item.quantity }}</span>
-              <button class="quantity-btn" (click)="updateQuantity(item.product.id, item.quantity + 1)">+</button>
+              <button 
+                class="quantity-btn" 
+                (click)="decreaseItemQuantity(item)"
+                [disabled]="item.displayQuantity <= getMinQuantityForUnit(item.selectedUnit)">
+                -
+              </button>
+              
+              <input 
+                type="number" 
+                [(ngModel)]="item.displayQuantity"
+                (ngModelChange)="onItemQuantityChange(item)"
+                [step]="getStepForUnit(item.selectedUnit)"
+                [min]="getMinQuantityForUnit(item.selectedUnit)"
+                class="quantity-input"
+                placeholder="0">
+              
+              <button 
+                class="quantity-btn" 
+                (click)="increaseItemQuantity(item)">
+                +
+              </button>
+            </div>
+            
+            <!-- Affichage de la quantité avec unité -->
+            <div class="quantity-display-info">
+              <span class="quantity-text">{{ item.displayQuantity }} {{ item.selectedUnit }}</span>
+              <small class="quantity-equivalent" *ngIf="item.selectedUnit === 'g'">
+                ({{ (item.displayQuantity / 1000) | number:'1.2-2' }} kg)
+              </small>
             </div>
           </div>
           
           <div class="item-total">
-            <div class="total-price">Rs {{ (item.product.price * item.quantity) | number:'1.2-2' }}</div>
+            <div class="total-price">Rs {{ getItemTotalPrice(item) | number:'1.2-2' }}</div>
             <button class="remove-btn" (click)="removeItem(item.product.id)" title="Supprimer cet article">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

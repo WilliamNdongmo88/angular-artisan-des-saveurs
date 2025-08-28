@@ -145,7 +145,7 @@ export class ProductDetailsComponent implements OnInit {
       case 'g':
         return 50; // Minimum 50g
       default:
-        return 0.1;
+        return 1;
     }
   }
 
