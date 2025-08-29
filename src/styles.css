@@ -36,6 +36,8 @@
   align-items: center;
   gap: 0.75rem; /* Espace entre l'icône et le texte */
   padding: 0 !important;
+  margin-top: -1rem;
+  margin-right: 30px;
   color: #333 !important;
   font-weight: 500 !important;
 }
@@ -66,8 +68,8 @@
 /* Bouton de fermeture */
 .toast-close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 2px;
+  right: 15px;
   background: transparent !important;
   border: none !important;
   color: #666 !important;
