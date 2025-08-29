@@ -65,11 +65,13 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value)
       .subscribe({
         next: (data) => {
+          console.log('Login successful, showing success notification');
           this.showNotification('success', 'Connexion réussie!');
           // this.toastr.success('Connexion réussie!', 'Succès');
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
+          console.log('Login error, showing error notification');
           this.showNotification('error', error.error?.message || 'Erreur de connexion');
           // this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
           this.loading = false;
@@ -80,6 +82,7 @@ export class LoginComponent implements OnInit {
   // Gestion des notifications
   private showNotification(type: 'success' | 'error', message: string) {
     this.notification = { type, message };
+    console.log('Notification set:', this.notification); 
     
     // Auto-fermeture après 5 secondes
     setTimeout(() => {
@@ -89,6 +92,7 @@ export class LoginComponent implements OnInit {
 
   closeNotification() {
     this.notification = null;
+    console.log('Notification cleared:', this.notification);
   }
 }
 
