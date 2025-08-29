@@ -134,61 +134,63 @@
       font-size: 14px;
     }
   }
-    // Notifications
-  .notification {
-    position: fixed;
-    top: 100px;
-    right: 2rem;
-    background: white;
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+}
+
+// Notifications
+.notification {
+  position: fixed;
+  top: 100px;
+  right: 2rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+  max-width: 400px;
+  border-left: 4px solid #28a745;
+
+  &.error {
+    border-left-color: #dc3545;
+  }
+
+  .notification-content {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    z-index: 1000;
-    animation: slideInRight 0.3s ease-out;
-    max-width: 400px;
-    border-left: 4px solid #28a745;
+    gap: 0.75rem;
+    flex: 1;
 
-    &.error {
-      border-left-color: #dc3545;
+    svg {
+      flex-shrink: 0;
+      color: #28a745;
     }
 
-    .notification-content {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1;
-
-      svg {
-        flex-shrink: 0;
-        color: #28a745;
-      }
-
-      span {
-        color: #333;
-        font-weight: 500;
-      }
+    span {
+      color: #333;
+      font-weight: 500;
     }
+  }
 
-    &.error .notification-content svg {
-      color: #dc3545;
-    }
+  &.error .notification-content svg {
+    color: #dc3545;
+  }
 
-    .notification-close {
-      background: none;
-      border: none;
-      color: #666;
-      cursor: pointer;
-      padding: 0.25rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+  .notification-close {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 
-      &:hover {
-        background: #f8f9fa;
-        color: #333;
-      }
+    &:hover {
+      background: #f8f9fa;
+      color: #333;
     }
   }
 }
@@ -225,7 +227,7 @@
   .auth-header h2 {
     font-size: 24px;
   }
-  
+
   .notification {
     right: 1rem;
     left: 1rem;
