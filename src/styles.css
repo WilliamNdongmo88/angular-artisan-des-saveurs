@@ -1,6 +1,80 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 
-.toast-top-center {
-  top: 3rem !important; /* ou la marge souhaitée */
+/* styles.scss */
+
+/* Styles généraux du conteneur de notifications ngx-toastr */
+.toast-container {
+  top: 100px !important; /* Positionne le conteneur en haut */
+  right: 2rem !important; /* Positionne le conteneur à droite */
+  left: auto !important; /* S'assure qu'il n'y a pas de conflit avec 'left' */
+  width: auto !important; /* Permet à la largeur de s'adapter au contenu */
+  max-width: 400px !important; /* Limite la largeur comme dans votre composant */
+  /* Ajoutez d'autres styles si nécessaire pour le conteneur global */
+
+  @media (max-width: 480px) {
+    right: 1rem !important;
+    left: 1rem !important;
+    max-width: none !important;
+  }
+}
+
+/* Styles pour chaque notification individuelle (le "toast") */
+.toast {
+  background: white !important;
+  border-radius: 12px !important;
+  padding: 1rem 1.5rem !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  z-index: 1000 !important;
+  animation: slideInRight 0.3s ease-out !important;
+  border-left: 4px solid #28a745 !important; /* Bordure par défaut pour le succès */
+  opacity: 1 !important; /* Assurez-vous que l'opacité est à 1 */
+}
+
+/* Styles pour les notifications d'erreur */
+.toast-error {
+  border-left-color: #dc3545 !important;
+}
+
+/* Styles pour le contenu du message */
+.toast-message {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  flex: 1 !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+}
+
+/* Styles pour le bouton de fermeture */
+.toast-close-button {
+  background: none !important;
+  border: none !important;
+  color: #666 !important;
+  cursor: pointer !important;
+  padding: 0.25rem !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+  font-size: 1.5rem !important; /* Ajustez la taille de la croix si nécessaire */
+  line-height: 1 !important;
+
+  &:hover {
+    background: #f8f9fa !important;
+    color: #333 !important;
+  }
+}
+
+/* Animation d'entrée (si vous ne l'avez pas déjà définie) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
