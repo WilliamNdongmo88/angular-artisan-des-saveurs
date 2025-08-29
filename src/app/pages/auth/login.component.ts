@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
-          this.showNotification('success', `${error.error?.message}` || "Erreur de connexion");
+          this.showNotification('error', error.error?.message || 'Erreur de connexion');
           // this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
           this.loading = false;
         }
