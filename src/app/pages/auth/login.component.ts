@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private toastr: ToastrService // Assurez-vous que ToastrService est bien injecté
+    private toastr: ToastrService
   ) {
     // Rediriger vers l'accueil si déjà connecté
     if (this.authService.currentUserValue) {
@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
+    console.log('Tentative de connexion avec:', this.loginForm.value);
     this.authService.login(this.loginForm.value)
       .subscribe({
         next: (data) => {
@@ -66,3 +67,4 @@ export class LoginComponent implements OnInit {
       });
   }
 }
+

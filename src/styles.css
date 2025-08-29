@@ -101,3 +101,9 @@
   animation: slideInRight 0.4s ease-out;
 }
 
+@media (min-width: 241px) and (max-width: 480px) {
+    .toast-container .toast-close-button {
+        right: 15px;
+        top: 2px;
+    }
+}
