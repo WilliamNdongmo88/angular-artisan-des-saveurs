@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { provideToastr } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { routes } from './app.routes';
@@ -20,15 +21,14 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       BrowserAnimationsModule,
       FormsModule,
-      ReactiveFormsModule,
-      ToastrModule.forRoot({
-        timeOut: 3000,
-        positionClass: 'toast-top-right',
-        preventDuplicates: false,
-        progressBar: true,
-        closeButton: true
-      })
-    )
+      ReactiveFormsModule
+    ),
+    provideToastr({
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      closeButton: true, // Affiche le bouton de fermeture
+    }),
   ]
 };
 

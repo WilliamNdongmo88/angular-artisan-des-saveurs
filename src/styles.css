@@ -1,73 +1,89 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 
-/* styles.scss */
+/* styles.scss ou styles.css */
 
-/* Styles généraux du conteneur de notifications ngx-toastr */
-.toast-container {
-  top: 100px !important; /* Positionne le conteneur en haut */
-  right: 2rem !important; /* Positionne le conteneur à droite */
-  left: auto !important; /* S'assure qu'il n'y a pas de conflit avec 'left' */
-  width: auto !important; /* Permet à la largeur de s'adapter au contenu */
-  max-width: 400px !important; /* Limite la largeur comme dans votre composant */
-  /* Ajoutez d'autres styles si nécessaire pour le conteneur global */
-
-  @media (max-width: 480px) {
-    right: 1rem !important;
-    left: 1rem !important;
-    max-width: none !important;
-  }
+/* Supprime les icônes par défaut de ngx-toastr (car nous allons utiliser les nôtres) */
+.toast-success, .toast-error, .toast-info, .toast-warning {
+  background-image: none !important;
 }
 
-/* Styles pour chaque notification individuelle (le "toast") */
-.toast {
-  background: white !important;
+/* Conteneur principal des toasts */
+.toast-container .ngx-toastr {
+  background: #fff !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
   border-radius: 12px !important;
   padding: 1rem 1.5rem !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 1rem !important;
-  z-index: 1000 !important;
-  animation: slideInRight 0.3s ease-out !important;
-  border-left: 4px solid #28a745 !important; /* Bordure par défaut pour le succès */
-  opacity: 1 !important; /* Assurez-vous que l'opacité est à 1 */
+  width: 100% !important; /* Assure que le toast prend la largeur du conteneur */
+  border-left: 5px solid transparent; /* Bordure de base */
+  overflow: hidden; /* Pour que la bordure arrondie fonctionne bien */
+  opacity: 1 !important;
 }
 
-/* Styles pour les notifications d'erreur */
-.toast-error {
-  border-left-color: #dc3545 !important;
+/* Style pour les toasts d'erreur (basé sur votre image) */
+.toast-container .toast-error {
+  border-left-color: #dc3545 !important; /* Rouge pour l'erreur */
 }
 
-/* Styles pour le contenu du message */
+/* Style pour les toasts de succès */
+.toast-container .toast-success {
+  border-left-color: #28a745 !important; /* Vert pour le succès */
+}
+
+/* Conteneur du message pour utiliser flexbox */
 .toast-message {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.75rem !important;
-  flex: 1 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Espace entre l'icône et le texte */
+  padding: 0 !important;
   color: #333 !important;
   font-weight: 500 !important;
 }
 
-/* Styles pour le bouton de fermeture */
-.toast-close-button {
-  background: none !important;
-  border: none !important;
-  color: #666 !important;
-  cursor: pointer !important;
-  padding: 0.25rem !important;
-  border-radius: 4px !important;
-  transition: all 0.3s ease !important;
-  font-size: 1.5rem !important; /* Ajustez la taille de la croix si nécessaire */
-  line-height: 1 !important;
-
-  &:hover {
-    background: #f8f9fa !important;
-    color: #333 !important;
-  }
+/* Ajout de l'icône via un pseudo-élément ::before */
+.toast-message::before {
+  content: '';
+  display: inline-block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-/* Animation d'entrée (si vous ne l'avez pas déjà définie) */
+/* Icône pour les toasts d'erreur */
+.toast-error .toast-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>' );
+}
+
+/* Icône pour les toasts de succès */
+.toast-success .toast-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2328a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>' );
+}
+
+
+/* Bouton de fermeture */
+.toast-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent !important;
+  border: none !important;
+  color: #666 !important;
+  font-size: 24px !important;
+  font-weight: 300 !important;
+  line-height: 1;
+  opacity: 0.8 !important;
+  text-shadow: none !important;
+  transition: color 0.3s ease;
+}
+
+.toast-close-button:hover {
+  color: #000 !important;
+}
+
+/* Animation d'entrée */
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -78,3 +94,8 @@
     opacity: 1;
   }
 }
+
+.toast-container .ngx-toastr {
+  animation: slideInRight 0.4s ease-out;
+}
+
