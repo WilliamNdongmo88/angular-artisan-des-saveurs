@@ -5,13 +5,6 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 
-
-interface Notification {
-  type: 'success' | 'error';
-  message: string;
-}
-
-
 @Component({
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
@@ -24,14 +17,13 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl!: string;
-  notification: Notification | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService // Assurez-vous que ToastrService est bien injecté
   ) {
     // Rediriger vers l'accueil si déjà connecté
     if (this.authService.currentUserValue) {
@@ -61,38 +53,16 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    console.log('Tentative de connexion avec:', this.loginForm.value);
     this.authService.login(this.loginForm.value)
       .subscribe({
         next: (data) => {
-          console.log('Login successful, showing success notification');
-          this.showNotification('success', 'Connexion réussie!');
-          // this.toastr.success('Connexion réussie!', 'Succès');
+          this.toastr.success('Connexion réussie!', 'Succès');
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
-          console.log('Login error, showing error notification');
-          this.showNotification('error', error.error?.message || 'Erreur de connexion');
-          // this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
+          this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
           this.loading = false;
         }
       });
   }
-
-  // Gestion des notifications
-  private showNotification(type: 'success' | 'error', message: string) {
-    this.notification = { type, message };
-    console.log('Notification set:', this.notification); 
-    
-    // Auto-fermeture après 5 secondes
-    setTimeout(() => {
-      this.closeNotification();
-    }, 5000);
-  }
-
-  closeNotification() {
-    this.notification = null;
-    console.log('Notification cleared:', this.notification);
-  }
 }
-
