@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { UserService, Address } from '../../services/user.service';
+import { UserService, Address, messageResponse } from '../../services/user.service';
 import { AuthUser } from '../../models/auth.models';
 import { AddressModalComponent } from '../../components/address-modal/address.component';
 import { OrdersResponse } from '../../models/product.models';
@@ -65,6 +65,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
   orders: OrdersResponse[] = [];
   addresses: Address[] = [];
   avatar = '';
+  userId: number | null = null;
 
   // Modal d'adresse
   isAddressModalVisible = false;
@@ -84,6 +85,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
     const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
     console.log('[ProfilComponent] data :: ', data);
     if (data && data.token) {
+      this.userId = data.id;
       this.authService.extractUserFromToken(data.token); // Restaure le user en mémoire
       console.log('[ProfilComponent] currentUser :: ', this.authService.getUser());
       const userData = this.authService.getUser();
@@ -476,15 +478,25 @@ export class ProfilComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     try {
-      await this.userService.deleteAccount();
-      this.authService.logout();
-      this.showNotification('success', 'Compte supprimé avec succès');
+      if (!this.userId) {
+        throw new Error("ID utilisateur non disponible");
+      }
+      this.userService.deleteAccount(this.userId).subscribe({
+        next: (res: messageResponse) => {
+          console.log("Compte supprimé :", res);
+          this.showNotification('success', res.message || 'Compte supprimé avec succès');
+          this.authService.logout();
+        },
+        error: (err: { error: { message: string; }; }) => {
+          console.error("Erreur suppression du compte :", err);
+          this.showNotification('error', err?.error?.message || 'Erreur lors de la suppression du compte');
+        }
+      });
     } catch (error) {
       console.error('Erreur lors de la suppression du compte:', error);
       this.showNotification('error', 'Erreur lors de la suppression du compte');
-    } finally {
-      this.isLoading = false;
     }
+  
   }
 
   // Utilitaires
