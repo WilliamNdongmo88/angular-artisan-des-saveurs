@@ -181,11 +181,21 @@ export class UserService {
     });
   }
 
-  // Récupérer l'historique des commandes
+  // Récupérer l'historique des commandes d'un utilisateur
   getOrderHistory(id: number): Observable<OrdersResponse[]> {
     return this.http.get<OrdersResponse[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions).pipe(
       map(response => {
         console.log('Historique des commandes:', response);
+        return response as OrdersResponse[];
+      })
+    );
+  }
+
+  // Récupérer tous les commandes des utilisateurs
+  getAllOrders(): Observable<OrdersResponse[]> {
+    return this.http.get<OrdersResponse[]>(`${this.apiUrl+'orders'}`, this.httpOptions).pipe(
+      map(response => {
+        console.log('Toutes les commandes:', response);
         return response as OrdersResponse[];
       })
     );
