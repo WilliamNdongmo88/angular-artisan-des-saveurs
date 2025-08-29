@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule
     ),
     provideToastr({
-      timeOut: 5000,
+      timeOut: 5000000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       closeButton: true, // Affiche le bouton de fermeture
