@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       timeOut: 5000,
       positionClass: 'toast-top-right',
-      preventDuplicates: true,
+      preventDuplicates: false,
       closeButton: true, // Affiche le bouton de fermeture
     }),
   ]
