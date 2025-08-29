@@ -1,0 +1,65 @@
+<div class="orders-container">
+  <header class="orders-header">
+    <h1>Gestion des Commandes</h1>
+    <button class="btn btn-primary">Nouvelle Commande</button>
+  </header>
+
+  <div class="filters-bar">
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher par nom ou ID..." [(ngModel)]="searchTerm" (input)="applyFilters()">
+    </div>
+    <div class="status-filter">
+      <label for="status">Filtrer par statut :</label>
+      <select id="status" [(ngModel)]="statusFilter" (change)="applyFilters()">
+        <option>Tous</option>
+        <option>En attente</option>
+        <option>En cours</option>
+        <option>Expédiée</option>
+        <option>Livrée</option>
+        <option>Annulée</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="orders-table-container">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>ID Commande</th>
+          <th>Client</th>
+          <th>Date</th>
+          <th>Montant Total</th>
+          <th>Articles</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of paginatedOrders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.customerName }}</td>
+          <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ order.totalAmount | currency:'EUR' }}</td>
+          <td>{{ order.items }}</td>
+          <td>
+            <span class="status" [ngClass]="'status-' + order.status.toLowerCase().replace(' ', '-')">{{ order.status }}</span>
+          </td>
+          <td class="actions">
+            <button class="btn-icon" title="Voir les détails">🔍</button>
+            <button class="btn-icon" title="Modifier">✏️</button>
+            <button class="btn-icon btn-danger" title="Annuler">❌</button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredOrders.length === 0">
+          <td colspan="7" class="no-data">Aucune commande trouvée.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+    <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </div>
+</div>

@@ -22,6 +22,7 @@ import { EmailComponent } from './pages/auth/email-component/email.component';
 import { DummyComponent } from './pages/dummy-component';
 import { ProfilComponent } from './pages/profil/profil';
 import { FileUploadComponent } from './components/file-upload/file-upload';
+import { OrderListComponent } from './pages/dashboard/orders/order-list.component';
 
 export const routes: Routes = [
   // Routes d'authentification
@@ -59,6 +60,12 @@ export const routes: Routes = [
   { 
     path: 'dashboard/products', 
     component: ProductListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  { 
+    path: 'dashboard/orders', 
+    component: OrderListComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
