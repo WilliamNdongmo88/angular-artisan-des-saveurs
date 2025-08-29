@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../header/header";
 
 // Modèle pour une commande (à adapter selon votre structure de données)
 export interface Order {
@@ -15,7 +16,7 @@ export interface Order {
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss']
 })
