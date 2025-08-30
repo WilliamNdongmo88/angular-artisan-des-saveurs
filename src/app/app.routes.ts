@@ -26,71 +26,76 @@ import { OrderListComponent } from './pages/dashboard/orders/order-list.componen
 import { OrderDetailComponent } from './pages/dashboard/order-detail/order-detail.component';
 
 export const routes: Routes = [
-  // --- Routes publiques et d'authentification (inchangées) ---
+  // Routes d'authentification
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  // ... autres routes publiques
+  { path: 'activate', component: ActiveAccountComponent },
+  { path: 'new-activation', component: NewActivatioComponent },
+  { path: 'reset-password', component: NewPasswordComponent },
+  { path: 'sent-email', component: EmailComponent },
+
+  // Routes publiques
   { path: '', component: HomeComponent },
   { path: 'catalog', component: CatalogComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'cart', component: CartComponent },
   { path: 'profil', component: ProfilComponent },
-  { path: 'product/:id', component: ProductDetailsComponent},
+  { path: 'file-upload', component: FileUploadComponent },
+  { path: 'product/:id', component: ProductDetailsComponent},//, canActivate: [AuthGuard], data: { roles: [] } 
+  { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
   
-  // --- Routes Protégées du Dashboard (RESTRUCTURÉES) ---
-  { 
-    path: 'dashboard', 
-    component: DashboardComponent, // Le composant "coquille"
-    canActivate: [AuthGuard],      // Le Guard est appliqué UNE SEULE FOIS ici
-    data: { roles: ['ROLE_ADMIN'] },
-    children: [
-      // Redirection : quand on va sur /dashboard, on affiche la liste des produits par défaut
-      { path: '', redirectTo: 'products', pathMatch: 'full' }, 
-      
-      // Routes enfants du dashboard
-      { 
-        path: 'products', 
-        component: ProductListComponent 
-        // Plus besoin de Guard ici, il hérite du parent
-      },
-      { 
-        path: 'products/create', 
-        component: ProductFormComponent 
-      },
-      { 
-        path: 'products/edit/:id', 
-        component: ProductFormComponent 
-      },
-      {
-        path: 'products/view/:id',
-        component: ProductDetailsComponent
-      },
-      { 
-        path: 'orders', // La liste des commandes
-        component: OrderListComponent 
-      },
-      // ==========================================================
-      // === LA ROUTE MANQUANTE QUE VOUS DEVEZ AJOUTER EST ICI ===
-      // ==========================================================
-      { 
-        path: 'orders/:id', // La page de détail d'une commande
-        component: OrderDetailComponent 
-      },
-      // Ajoutez ici d'autres futures routes du dashboard (stats, settings...)
-    ]
-  },
-
-  // --- Autres routes protégées (si elles ne font pas partie du layout du dashboard) ---
+  // Routes protégées - Dashboard
   {
-    path: 'products/view/:id', // Gardez celle-ci si elle est accessible hors du dashboard
+    path: 'products/view/:id',
     component: ProductDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
-  { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
+  { 
+    path: 'dashboard', 
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  { 
+    path: 'dashboard/products', 
+    component: ProductListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  { 
+    path: 'dashboard/orders', 
+    component: OrderListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: '/dashboard/orders/:id',
+    component: OrderDetailComponent,
+    // canActivate: [AuthGuard],
+    // data: { roles: ['ROLE_ADMIN'] }
+  },
+  { 
+    path: 'dashboard/products/create', 
+    component: ProductFormComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  { 
+    path: 'dashboard/products/edit/:id', 
+    component: ProductFormComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'dashboard/products/view/:id',
+    component: ProductDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
   
-  // --- Route par défaut (inchangée) ---
+  // Route par défaut
   { path: '**', redirectTo: '' }
 ];
 
