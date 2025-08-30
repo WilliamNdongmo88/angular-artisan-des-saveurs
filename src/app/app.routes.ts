@@ -89,7 +89,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'dashboard/products/view/:id',
+    path: 'dashboard/orders/:id',
     component: ProductDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
