@@ -35,6 +35,8 @@ export class OrderListComponent implements OnInit {
     this.isLoading = true;
     this.orderService.getOrders().subscribe(data => {
       this.orders = data;
+      console.log('[OrderListComponent] Orders loaded:', this.orders);
+      console.log('[OrderListComponent] Order status:', this.orders[0].status);
       this.applyFilters();
       this.isLoading = false;
     });
