@@ -71,7 +71,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: '/dashboard/orders',
+    path: '/dashboard/orders/view/:id',
     component: OrderDetailComponent,
     // canActivate: [AuthGuard],
     // data: { roles: ['ROLE_ADMIN'] }
