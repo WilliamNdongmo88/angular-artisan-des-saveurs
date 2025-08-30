@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
   }
 
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
