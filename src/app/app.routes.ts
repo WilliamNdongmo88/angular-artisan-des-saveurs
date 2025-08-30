@@ -71,7 +71,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'dashboard/order-detail/view/:id',
+    path: '/dashboard/orders:id',
     component: OrderDetailComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
@@ -89,7 +89,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'dashboard/orders/:id',
+    path: 'dashboard/products/view/:id',
     component: ProductDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
