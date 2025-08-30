@@ -23,6 +23,7 @@ import { DummyComponent } from './pages/dummy-component';
 import { ProfilComponent } from './pages/profil/profil';
 import { FileUploadComponent } from './components/file-upload/file-upload';
 import { OrderListComponent } from './pages/dashboard/orders/order-list.component';
+import { OrderDetailComponent } from './pages/dashboard/order-detail/order-detail.component';
 
 export const routes: Routes = [
   // Routes d'authentification
@@ -66,6 +67,12 @@ export const routes: Routes = [
   { 
     path: 'dashboard/orders', 
     component: OrderListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'dashboard/order-detail/view/:id',
+    component: OrderDetailComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
