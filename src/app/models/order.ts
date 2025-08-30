@@ -31,6 +31,7 @@ export interface OrderPayload {
     total: number;
     freeShipping: boolean;
     status: string;
+    slug?: string;
     createdAt: Date;
     items: OrderItem[];
 }

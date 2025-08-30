@@ -17,6 +17,10 @@ export class OrderService {
   getOrders(): Observable<OrderPayload[]> {
     return this.http.get<OrderPayload[]>(`${this.apiUrl}/all-orders` ).pipe(
       map(orders => {
+        orders = orders.map(order => ({
+          ...order, 
+            slug: order.status.toLowerCase().replace(/\s+/g, '-')
+        }));
         console.log('Commandes récupérées:', orders );
         return orders;
       }),

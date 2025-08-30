@@ -44,9 +44,8 @@
         <td>{{ order.createdAt | date: 'dd/MM/yyyy' }}</td>
         <td>{{ order.total | currency:'Rs ' }}</td>
         <td>{{ order.items.length }}</td>
-        <td><span [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span></td>
         <td>
-            <span class="status" [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span>
+            <span class="status" [ngClass]="'status-' + order.slug">{{ order.status }}</span>
         </td>
         <td class="actions">
             <!-- Utiliser routerLink pour la navigation -->
