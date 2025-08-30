@@ -70,12 +70,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
-  // {
-  //   path: '/dashboard/orders',
-  //   component: OrderDetailComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { roles: ['ROLE_ADMIN'] }
-  // },
+  {
+    path: '/dashboard/orders',
+    component: OrderDetailComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
   { 
     path: 'dashboard/products/create', 
     component: ProductFormComponent,
