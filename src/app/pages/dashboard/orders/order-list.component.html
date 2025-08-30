@@ -36,23 +36,29 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Dans <tbody> de order-list.component.html -->
         <tr *ngFor="let order of paginatedOrders">
-          <td>{{ order.id }}</td>
-          <td>{{ order.customerName }}</td>
-          <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ order.totalAmount | currency:'EUR' }}</td>
-          <td>{{ order.items }}</td>
-          <td>
-            <span class="status" [ngClass]="'status-' + order.status.toLowerCase().replace(' ', '-')">{{ order.status }}</span>
-          </td>
-          <td class="actions">
-            <button class="btn-icon" title="Voir les détails">🔍</button>
+        <td>CMD-{{ order.id }}</td>
+        <td>{{ order.user.fullName }}</td>
+        <td>{{ order.createdAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ order.total | currency:'Rs ' }}</td>
+        <td>{{ order.items.length }}</td>
+        <td>
+            <span class="status" [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span>
+        </td>
+        <td class="actions">
+            <!-- Utiliser routerLink pour la navigation -->
+            <button class="btn-icon" [routerLink]="['/dashboard/orders', order.id]" title="Voir les détails">🔍</button>
             <button class="btn-icon" title="Modifier">✏️</button>
             <button class="btn-icon btn-danger" title="Annuler">❌</button>
-          </td>
+        </td>
         </tr>
-        <tr *ngIf="filteredOrders.length === 0">
-          <td colspan="7" class="no-data">Aucune commande trouvée.</td>
+        <!-- Ajouter un état de chargement -->
+        <tr *ngIf="isLoading">
+        <td colspan="7" class="no-data">Chargement des commandes...</td>
+        </tr>
+        <tr *ngIf="!isLoading && filteredOrders.length === 0">
+        <td colspan="7" class="no-data">Aucune commande trouvée.</td>
         </tr>
       </tbody>
     </table>

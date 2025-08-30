@@ -1,0 +1,88 @@
+:host {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.order-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 20px;
+
+  h1 { margin: 0 0 5px 0; font-size: 28px; }
+  p { margin: 0; color: #6c757d; }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+
+  h2 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+  }
+
+  p { margin: 5px 0; }
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  &.total { font-size: 1.1em; margin-top: 15px; }
+}
+
+.status-control {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  .status { /* Reprendre les styles de la liste */ }
+  select { padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
+}
+
+.items-list table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e9ecef; }
+  th { font-weight: 600; }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+  }
+}
+
+.loading-text {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2em;
+  color: #6c757d;
+}
+
+// Reprendre les styles de boutons et de statuts
+.btn { /* ... */ }
+.status { /* ... */ }

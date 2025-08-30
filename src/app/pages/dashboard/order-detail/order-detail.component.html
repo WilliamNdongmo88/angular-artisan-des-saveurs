@@ -1,0 +1,74 @@
+<div class="order-detail-container" *ngIf="order$ | async as order; else loading">
+  <header class="detail-header">
+    <div>
+      <h1>Commande #{{ order.id }}</h1>
+      <p>Passée le {{ order.createdAt | date: 'fullDate' }}</p>
+    </div>
+    <a routerLink="/dashboard/orders" class="btn btn-secondary">Retour à la liste</a>
+  </header>
+
+  <div class="detail-grid">
+    <!-- Informations Client -->
+    <div class="detail-card">
+      <h2>Client</h2>
+      <p><strong>{{ order.user.fullName }}</strong></p>
+      <p>{{ order.user.email }}</p>
+      <p>{{ order.user.phone }}</p>
+    </div>
+
+    <!-- Résumé Financier -->
+    <div class="detail-card">
+      <h2>Résumé Financier</h2>
+      <div class="summary-line"><span>Sous-total :</span> <span>{{ order.subtotal | currency:'Rs ' }}</span></div>
+      <div class="summary-line"><span>Remise :</span> <span>- {{ order.discount | currency:'Rs ' }}</span></div>
+      <div class="summary-line total"><strong>Total :</strong> <strong>{{ order.total | currency:'Rs ' }}</strong></div>
+    </div>
+
+    <!-- Statut de la commande -->
+    <div class="detail-card">
+      <h2>Statut</h2>
+      <div class="status-control">
+        <span class="status" [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span>
+        <select>
+          <option [selected]="order.status === 'processing'">En cours</option>
+          <option [selected]="order.status === 'shipped'">Expédiée</option>
+          <option [selected]="order.status === 'delivered'">Livrée</option>
+          <option [selected]="order.status === 'cancelled'">Annulée</option>
+        </select>
+        <button class="btn btn-primary">Mettre à jour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Détails des produits -->
+  <div class="detail-card items-list">
+    <h2>Articles de la commande ({{ order.items.length }})</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Prix Unitaire</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of order.items">
+          <td>
+            <div class="product-info">
+              <img [src]="item.product.imageUrl" alt="{{ item.product.name }}">
+              <span>{{ item.product.name }}</span>
+            </div>
+          </td>
+          <td>{{ item.displayQuantity }} {{ item.selectedUnit }}</td>
+          <td>{{ item.product.price | currency:'Rs ' }} / {{ item.product.unit }}</td>
+          <td>{{ (item.displayQuantity * item.product.price) | currency:'Rs ' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p class="loading-text">Chargement des détails de la commande...</p>
+</ng-template>

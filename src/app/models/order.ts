@@ -15,16 +15,22 @@ export interface Product {
   origin: string;
   preparation?: string;
 }
+
 export interface OrderItem {
-  product: Product;
-  quantity: number;
+    product: Product;
+    quantity: number;
+    displayQuantity: number;
+    selectedUnit: string;
 }
 
 export interface OrderPayload {
-  user: User;
-  items: OrderItem[];
-  subtotal: number;
-  discount: number;
-  total: number;
-  freeShipping: boolean;
+    id: number;
+    user: User;
+    subtotal: number;
+    discount: number;
+    total: number;
+    freeShipping: boolean;
+    status: string;
+    createdAt: Date;
+    items: OrderItem[];
 }
