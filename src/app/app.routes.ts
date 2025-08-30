@@ -70,6 +70,9 @@ export const routes: Routes = [
         path: 'orders', // La liste des commandes
         component: OrderListComponent 
       },
+      // ==========================================================
+      // === LA ROUTE MANQUANTE QUE VOUS DEVEZ AJOUTER EST ICI ===
+      // ==========================================================
       { 
         path: 'orders/:id', // La page de détail d'une commande
         component: OrderDetailComponent 
@@ -90,5 +93,4 @@ export const routes: Routes = [
   // --- Route par défaut (inchangée) ---
   { path: '**', redirectTo: '' }
 ];
-
 

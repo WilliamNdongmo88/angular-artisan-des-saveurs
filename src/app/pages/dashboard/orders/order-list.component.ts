@@ -63,7 +63,7 @@ export class OrderListComponent implements OnInit {
   
   // La navigation se fera via routerLink dans le template
   viewOrderDetails(orderId: number): void {
-    this.router.navigate(['/dashboard/orders/view/', orderId]);
+    this.router.navigate(['/dashboard/orders', orderId]);
   }
 
   // Les getters pour la pagination restent les mêmes
