@@ -10,7 +10,7 @@
         <div class="card-content">
           <h3>Gestion des Produits</h3>
           <p>Créer, modifier et supprimer des produits</p>
-          <button class="btn btn-primary" onclick="navigateToProduct()" routerLink="/dashboard/products">
+          <button class="btn btn-primary" (click)="navigateToProduct()">
             Gérer les produits
           </button>
         </div>
@@ -23,7 +23,7 @@
         <div class="card-content">
           <h3>Commandes</h3>
           <p>Gérer les commandes clients</p>
-          <button class="btn btn-primary" onclick="navigateToOrders()" routerLink="/dashboard/orders">
+          <button class="btn btn-primary" (click)="navigateToOrders()">
             Gérer les commandes
           </button>
         </div>
