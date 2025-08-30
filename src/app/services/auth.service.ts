@@ -180,6 +180,7 @@ export class AuthService {
         id:payload.id,
         firstName: payload.firstname,
         lastName: payload.lastname,
+        fullName: payload.firstname + ' ' + payload.lastname,
         phone: payload.phone,
         email: payload.email,
         actif: true,

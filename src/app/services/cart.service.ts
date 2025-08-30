@@ -8,6 +8,8 @@ import { catchError, delay, tap } from 'rxjs/operators';
 export interface CartItem {
   product: Product;
   quantity: number;
+  displayQuantity: number;
+  selectedUnit: string;
 }
 
   const httpOptions = {
@@ -41,7 +43,7 @@ export class CartService {
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      this.cartItems.push({ product, quantity });
+      this.cartItems.push({ product, quantity, displayQuantity: quantity, selectedUnit: product.unit });
     }
 
     this.updateCartCount();

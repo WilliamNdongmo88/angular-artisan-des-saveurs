@@ -13,6 +13,8 @@ export interface OrderData {
   discount: number;
   total: number;
   freeShipping: boolean;
+  status: string;
+  createdAt: Date;
 }
 
 export interface OrderFormData {
@@ -111,7 +113,8 @@ export class OrderModalComponent implements OnInit {
         email: formData.email,
         phone: formData.phone,
         consent: false,
-        contactRequests: []
+        contactRequests: [],
+        fullName: ''
       };
       this.productIdItems = this.cartItems.map(item => ({
         productId: item.product.id,
@@ -119,12 +122,15 @@ export class OrderModalComponent implements OnInit {
         quantity: item.quantity
       }));
       const order: OrderPayload = {
+        id: 0,
         user: userData,
         items: this.cartItems,
         total: this.orderData.total,
         subtotal: this.orderData.subtotal,
         discount: this.orderData.discount,
-        freeShipping: this.orderData.freeShipping
+        freeShipping: this.orderData.freeShipping,
+        status: this.orderData.status,
+        createdAt: this.orderData.createdAt,
       };
       console.log('[OrderModalComponent] Commande soumise: ', order);
       //this.submitOrderEvent.emit(formData);
@@ -173,7 +179,8 @@ export class OrderModalComponent implements OnInit {
         email: formData.email,
         phone: formData.phone,
         consent: false,
-        contactRequests: []
+        contactRequests: [],
+        fullName: ''
       };
       console.log('[OrderModalComponent] userData :: ', userData);
       this.productIdItems = this.cartItems.map(item => ({
@@ -182,12 +189,15 @@ export class OrderModalComponent implements OnInit {
         quantity: item.quantity
       }));
       const order: OrderPayload = {
+        id: 0,
         user: userData,
         items: this.cartItems,
         total: this.orderData.total,
         subtotal: this.orderData.subtotal,
         discount: this.orderData.discount,
-        freeShipping: this.orderData.freeShipping
+        freeShipping: this.orderData.freeShipping,
+        status: this.orderData.status,
+        createdAt: this.orderData.createdAt,
       };
       console.log('[OrderModalComponent] Commande soumise: ', order);
 
