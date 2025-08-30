@@ -43,7 +43,9 @@ export class CartComponent implements OnInit, OnDestroy {
     subtotal: 0,
     discount: 0,
     total: 0,
-    freeShipping: false
+    freeShipping: false,
+    status: '',
+    createdAt: new Date(),
   };
 
   constructor(
@@ -110,7 +112,9 @@ export class CartComponent implements OnInit, OnDestroy {
       subtotal: this.subtotal,
       discount: this.discountAmount,
       total: this.total,
-      freeShipping: this.isEligibleForFreeShipping
+      freeShipping: this.isEligibleForFreeShipping,
+      status: 'En attente',
+      createdAt: new Date(),
     };
   }
 
