@@ -47,7 +47,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] },
     children: [
       // Redirection : quand on va sur /dashboard, on affiche la liste des produits par défaut
-      { path: '', redirectTo: 'products', pathMatch: 'full' }, 
+      { path: '', redirectTo: '', pathMatch: 'full' }, 
       
       // Routes enfants du dashboard
       { 
