@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthUser } from '../../models/auth.models';
 import { HeaderComponent } from "./header/header";
 import { CommonModule } from '@angular/common';
+import { SharedService } from '../../services/sharedService';
 
 
 @Component({
@@ -18,12 +19,16 @@ export class DashboardComponent implements OnInit {
   isDasboard: boolean = true; // Pour afficher un indicateur de chargement
 
   constructor(
+    private sharedService: SharedService,
     private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.currentUser = this.authService.currentUserValue;
+    this.sharedService.signal$.subscribe(bool => {
+      this.isDasboard = bool;
+    });
   }
 
   logout() {

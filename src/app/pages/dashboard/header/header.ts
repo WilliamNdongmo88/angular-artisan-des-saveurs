@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthUser } from '../../../models/auth.models';
 import { AuthService } from '../../../services/auth.service';
+import { SharedService } from '../../../services/sharedService';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   
 
   constructor(
+    private sharedService: SharedService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -24,6 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goToDashboard() {
+    this.sharedService.sendSignal(true);
     this.router.navigate(['/dashboard']);
   }
 
