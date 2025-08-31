@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goToDashboard() {
-    this.router.navigate(['/dashboard/products']);
+    this.router.navigate(['/dashboard']);
   }
 
   logout() {
