@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, tap } from 'rxjs/operators';
 import { ContactForm, ContactForms, ContactRequest } from '../models/product';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { HttpClient } from '@angular/common/http';
 export class ContactService {
 
   //private apiUrl = 'http://localhost:8070/api/users';
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/users';
+  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/users';
+  private apiUrl = environment.apiUrl+'orders'
 
   constructor(private http: HttpClient) { }
 

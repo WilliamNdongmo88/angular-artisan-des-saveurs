@@ -4,9 +4,11 @@ import { Product, ProductCategory } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProductResponse } from '../models/product.models';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
-const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
+//const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
+const PRODUCTS_API = environment.apiUrl+'/products/'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

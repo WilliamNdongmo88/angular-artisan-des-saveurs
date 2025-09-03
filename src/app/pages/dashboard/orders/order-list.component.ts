@@ -6,12 +6,13 @@ import { Router, RouterModule } from '@angular/router'; // Importer RouterModule
 import { OrderService } from '../../../services/order.service';
 import { OrderPayload } from '../../../models/order';
 import { HeaderComponent } from "../header/header";
+import { SharedService } from '../../../services/sharedService';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
   // Mettre à jour les imports
-  imports: [CommonModule, FormsModule, RouterModule, CurrencyPipe, DatePipe, HeaderComponent],
+  imports: [CommonModule, FormsModule, RouterModule, CurrencyPipe, DatePipe],
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss']
 })
@@ -25,7 +26,11 @@ export class OrderListComponent implements OnInit {
   itemsPerPage: number = 10;
   isLoading: boolean = true; // Pour afficher un indicateur de chargement
 
-  constructor(private orderService: OrderService, private router: Router) { }
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private sharedService: SharedService,
+  ) { }
 
   ngOnInit(): void {
     this.loadOrders();
@@ -80,5 +85,10 @@ export class OrderListComponent implements OnInit {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
+  }
+
+  goBack(): void {
+    this.sharedService.sendSignal(true);
+    this.router.navigate(['/dashboard']);
   }
 }

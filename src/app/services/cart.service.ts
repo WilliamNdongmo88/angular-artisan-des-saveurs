@@ -4,6 +4,7 @@ import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OrderPayload } from '../models/order';
 import { catchError, delay, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface CartItem {
   product: Product;
@@ -24,7 +25,8 @@ export class CartService {
   private cartItemCountSubject = new BehaviorSubject<number>(0);
 
   //private apiUrl = 'http://localhost:8070/api/orders';
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+  private apiUrl = environment.apiUrl+'/orders'
 
   constructor(private http: HttpClient) {
     // Charger le panier depuis le localStorage au démarrage

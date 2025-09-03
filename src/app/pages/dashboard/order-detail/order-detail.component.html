@@ -2,7 +2,8 @@
   <header class="detail-header">
     <div>
       <h1>Commande #{{ order.id }}</h1>
-      <p>Passée le {{ order.createdAt | date: 'fullDate' }}</p>
+      <!-- date: 'fullDate' -->
+      <p>Passée le {{ order.createdAt | date:'yyyy-MM-dd HH:mm' }}</p>
     </div>
     <a routerLink="/dashboard/orders" class="btn btn-secondary">Retour à la liste</a>
   </header>
@@ -29,13 +30,14 @@
       <h2>Statut</h2>
       <div class="status-control">
         <span class="status" [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span>
-        <select>
-          <option [selected]="order.status === 'processing'">En cours</option>
-          <option [selected]="order.status === 'shipped'">Expédiée</option>
-          <option [selected]="order.status === 'delivered'">Livrée</option>
-          <option [selected]="order.status === 'cancelled'">Annulée</option>
+        <select (change)="onStatusChange($event)">
+          <option >Sélectionner un statut</option>
+          <option [selected]="order.status === 'processing'" value="processing">En cours</option>
+          <option [selected]="order.status === 'shipped'" value="shipped">Expédiée</option>
+          <option [selected]="order.status === 'delivered'" value="delivered">Livrée</option>
+          <option [selected]="order.status === 'cancelled'" value="cancelled">Annulée</option>
         </select>
-        <button class="btn btn-primary">Mettre à jour</button>
+        <button class="btn btn-primary" (click)="updateStatusOrder()">Mettre à jour</button>
       </div>
     </div>
   </div>

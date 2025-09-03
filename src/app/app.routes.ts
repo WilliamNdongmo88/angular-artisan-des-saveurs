@@ -30,6 +30,10 @@ export const routes: Routes = [
   // --- Routes publiques et d'authentification (inchangées) ---
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  {path: 'sent-email', component: EmailComponent},
+  {path: 'reset-password', component: NewPasswordComponent},
+  {path: 'activate', component: ActiveAccountComponent},
+  {path: 'new-activation', component: NewActivatioComponent},
   // ... autres routes publiques
   { path: '', component: HomeComponent },
   { path: 'catalog', component: CatalogComponent },

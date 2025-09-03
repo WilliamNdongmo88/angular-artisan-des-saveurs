@@ -86,7 +86,7 @@
 
   <!-- AFFICHAGE EN GRILLE-->
   <div *ngIf="viewMode === 'grid' && !loading && filteredProducts.length > 0" class="products-grid">
-    <div *ngFor="let product of filteredProducts" class="product-card">
+    <div *ngFor="let product of paginatedProducts" class="product-card">
       <div class="product-image">
         <img [src]="product.mainImage.filePath" (error)="handleImageError($event)" [alt]="product.mainImage.fileName" />
         <div class="product-status" [class.available]="product.available" [class.unavailable]="!product.available">
@@ -112,14 +112,14 @@
         <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
           ✏️
         </button>
-        <button
+        <!-- <button
           class="btn btn-sm"
           [class.btn-success]="!product.available"
           [class.btn-warning]="product.available"
           (click)="toggleAvailability(product)"
           [title]="product.available ? 'Désactiver' : 'Activer'">
           {{ product.available ? '🔒' : '🔓' }}
-        </button>
+        </button> -->
         <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
           🗑️
         </button>
@@ -139,12 +139,12 @@
           <th>Prix</th>
           <th>Stock</th>
           <th>Disponibilité</th>
-          <th>Statut de la commande</th>
+          <!-- <th>Statut de la commande</th> -->
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of filteredProducts" class="product-row">
+        <tr *ngFor="let product of paginatedProducts" class="product-row">
           <!-- Image du produit -->
           <td class="product-image-cell">
             <img 
@@ -190,8 +190,7 @@
           </td>
 
           <!-- Statut de la commande -->
-          <td class="product-order-status-cell">
-            <!-- product.orderStatus || -->
+          <!-- <td class="product-order-status-cell">
             <select 
               class="order-status-select" 
               [value]=" 'pending'" 
@@ -203,7 +202,7 @@
               <option value="delivered">Livré</option>
               <option value="cancelled">Annulé</option>
             </select>
-          </td>
+          </td> -->
 
           <!-- Actions -->
           <td class="product-actions-cell">
@@ -214,14 +213,14 @@
               <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
                 ✏️
               </button>
-              <button
+              <!-- <button
                 class="btn btn-sm"
                 [class.btn-success]="!product.available"
                 [class.btn-warning]="product.available"
                 (click)="toggleAvailability(product)"
                 [title]="product.available ? 'Désactiver' : 'Activer'">
                 {{ product.available ? '🔒' : '🔓' }}
-              </button>
+              </button> -->
               <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
                 🗑️
               </button>
@@ -230,6 +229,29 @@
         </tr>
       </tbody>
     </table>
+  </div>
+    <div *ngIf="!loading && filteredProducts.length > itemsPerPage" class="pagination-container">
+    <div class="pagination-summary">
+      Page {{ currentPage }} sur {{ totalPages }}
+      <span class="texte-desktop"> ({{ filteredProducts.length }} produits au total)</span>
+    </div>
+    <div class="pagination-controls">
+      <button class="btn-pagination" (click)="changePage(1)" [disabled]="currentPage === 1" title="Première page">
+        «
+      </button>
+      <button class="btn-pagination" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Page précédente">
+        ‹
+      </button>
+      <span class="pagination-info-mobile">
+        {{ currentPage }} / {{ totalPages }}
+      </span>
+      <button class="btn-pagination" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" title="Page suivante">
+        ›
+      </button>
+      <button class="btn-pagination" (click)="changePage(totalPages)" [disabled]="currentPage === totalPages" title="Dernière page">
+        »
+      </button>
+    </div>
   </div>
   </div>
 </div>

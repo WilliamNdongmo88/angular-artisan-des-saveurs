@@ -26,7 +26,7 @@ export const ORDER_STATUSES: OrderStatus[] = [
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule],
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
@@ -42,6 +42,8 @@ export class ProductListComponent implements OnInit {
 
   // Nouvelle propriété pour gérer le mode d'affichage
   viewMode: 'grid' | 'table' = 'grid'; // Mode par défaut : grille
+    currentPage: number = 1;
+  itemsPerPage: number = 8;
 
   constructor(
     private productService: ProductAdminService,
@@ -125,6 +127,8 @@ export class ProductListComponent implements OnInit {
       const matchesCategory = !this.selectedCategory || product.category === this.selectedCategory;
       return matchesSearch && matchesCategory;
     });
+    // Revenir à la première page après chaque filtre
+    this.currentPage = 1; 
   }
 
   onSearchChange() {
@@ -139,6 +143,35 @@ export class ProductListComponent implements OnInit {
     this.searchTerm = '';
     this.selectedCategory = '';
     this.filteredProducts = this.products;
+    this.currentPage = 1; // Réinitialise la page
+  }
+
+  /**
+   * Retourne la tranche de produits à afficher pour la page courante.
+   */
+  get paginatedProducts(): ProductResponse[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Calcule le nombre total de pages.
+   */
+  get totalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+  }
+
+  /**
+   * Change la page actuelle.
+   * @param page Le numéro de la page vers laquelle naviguer.
+   */
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      // Optionnel : faire défiler vers le haut de la liste
+      window.scrollTo({ top: 200, behavior: 'smooth' });
+    }
   }
 
   handleImageError(event: Event): void {

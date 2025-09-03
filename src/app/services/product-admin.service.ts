@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
 import { Product, ProductDto, ProductResponse } from '../models/product.models';
 import { MessageResponse } from '../models/auth.models';
+import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
-const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
+//const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
+const PRODUCTS_API = environment.apiUrl+'/products/'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

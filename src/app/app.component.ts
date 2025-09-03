@@ -4,6 +4,7 @@ import { RouterOutlet, RouterModule, Router, NavigationEnd } from '@angular/rout
 import { HeaderComponent } from './components/header/header';
 import { FooterComponent } from './components/footer/footer';
 import { AuthService } from './services/auth.service';
+import { SharedService } from './services/sharedService';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +21,16 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   authService = inject(AuthService);
   readonly isDashboard = this.authService.isDashboard;
+  isRacine: boolean = false;
 
-  constructor() {
+  constructor(private sharedService: SharedService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
         console.log('[AppComponent] URL changée :', url);
         if(url=="/"){
           this.router.navigate(['/']);
+          this.isRacine = true;
         }
         this.isDashboard.set(url.startsWith('/dashboard'));
       }
@@ -35,6 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sharedService.sendSignal(this.isRacine);
     console.log('AppComponent initialized this.isDashboard() :: ', this.isDashboard());
     console.log('[AppComponent] isAuthenticated ::', this.authService.isAuthenticated());
     if (this.authService.isAuthenticated() === false) {

@@ -16,7 +16,7 @@ import { SharedService } from '../../services/sharedService';
 })
 export class DashboardComponent implements OnInit {
   currentUser: AuthUser | null = null;
-  isDasboard: boolean = true; // Pour afficher un indicateur de chargement
+  isDasboard: boolean = true; 
 
   constructor(
     private sharedService: SharedService,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, map } from 'rxjs';
 import { OrdersResponse } from '../models/product.models';
+import { environment } from '../../environments/environment';
 
 // Interfaces pour les données utilisateur
 export interface PersonalInfo {
@@ -49,7 +50,8 @@ export interface messageResponse {
 })
 export class UserService {
   //private apiUrl = 'http://localhost:8070/api/users';
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/';
+  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/';
+  private apiUrl = environment.apiUrl+'/'
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

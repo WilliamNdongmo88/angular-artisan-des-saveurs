@@ -2,7 +2,7 @@
 <div class="orders-container">
   <header class="orders-header">
     <h1>Gestion des Commandes</h1>
-    <button class="btn btn-primary">Nouvelle Commande</button>
+    <button class="btn btn-secondary" (click)="goBack()">Retour</button>
   </header>
 
   <div class="filters-bar">
@@ -32,7 +32,6 @@
           <th>Montant Total</th>
           <th>Articles</th>
           <th>Statut</th>
-          <th>Statut</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -50,8 +49,8 @@
         <td class="actions">
             <!-- Utiliser routerLink pour la navigation -->
             <button class="btn-icon" [routerLink]="['/dashboard/orders', order.id]" title="Voir les détails">🔍</button>
-            <button class="btn-icon" title="Modifier">✏️</button>
-            <button class="btn-icon btn-danger" title="Annuler">❌</button>
+            <!-- <button class="btn-icon" title="Modifier">✏️</button>
+            <button class="btn-icon btn-danger" title="Annuler">❌</button> -->
         </td>
         </tr>
         <!-- Ajouter un état de chargement -->

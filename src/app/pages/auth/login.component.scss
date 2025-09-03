@@ -235,3 +235,47 @@
   }
 }
 
+.auth-form {
+  .form-group {
+    position: relative;
+
+    .input-group-append {
+      position: absolute;
+      top: 67%;
+      right: 12px;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+      z-index: 2;
+    }
+
+    .form-control {
+      padding-right: 48px; // espace pour le bouton
+    }
+
+    .btn.btn-outline-secondary {
+      background: transparent;
+      color: #667eea;
+      border: 2px solid #667eea;
+      border-radius: 8px;
+      padding: 2px 5px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: #667eea;
+        color: #fff;
+        border-color: #667eea;
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+

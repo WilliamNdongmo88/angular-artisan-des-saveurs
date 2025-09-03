@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface FileDTO {
   fileName: string;
@@ -13,7 +13,8 @@ interface FileDTO {
 })
 export class FileService {
 
-  private baseUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/products';
+  //private baseUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/products';
+  private baseUrl = environment.apiUrl+'/products'
 
   constructor(private http: HttpClient) {}
 
@@ -24,3 +25,7 @@ export class FileService {
     return this.http.post<FileDTO>(`${this.baseUrl}/files-upload`, formData);
   }
 }
+function Injectable(arg0: { providedIn: string; }): (target: typeof FileService) => void | typeof FileService {
+  throw new Error('Function not implemented.');
+}
+

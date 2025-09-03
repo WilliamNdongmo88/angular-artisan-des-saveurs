@@ -22,13 +22,21 @@
 
       <div class="form-group">
         <label for="password">Mot de passe</label>
-        <input 
-          type="password" 
-          id="password"
-          formControlName="password" 
-          class="form-control"
-          [class.is-invalid]="submitted && f['password'].errors"
-          placeholder="Votre mot de passe">
+        <div class="input-group">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password"
+            formControlName="password" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['password'].errors"
+            placeholder="Votre mot de passe"
+          >
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" tabindex="-1">
+              <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+            </button>
+          </div>
+        </div>
         <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
           <div *ngIf="f['password'].errors['required']">Le mot de passe est requis</div>
         </div>

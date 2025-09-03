@@ -1,15 +1,18 @@
 // src/app/services/order.service.ts
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { OrderPayload } from '../models/order';
+import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 } )
 export class OrderService {
-  private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+
+  //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
+  private apiUrl = environment.apiUrl+'/orders'
 
   constructor(private http: HttpClient ) { }
 
@@ -35,6 +38,15 @@ export class OrderService {
     return this.getOrders().pipe(
       map(orders => orders.find(order => order.id === id))
     );
+  }
+
+  updateOrderStatus(orderId: number, newStatus: string) {
+    const map = {
+      orderId: orderId,
+      status: newStatus
+    }
+    console.log("map ::: ", map);
+    return this.http.put(`${this.apiUrl}/status`, map);//this.httpOptions
   }
 
   // Gestionnaire d'erreurs simple
