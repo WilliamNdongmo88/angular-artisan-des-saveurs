@@ -32,6 +32,7 @@
         <span class="status" [ngClass]="'status-' + order.status.toLowerCase()">{{ order.status }}</span>
         <select (change)="onStatusChange($event)">
           <option >Sélectionner un statut</option>
+          <option [selected]="order.status === 'pending'" value="pending">En attente</option>
           <option [selected]="order.status === 'processing'" value="processing">En cours</option>
           <option [selected]="order.status === 'shipped'" value="shipped">Expédiée</option>
           <option [selected]="order.status === 'delivered'" value="delivered">Livrée</option>
