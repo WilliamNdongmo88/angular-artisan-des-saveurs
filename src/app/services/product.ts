@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
 //const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
-const PRODUCTS_API = environment.apiUrl+'/products/'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,20 +16,25 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService implements OnInit {
+export class ProductService {
   private products : Product[] = [];
   private productsCache$: Observable<any[]> | null = null;
   private productCacheMap = new Map<number, Observable<Product>>();
 
-  constructor(private http: HttpClient) { }
+  private PRODUCTS_API: string | undefined;
+  private isProd = environment.production;
 
-  ngOnInit() {
-    this.getAllProducts();
+  constructor(private http: HttpClient) {
+    if (this.isProd) {
+      this.PRODUCTS_API = environment.apiUrlProd + '/products/';
+    } else {
+      this.PRODUCTS_API = environment.apiUrlDev + '/products/';
+    }
   }
 
   getAllProducts(): Observable<any[]> {
     if (!this.productsCache$) {
-      this.productsCache$ = this.http.get<ProductResponse[]>(PRODUCTS_API + 'available').pipe(
+      this.productsCache$ = this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'available').pipe(
         map((datas: ProductResponse[]) =>
           datas.map(product => ({
             id: product.id,
@@ -82,7 +86,7 @@ export class ProductService implements OnInit {
     }
 
     // Sinon, on fait l'appel API et on met en cache
-    const product$ = this.http.get<ProductResponse>(`${PRODUCTS_API}${id}`).pipe(
+    const product$ = this.http.get<ProductResponse>(`${this.PRODUCTS_API}${id}`).pipe(
       map(product => ({
         id: product.id,
         name: product.name,

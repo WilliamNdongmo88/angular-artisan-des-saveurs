@@ -51,7 +51,8 @@ export interface messageResponse {
 export class UserService {
   //private apiUrl = 'http://localhost:8070/api/users';
   //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/';
-  private apiUrl = environment.apiUrl+'/'
+  private apiUrl: string | undefined;
+  private isProd = environment.production;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -62,7 +63,14 @@ export class UserService {
   private userDataSubject = new BehaviorSubject<any>(null);
   public userData$ = this.userDataSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.apiUrl = environment.apiUrlProd + '/';
+    } else {
+      this.apiUrl = environment.apiUrlDev + '/';
+    }
+  }
 
   // Récupérer les informations utilisateur complètes
   getUserProfile(): Observable<any> {

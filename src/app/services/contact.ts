@@ -13,9 +13,17 @@ export class ContactService {
 
   //private apiUrl = 'http://localhost:8070/api/users';
   //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/users';
-  private apiUrl = environment.apiUrl+'orders'
+  private apiUrl: string | undefined;
+  private isProd = environment.production;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.apiUrl = environment.apiUrlProd + 'orders';
+    } else {
+      this.apiUrl = environment.apiUrlDev + 'orders';
+    }
+  }
 
   sendContactForm(formDatas: ContactForms): Observable<{ success: boolean; message: string }> {
     // Simulation d'un appel API

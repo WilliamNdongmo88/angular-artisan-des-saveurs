@@ -14,9 +14,17 @@ interface FileDTO {
 export class FileService {
 
   //private baseUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/products';
-  private baseUrl = environment.apiUrl+'/products'
+  private baseUrl: string | undefined;
+  private isProd = environment.production;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.baseUrl = environment.apiUrlProd + '/products/';
+    } else {
+      this.baseUrl = environment.apiUrlDev + '/products/';
+    }
+  }
 
   uploadFile(file: File): Observable<FileDTO> {
     const formData = new FormData();

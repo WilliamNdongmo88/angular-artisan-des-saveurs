@@ -16,9 +16,9 @@ import { Users } from '../models/user';
 import { MyFile } from '../models/product.models';
 import { environment } from '../../environments/environment';
 
-//const AUTH_API = 'http://localhost:8070/api/auth/';
+//const AUTH_API  = 'http://localhost:8070/api/auth/';
 // const AUTH_API = 'https://artisan-des-saveurs-production.up.railway.app/api/auth/';
-const AUTH_API = environment.apiUrl+'/auth/';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,7 +35,18 @@ export class AuthService {
   user = signal<Users | undefined| null>(undefined);
   isDashboard = signal(false);
 
+  public isProd = environment.production;
+  private AUTH_API: string | undefined;
+
   constructor(private http: HttpClient) {
+
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.AUTH_API = environment.apiUrlProd + '/auth/';
+    } else {
+      this.AUTH_API = environment.apiUrlDev + '/auth/';
+    }
+
     this.currentUserSubject = new BehaviorSubject<AuthUser | null>(
       JSON.parse(localStorage.getItem('currentUser') || 'null')
     );
@@ -48,7 +59,7 @@ export class AuthService {
 
   login(credentials: LoginRequest): Observable<JwtResponse> {
     this.isDashboard.set(true);
-    return this.http.post<JwtResponse>(AUTH_API + 'signin', credentials, httpOptions)
+    return this.http.post<JwtResponse>(this.AUTH_API + 'signin', credentials, httpOptions)
       .pipe(map(response => {
         // Stocker les détails de l'utilisateur et le token JWT dans le localStorage
         const user: AuthUser = {
@@ -69,7 +80,7 @@ export class AuthService {
   }
 
   register(user: SignupRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(AUTH_API + 'signup', user, httpOptions);
+    return this.http.post<MessageResponse>(this.AUTH_API  + 'signup', user, httpOptions);
   }
 
   logout(): void {
@@ -80,23 +91,23 @@ export class AuthService {
   }
 
   activateAccount(token: string): Observable<MessageResponse> {
-    return this.http.get<MessageResponse>(`${AUTH_API}activate?token=${token}`);
+    return this.http.get<MessageResponse>(`${this.AUTH_API }activate?token=${token}`);
   }
 
   resendActivation(emailRequest: EmailRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(AUTH_API + 'resend-activation', emailRequest, httpOptions);
+    return this.http.post<MessageResponse>(this.AUTH_API  + 'resend-activation', emailRequest, httpOptions);
   }
 
   forgotPassword(emailRequest: EmailRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(AUTH_API + 'forgot-password', emailRequest, httpOptions);
+    return this.http.post<MessageResponse>(this.AUTH_API  + 'forgot-password', emailRequest, httpOptions);
   }
 
   resetPassword(resetRequest: ResetPasswordRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(AUTH_API + 'reset-password', resetRequest, httpOptions);
+    return this.http.post<MessageResponse>(this.AUTH_API  + 'reset-password', resetRequest, httpOptions);
   }
 
   getAvatars(id: number): Observable<MyFile> {
-    return this.http.get<MyFile>(AUTH_API + `avatar/${id}`);
+    return this.http.get<MyFile>(this.AUTH_API  + `avatar/${id}`);
   }
 
   isLoggedIn(): boolean {
@@ -140,7 +151,7 @@ export class AuthService {
     const refreshToken = this.getRefreshToken();
     if (refreshToken) {
       console.log('[AuthService] Refresh token trouvé, appel API pour rafraîchir le token');
-      return this.http.post<any>(AUTH_API + 'refresh-token', { refreshToken }).pipe(
+      return this.http.post<any>(this.AUTH_API  + 'refresh-token', { refreshToken }).pipe(
         tap(response => {
           console.log('[AuthService] Nouveau token reçu du serveur après rafraîchissement');
           // Mettre à jour le token et le refresh token dans le localStorage

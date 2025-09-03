@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
 //const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
-const PRODUCTS_API = environment.apiUrl+'/products/'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +20,17 @@ export class ProductAdminService {
   private productsSubject = new BehaviorSubject<ProductResponse[]>([]);
   products$ = this.productsSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  private PRODUCTS_API: string | undefined;
+  private isProd = environment.production;
+
+  constructor(private http: HttpClient) { 
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.PRODUCTS_API = environment.apiUrlProd + '/products/';
+    } else {
+      this.PRODUCTS_API = environment.apiUrlDev + '/products/';
+    }
+  }
 
   /** Ajout d'un produit */
 createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
@@ -37,7 +46,7 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
   );
 
   return this.http.post<ProductResponse>(
-    PRODUCTS_API + 'create',
+    this.PRODUCTS_API + 'create',
     formData,
     {
       headers: {
@@ -53,18 +62,18 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
 }
 
   // createProduct(product: ProductToSend): Observable<ProductResponse> {
-  //   return this.http.post<ProductResponse>(PRODUCTS_API + 'create', product, httpOptions);
+  //   return this.http.post<ProductResponse>(this.PRODUCTS_API + 'create', product, httpOptions);
   // }
 
   /** Récupère tous les produits disponibles et met à jour le BehaviorSubject */
   /*getAvailableProducts(): void {
-    this.http.get<ProductResponse[]>(PRODUCTS_API + 'available')
+    this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'available')
       .subscribe((products) => {
         this.productsSubject.next(products);
       });
   }*/
   getAvailableProducts() {
-    return this.http.get<ProductResponse[]>(PRODUCTS_API + 'available');
+    return this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'available');
   }
 
 
@@ -84,7 +93,7 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
     );
 
     return this.http.put<ProductResponse>(
-      `${PRODUCTS_API}${id}`,  // 👈 Corrigé
+      `${this.PRODUCTS_API}${id}`,  // 👈 Corrigé
       formData
     ).pipe(
       tap((updated) => {
@@ -98,12 +107,12 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
   }
 
   // updateProduct(id: number, product: ProductToSend): Observable<ProductResponse> {
-  //   return this.http.put<ProductResponse>(`${PRODUCTS_API}${id}`, product, httpOptions);
+  //   return this.http.put<ProductResponse>(`${this.PRODUCTS_API}${id}`, product, httpOptions);
   // }
 
   /** Suppression d'un produit */
   deleteProduct(id: number): Observable<MessageResponse> {
-    return this.http.delete<MessageResponse>(`${PRODUCTS_API}${id}`)
+    return this.http.delete<MessageResponse>(`${this.PRODUCTS_API}${id}`)
       .pipe(
         tap(() => {
           const newList = this.productsSubject.value.filter(p => p.id !== id);
@@ -112,28 +121,28 @@ createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
       );
   }
   // deleteProduct(id: number): Observable<MessageResponse> {
-  //   return this.http.delete<MessageResponse>(`${PRODUCTS_API}${id}`);
+  //   return this.http.delete<MessageResponse>(`${this.PRODUCTS_API}${id}`);
   // }
 
 
   getProductById(id: number): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(`${PRODUCTS_API}${id}`);
+    return this.http.get<ProductResponse>(`${this.PRODUCTS_API}${id}`);
   }
 
   getProductsByCategory(category: string): Observable<ProductResponse[]> {
-    return this.http.get<ProductResponse[]>(`${PRODUCTS_API}category/${category}`);
+    return this.http.get<ProductResponse[]>(`${this.PRODUCTS_API}category/${category}`);
   }
 
   searchProducts(name: string): Observable<ProductResponse[]> {
-    return this.http.get<ProductResponse[]>(`${PRODUCTS_API}search?name=${name}`);
+    return this.http.get<ProductResponse[]>(`${this.PRODUCTS_API}search?name=${name}`);
   }
 
   getAllCategories(): Observable<string[]> {
-    return this.http.get<string[]>(PRODUCTS_API + 'categories');
+    return this.http.get<string[]>(this.PRODUCTS_API + 'categories');
   }
 
   toggleProductAvailability(id: number): Observable<ProductResponse> {
-    return this.http.patch<ProductResponse>(`${PRODUCTS_API}${id}/toggle-availability`, {});
+    return this.http.patch<ProductResponse>(`${this.PRODUCTS_API}${id}/toggle-availability`, {});
   }
 }
 

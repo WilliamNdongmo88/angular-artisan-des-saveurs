@@ -26,12 +26,24 @@ export class CartService {
 
   //private apiUrl = 'http://localhost:8070/api/orders';
   //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
-  private apiUrl = environment.apiUrl+'/orders'
+  public isProd = environment.production;
+  private apiUrl: string;
 
   constructor(private http: HttpClient) {
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.apiUrl = environment.apiUrlProd + '/orders';
+    } else {
+      this.apiUrl = environment.apiUrlDev + '/orders';
+    }
     // Charger le panier depuis le localStorage au démarrage
     this.loadCartFromStorage();
   }
+
+  // constructor(private http: HttpClient) {
+  //   // Charger le panier depuis le localStorage au démarrage
+  //   this.loadCartFromStorage();
+  // }
 
   // Observable pour le nombre d'articles dans le panier
   getCartItemCount(): Observable<number> {

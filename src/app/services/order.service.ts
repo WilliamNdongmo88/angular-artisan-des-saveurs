@@ -12,9 +12,17 @@ import { Injectable } from '@angular/core';
 export class OrderService {
 
   //private apiUrl = 'https://artisan-des-saveurs-production.up.railway.app/api/orders';
-  private apiUrl = environment.apiUrl+'/orders'
+  private apiUrl: string | undefined;
+  private isProd = environment.production;
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient ) { 
+    // Définir l'URL de l'API selon l'environnement
+    if (this.isProd) {
+      this.apiUrl = environment.apiUrlProd + '/orders';
+    } else {
+      this.apiUrl = environment.apiUrlDev + '/orders';
+    }
+  }
 
   // Récupère toutes les commandes
   getOrders(): Observable<OrderPayload[]> {
