@@ -19,9 +19,9 @@ export class ContactService {
   constructor(private http: HttpClient) { 
     // Définir l'URL de l'API selon l'environnement
     if (this.isProd) {
-      this.apiUrl = environment.apiUrlProd + 'orders';
+      this.apiUrl = environment.apiUrlProd + '/users';
     } else {
-      this.apiUrl = environment.apiUrlDev + 'orders';
+      this.apiUrl = environment.apiUrlDev + '/users';
     }
   }
 
