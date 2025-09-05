@@ -30,7 +30,14 @@ export class AppComponent implements OnInit {
         console.log('[AppComponent] URL changée :', url);
         if(url=="/"){
           this.router.navigate(['/']);
+        }else if(url=='/login' || url=='/register' || 
+          url.startsWith('/reset-password') || 
+          url.startsWith('/activate') || 
+          url.startsWith('/new-activation') || 
+          url.startsWith('/sent-email')){
+          console.log(":: Login/Register page ::");
           this.isRacine = true;
+          this.sharedService.sendSignal(this.isRacine);
         }
         this.isDashboard.set(url.startsWith('/dashboard'));
       }
@@ -38,7 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sharedService.sendSignal(this.isRacine);
     console.log('AppComponent initialized this.isDashboard() :: ', this.isDashboard());
     console.log('[AppComponent] isAuthenticated ::', this.authService.isAuthenticated());
     if (this.authService.isAuthenticated() === false) {

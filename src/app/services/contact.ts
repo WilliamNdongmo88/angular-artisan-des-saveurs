@@ -36,10 +36,6 @@ export class ContactService {
 				return throwError(() => err);
 			})
 		);
-    // return of({
-    //   success: true,
-    //   message: 'Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.'
-    // }).pipe(delay(1000));
   }
 
   validateEmail(email: string): boolean {

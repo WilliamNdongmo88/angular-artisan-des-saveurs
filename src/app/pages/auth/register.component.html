@@ -93,6 +93,11 @@
             class="form-control"
             [class.is-invalid]="submitted && f['password'].errors"
             placeholder="Mot de passe">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" tabindex="-1">
+                <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
           <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
             <div *ngIf="f['password'].errors['required']">Le mot de passe est requis</div>
             <div *ngIf="f['password'].errors['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
@@ -109,6 +114,11 @@
             class="form-control"
             [class.is-invalid]="submitted && f['confirmPassword'].errors"
             placeholder="Confirmer le mot de passe">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
+                <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
           <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
             <div *ngIf="f['confirmPassword'].errors['required']">La confirmation du mot de passe est requise</div>
             <div *ngIf="f['confirmPassword'].errors['mustMatch']">Les mots de passe ne correspondent pas</div>

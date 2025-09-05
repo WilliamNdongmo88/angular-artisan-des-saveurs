@@ -55,6 +55,9 @@ export class ProfilComponent implements OnInit, OnDestroy {
   personalInfoForm!: FormGroup;
   passwordForm!: FormGroup;
   preferencesForm!: FormGroup;
+  showCurrentPassword: boolean = false;
+  showNewPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   // Modes d'édition
   editMode = {

@@ -840,6 +840,50 @@
   }
 }
 
+.password-form {
+  .form-group {
+    position: relative;
+
+    .input-group-append {
+      position: absolute;
+      top: 67%;
+      right: 12px;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+      z-index: 2;
+    }
+
+    .form-control {
+      padding-right: 48px; // espace pour le bouton
+    }
+
+    .btn.btn-outline-secondary {
+      background: transparent;
+      color: #3d3e44;
+      border: 2px solid #6c6f7e;
+      border-radius: 8px;
+      padding: 2px 5px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: #a15151;
+        color: #fff;
+        border-color: #a14646;
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
 // Responsive Design
 @media (max-width: 1024px) {
   .profile-container {

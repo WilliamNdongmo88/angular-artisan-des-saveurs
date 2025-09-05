@@ -107,7 +107,7 @@
 .footer-blue {
   @include footer-base(linear-gradient(135deg, #354179 0%, #720808 100%));
 }
-// .footer-red {
+// .footer {
 //   background: linear-gradient(135deg, #720808 0%, #354179 100%);
 //   color: #ecf0f1;
 //   padding: 3rem 0 1rem;
@@ -209,107 +209,6 @@
 //   }
 // }
 
-// .footer-blue {
-//   background: linear-gradient(135deg, #354179 0%, #720808 100%);
-//   color: #ecf0f1;
-//   padding: 3rem 0 1rem;
-//   margin-top: 4rem;
-
-//   .container {
-//     max-width: 1200px;
-//     margin: 0 auto;
-//     padding: 0 1rem;
-//   }
-
-//   .footer-content {
-//     display: grid;
-//     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-//     gap: 2rem;
-//     margin-bottom: 2rem;
-//   }
-
-//   .footer-section {
-//     h5 {
-//       color: #e74c3c;
-//       font-family: 'Georgia', serif;
-//       font-size: 1.5rem;
-//       margin-bottom: 1rem;
-//       font-weight: 700;
-//     }
-
-//     h6 {
-//       color: #ecf0f1;
-//       font-size: 1.1rem;
-//       margin-bottom: 1rem;
-//       font-weight: 600;
-//     }
-
-//     p {
-//       margin-bottom: 0.5rem;
-//       line-height: 1.6;
-//       color: #bdc3c7;
-//     }
-
-//     .contact-info {
-//       p {
-//         display: flex;
-//         align-items: center;
-//         gap: 0.5rem;
-//         margin-bottom: 0.8rem;
-
-//         strong {
-//           font-size: 1.1rem;
-//         }
-//       }
-//     }
-
-//     .hours {
-//       p {
-//         margin-bottom: 0.5rem;
-//         font-size: 0.95rem;
-
-//         strong {
-//           color: #e74c3c;
-//         }
-//       }
-//     }
-
-//     .commitments {
-//       list-style: none;
-//       padding: 0;
-//       margin: 0;
-
-//       li {
-//         margin-bottom: 0.8rem;
-//         padding-left: 0;
-//         color: #bdc3c7;
-//         font-size: 0.95rem;
-//         line-height: 1.5;
-//       }
-//     }
-//   }
-
-//   .footer-bottom {
-//     border-top: 1px solid #34495e;
-//     padding-top: 1.5rem;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     flex-wrap: wrap;
-//     gap: 1rem;
-
-//     p {
-//       margin: 0;
-//       color: #95a5a6;
-//       font-size: 0.9rem;
-//     }
-
-//     .made-with {
-//       font-style: italic;
-//       color: #7f8c8d;
-//     }
-//   }
-// }
 // Animations
 .footer-section {
   animation: fadeInUp 0.6s ease-out;

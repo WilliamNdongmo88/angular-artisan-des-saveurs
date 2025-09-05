@@ -20,8 +20,10 @@ export class NewPasswordComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl!: string;
-  token!: string;;
+  token!: string;
   error!: string;
+  showPassword = false;
+  showConfirmPassword = false;
 
   constructor(
     private formBuilder: FormBuilder,
