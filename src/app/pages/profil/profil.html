@@ -320,16 +320,16 @@
         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="password-form">
           <div class="form-group">
             <label for="currentPassword">Mot de passe actuel</label>
-            <input 
-              [type]="showCurrentPassword ? 'text' : 'password'" 
-              id="currentPassword" 
-              formControlName="currentPassword"
-              placeholder="Entrez votre mot de passe actuel">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary" (click)="showCurrentPassword = !showCurrentPassword" tabindex="-1">
-                  <i [class]="showCurrentPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
-                </button>
-              </div>
+            <div class="input-wrapper">
+              <input 
+                [type]="showCurrentPassword ? 'text' : 'password'" 
+                id="currentPassword" 
+                formControlName="currentPassword"
+                placeholder="Mot de passe actuel">
+              <button type="button" class="password-toggle-btn" (click)="showCurrentPassword = !showCurrentPassword" tabindex="-1">
+                <i [class]="showCurrentPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
             <div class="error-message" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
               Le mot de passe actuel est requis
             </div>
@@ -337,16 +337,16 @@
 
           <div class="form-group">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input 
-              [type]="showNewPassword ? 'text' : 'password'"
-              id="newPassword" 
-              formControlName="newPassword"
-              placeholder="Entrez votre nouveau mot de passe">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary" (click)="showNewPassword = !showNewPassword" tabindex="-1">
-                  <i [class]="showNewPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
-                </button>
-              </div>
+            <div class="input-wrapper">
+              <input 
+                [type]="showNewPassword ? 'text' : 'password'"
+                id="newPassword" 
+                formControlName="newPassword"
+                placeholder="Nouveau mot de passe">
+              <button type="button" class="password-toggle-btn" (click)="showNewPassword = !showNewPassword" tabindex="-1">
+                <i [class]="showNewPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
             <div class="error-message" *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
               <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">Le nouveau mot de passe est requis</span>
               <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
@@ -355,21 +355,22 @@
 
           <div class="form-group">
             <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
-            <input 
-              [type]="showConfirmPassword ? 'text' : 'password'"
-              id="confirmPassword" 
-              formControlName="confirmPassword"
-              placeholder="Confirmez votre nouveau mot de passe">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
-                  <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
-                </button>
-              </div>
+            <div class="input-wrapper">
+              <input 
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                id="confirmPassword" 
+                formControlName="confirmPassword"
+                placeholder="Confirmez nouveau mot de passe">
+              <button type="button" class="password-toggle-btn" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
+                <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
             <div class="error-message" *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched">
               <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">La confirmation du mot de passe est requise</span>
               <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['mismatch']">Les mots de passe ne correspondent pas</span>
             </div>
           </div>
+
 
           <div class="form-actions">
             <button type="submit" class="btn-primary" [disabled]="passwordForm.invalid || isLoading">
