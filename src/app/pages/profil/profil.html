@@ -321,7 +321,7 @@
           <div class="form-group">
             <label for="currentPassword">Mot de passe actuel</label>
             <input 
-              type="password" 
+              [type]="showCurrentPassword ? 'text' : 'password'" 
               id="currentPassword" 
               formControlName="currentPassword"
               placeholder="Entrez votre mot de passe actuel">
@@ -338,7 +338,7 @@
           <div class="form-group">
             <label for="newPassword">Nouveau mot de passe</label>
             <input 
-              type="password" 
+              [type]="showNewPassword ? 'text' : 'password'"
               id="newPassword" 
               formControlName="newPassword"
               placeholder="Entrez votre nouveau mot de passe">
@@ -356,7 +356,7 @@
           <div class="form-group">
             <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
             <input 
-              type="password" 
+              [type]="showConfirmPassword ? 'text' : 'password'"
               id="confirmPassword" 
               formControlName="confirmPassword"
               placeholder="Confirmez votre nouveau mot de passe">

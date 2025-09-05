@@ -87,7 +87,7 @@
         <div class="form-group">
           <label for="password">Mot de passe</label>
           <input 
-            type="password" 
+            [type]="showPassword ? 'text' : 'password'" 
             id="password"
             formControlName="password" 
             class="form-control"
@@ -108,7 +108,7 @@
         <div class="form-group">
           <label for="confirmPassword">Confirmer le mot de passe</label>
           <input 
-            type="password" 
+            [type]="showConfirmPassword ? 'text' : 'password'" 
             id="confirmPassword"
             formControlName="confirmPassword" 
             class="form-control"
