@@ -8,7 +8,7 @@
         (error)="onAvatarError($event)"
       >
 
-      <label class="avatar-edit-btn" title="Changer l'avatar">
+      <label class="avatar-edit-btn" title="{{ 'profile.changeAvatar' | translate }}">
         <input type="file" hidden (change)="onFileSelected($event)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" 
             xmlns="http://www.w3.org/2000/svg">
@@ -18,12 +18,11 @@
       </label>
     </div>
 
-
     <div class="profile-info">
       <h1 class="profile-name">{{ this.userData?.firstName }} {{ this.userData?.lastName }}</h1>
       <p class="profile-email">{{ currentUser?.email }}</p>
       <span class="profile-status" [class.active]="this.userData?.actif">
-        {{ this.userData?.actif ? 'Compte actif' : 'Compte inactif' }}
+        {{ this.userData?.actif ? ('profile.activeAccount' | translate) : ('profile.inactiveAccount' | translate) }}
       </span>
     </div>
   </div>
@@ -33,31 +32,31 @@
       class="tab-button" 
       [class.active]="activeTab === 'personal'" 
       (click)="setActiveTab('personal')">
-      Informations personnelles
+      {{ 'profile.personalInfo' | translate }}
     </button>
     <button 
       class="tab-button" 
       [class.active]="activeTab === 'orders'" 
       (click)="setActiveTab('orders')">
-      Historique des commandes
+      {{ 'profile.orderHistory' | translate }}
     </button>
     <button 
       class="tab-button tab-button-addresses" 
       [class.active]="activeTab === 'addresses'" 
       (click)="setActiveTab('addresses')">
-      Adresses
+      {{ 'profile.addresses' | translate }}
     </button>
     <button 
       class="tab-button" 
       [class.active]="activeTab === 'preferences'" 
       (click)="setActiveTab('preferences')">
-      Préférences
+      {{ 'profile.preferences' | translate }}
     </button>
     <button 
       class="tab-button" 
       [class.active]="activeTab === 'security'" 
       (click)="setActiveTab('security')">
-      Sécurité
+      {{ 'profile.security' | translate }}
     </button>
   </div>
 
@@ -65,7 +64,7 @@
     <!-- Onglet Informations personnelles -->
     <div class="tab-content" *ngIf="activeTab === 'personal'">
       <div class="section-header">
-        <h2>Informations personnelles</h2>
+        <h2>{{ 'profile.personalInfo' | translate }}</h2>
         <button class="edit-toggle-btn" (click)="toggleEditMode('personal')" [class.editing]="editMode.personal">
           <svg *ngIf="!editMode.personal" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -74,14 +73,14 @@
           <svg *ngIf="editMode.personal" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {{ editMode.personal ? 'Annuler' : 'Modifier' }}
+          {{ editMode.personal ? ('form.cancel' | translate) : ('form.edit' | translate) }}
         </button>
       </div>
 
       <form [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" class="profile-form">
         <div class="form-row">
           <div class="form-group">
-            <label for="firstName">Prénom</label>
+            <label for="firstName">{{ 'form.firstName' | translate }}</label>
             <input 
               type="text" 
               id="firstName" 
@@ -89,11 +88,11 @@
               [readonly]="!editMode.personal"
               [class.readonly]="!editMode.personal">
             <div class="error-message" *ngIf="personalInfoForm.get('firstName')?.invalid && personalInfoForm.get('firstName')?.touched">
-              Le prénom est requis
+              {{ 'validation.required' | translate }}
             </div>
           </div>
           <div class="form-group">
-            <label for="lastName">Nom</label>
+            <label for="lastName">{{ 'form.lastName' | translate }}</label>
             <input 
               type="text" 
               id="lastName" 
@@ -101,14 +100,14 @@
               [readonly]="!editMode.personal"
               [class.readonly]="!editMode.personal">
             <div class="error-message" *ngIf="personalInfoForm.get('lastName')?.invalid && personalInfoForm.get('lastName')?.touched">
-              Le nom est requis
+              {{ 'validation.required' | translate }}
             </div>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="email">Adresse e-mail</label>
+            <label for="email">{{ 'form.email' | translate }}</label>
             <input 
               type="email" 
               id="email" 
@@ -116,12 +115,12 @@
               [readonly]="!editMode.personal"
               [class.readonly]="!editMode.personal">
             <div class="error-message" *ngIf="personalInfoForm.get('email')?.invalid && personalInfoForm.get('email')?.touched">
-              <span *ngIf="personalInfoForm.get('email')?.errors?.['required']">L'adresse e-mail est requise</span>
-              <span *ngIf="personalInfoForm.get('email')?.errors?.['email']">L'adresse e-mail n'est pas valide</span>
+              <span *ngIf="personalInfoForm.get('email')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
+              <span *ngIf="personalInfoForm.get('email')?.errors?.['email']">{{ 'validation.email' | translate }}</span>
             </div>
           </div>
           <div class="form-group">
-            <label for="phone">Téléphone</label>
+            <label for="phone">{{ 'form.phone' | translate }}</label>
             <input 
               type="tel" 
               id="phone" 
@@ -129,16 +128,16 @@
               [readonly]="!editMode.personal"
               [class.readonly]="!editMode.personal">
             <div class="error-message" *ngIf="personalInfoForm.get('phone')?.invalid && personalInfoForm.get('phone')?.touched">
-              Le numéro de téléphone n'est pas valide
+              {{ 'validation.phone' | translate }}
             </div>
           </div>
         </div>
 
         <div class="form-actions" *ngIf="editMode.personal">
-          <button type="button" class="btn-secondary" (click)="cancelEdit('personal')">Annuler</button>
+          <button type="button" class="btn-secondary" (click)="cancelEdit('personal')">{{ 'form.cancel' | translate }}</button>
           <button type="submit" class="btn-primary" [disabled]="personalInfoForm.invalid || isLoading">
             <span *ngIf="isLoading" class="loading-spinner"></span>
-            {{ isLoading ? 'Enregistrement...' : 'Enregistrer' }}
+            {{ isLoading ? ('form.saving' | translate) : ('form.save' | translate) }}
           </button>
         </div>
       </form>
@@ -147,14 +146,14 @@
     <!-- Onglet Historique des commandes -->
     <div class="tab-content" *ngIf="activeTab === 'orders'">
       <div class="section-header">
-        <h2>Historique des commandes</h2>
+        <h2>{{ 'orders.title' | translate }}</h2>
       </div>
       
       <div class="orders-list" *ngIf="orders.length > 0; else noOrders">
         <div class="order-card" *ngFor="let order of orders">
           <div class="order-header">
             <div class="order-info">
-              <h3>Commande #{{'CMD-00'+ order.id || 'CMD-001'}}</h3>
+              <h3>{{ 'orders.orderNumber' | translate }}{{'CMD-00'+ order.id || 'CMD-001'}}</h3>
               <span class="order-date">{{ order.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
             </div>
             <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
@@ -162,25 +161,22 @@
             </div>
           </div>
           <div class="order-items">
-            <div class="order-item"  *ngFor="let item of order.productItems">
+            <div class="order-item" *ngFor="let item of order.productItems">
               <img [src]="item.product.imageUrl" [alt]="item.product.name" class="item-image">
               <div class="item-details">
                 <h4>{{ item.product.name }}</h4>
-                <p>Quantité: {{ item.displayQuantity }} {{ item.selectedUnit }}</p>
+                <p>{{ 'orders.quantity' | translate }}: {{ item.displayQuantity }} {{ item.selectedUnit }}</p>
               </div>
-              <div class="item-price">{{ item.product.price | currency:'Rs':'symbol':'1.2-2' }}</div>
+              <div class="item-price">{{ item.product.price | currencyFormat }}</div>
             </div>
           </div>
           <div class="order-total">
-            <p>Sous-total: {{ order.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</p>
-            <p>Réduction: -{{ order.discount | currency:'Rs ':'symbol':'1.2-2' }}</p>
+            <p>{{ 'orders.subtotal' | translate }}: {{ order.subtotal | currencyFormat }}</p>
+            <p>{{ 'orders.discount' | translate }}: -{{ order.discount | currencyFormat }}</p>
             @if(order.freeShipping){
-              <p>Livraison gratuite</p>
+              <p>{{ 'orders.freeShipping' | translate }}</p>
             }
-            <!-- @else{
-              <p>Frais de livraison: {{ 100 | currency:'Rs ':'symbol':'1.2-2' }}</p>
-            } -->
-            <strong>Total: {{ order.total | currency:'Rs':'symbol':'1.2-2' }}</strong>
+            <strong>{{ 'orders.total' | translate }}: {{ order.total | currencyFormat }}</strong>
           </div>
         </div>
       </div>
@@ -190,9 +186,9 @@
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <h3>Aucune commande</h3>
-          <p>Vous n'avez pas encore passé de commande.</p>
-          <button class="btn-primary" routerLink="/catalog">Découvrir nos produits</button>
+          <h3>{{ 'orders.empty' | translate }}</h3>
+          <p>{{ 'orders.emptyDescription' | translate }}</p>
+          <button class="btn-primary" routerLink="/catalog">{{ 'orders.discoverProducts' | translate }}</button>
         </div>
       </ng-template>
     </div>
@@ -200,12 +196,12 @@
     <!-- Onglet Adresses -->
     <div class="tab-content" *ngIf="activeTab === 'addresses'">
       <div class="section-header">
-        <h2>Mes adresses</h2>
+        <h2>{{ 'addresses.title' | translate }}</h2>
         <button class="btn-primary" (click)="addNewAddress()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Ajouter une adresse
+          {{ 'addresses.add' | translate }}
         </button>
       </div>
 
@@ -231,7 +227,7 @@
             <p>{{ address.street }}</p>
             <p>{{ address.city }}, {{ address.postalCode }}</p>
             <p>{{ address.country }}</p>
-            <span class="address-type" *ngIf="address.isDefault">Adresse par défaut</span>
+            <span class="address-type" *ngIf="address.isDefault">{{ 'addresses.default' | translate }}</span>
           </div>
         </div>
       </div>
@@ -242,8 +238,8 @@
             <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <h3>Aucune adresse enregistrée</h3>
-          <p>Ajoutez une adresse pour faciliter vos commandes.</p>
+          <h3>{{ 'addresses.empty' | translate }}</h3>
+          <p>{{ 'addresses.emptyDescription' | translate }}</p>
         </div>
       </ng-template>
     </div>
@@ -251,49 +247,49 @@
     <!-- Onglet Préférences -->
     <div class="tab-content" *ngIf="activeTab === 'preferences'">
       <div class="section-header">
-        <h2>Préférences</h2>
+        <h2>{{ 'preferences.title' | translate }}</h2>
       </div>
 
       <form [formGroup]="preferencesForm" (ngSubmit)="updatePreferences()" class="preferences-form">
         <div class="preference-section">
-          <h3>Notifications par e-mail</h3>
+          <h3>{{ 'preferences.emailNotifications' | translate }}</h3>
           <div class="preference-item">
             <label class="checkbox-label">
               <input type="checkbox" formControlName="emailPromotions">
               <span class="checkmark"></span>
-              Recevoir les offres promotionnelles
+              {{ 'preferences.promotions' | translate }}
             </label>
           </div>
           <div class="preference-item">
             <label class="checkbox-label">
               <input type="checkbox" formControlName="emailOrderUpdates">
               <span class="checkmark"></span>
-              Recevoir les mises à jour de commande
+              {{ 'preferences.orderUpdates' | translate }}
             </label>
           </div>
           <div class="preference-item">
             <label class="checkbox-label">
               <input type="checkbox" formControlName="emailNewProducts">
               <span class="checkmark"></span>
-              Être informé des nouveaux produits
+              {{ 'preferences.newProducts' | translate }}
             </label>
           </div>
         </div>
 
         <div class="preference-section">
-          <h3>Préférences d'affichage</h3>
+          <h3>{{ 'preferences.displaySettings' | translate }}</h3>
           <div class="preference-item">
-            <label for="language">Langue</label>
-            <select id="language" formControlName="language">
+            <label for="language">{{ 'preferences.language' | translate }}</label>
+            <select id="language" formControlName="language" (change)="onLanguageChange($event)">
               <option value="fr">Français</option>
               <option value="en">English</option>
               <option value="es">Español</option>
             </select>
           </div>
           <div class="preference-item">
-            <label for="currency">Devise</label>
+            <label for="currency">{{ 'preferences.currency' | translate }}</label>
             <select id="currency" formControlName="currency">
-              <option value="RS">Roupee (Rs)</option>
+              <option value="RS">Roupie (Rs)</option>
               <option value="EUR">Euro (€)</option>
               <option value="USD">Dollar US ($)</option>
             </select>
@@ -303,7 +299,7 @@
         <div class="form-actions">
           <button type="submit" class="btn-primary" [disabled]="preferencesForm.invalid || isLoading">
             <span *ngIf="isLoading" class="loading-spinner"></span>
-            {{ isLoading ? 'Enregistrement...' : 'Enregistrer les préférences' }}
+            {{ isLoading ? ('form.saving' | translate) : ('preferences.savePreferences' | translate) }}
           </button>
         </div>
       </form>
@@ -312,109 +308,94 @@
     <!-- Onglet Sécurité -->
     <div class="tab-content" *ngIf="activeTab === 'security'">
       <div class="section-header">
-        <h2>Sécurité du compte</h2>
+        <h2>{{ 'security.title' | translate }}</h2>
       </div>
 
       <div class="security-section">
-        <h3>Changer le mot de passe</h3>
+        <h3>{{ 'security.changePassword' | translate }}</h3>
         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="password-form">
           <div class="form-group">
-            <label for="currentPassword">Mot de passe actuel</label>
+            <label for="currentPassword">{{ 'security.currentPassword' | translate }}</label>
             <div class="input-wrapper">
               <input 
                 [type]="showCurrentPassword ? 'text' : 'password'" 
                 id="currentPassword" 
                 formControlName="currentPassword"
-                placeholder="Mot de passe actuel">
+                [placeholder]="'security.currentPassword' | translate">
               <button type="button" class="password-toggle-btn" (click)="showCurrentPassword = !showCurrentPassword" tabindex="-1">
                 <i [class]="showCurrentPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
               </button>
             </div>
             <div class="error-message" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
-              Le mot de passe actuel est requis
+              {{ 'validation.required' | translate }}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="newPassword">Nouveau mot de passe</label>
+            <label for="newPassword">{{ 'security.newPassword' | translate }}</label>
             <div class="input-wrapper">
               <input 
-                [type]="showNewPassword ? 'text' : 'password'"
+                [type]="showNewPassword ? 'text' : 'password'" 
                 id="newPassword" 
                 formControlName="newPassword"
-                placeholder="Nouveau mot de passe">
+                [placeholder]="'security.newPassword' | translate">
               <button type="button" class="password-toggle-btn" (click)="showNewPassword = !showNewPassword" tabindex="-1">
                 <i [class]="showNewPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
               </button>
             </div>
             <div class="error-message" *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
-              <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">Le nouveau mot de passe est requis</span>
-              <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
+              <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
+              <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">{{ 'validation.minLength' | translate: {min: 8} }}</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+            <label for="confirmPassword">{{ 'security.confirmPassword' | translate }}</label>
             <div class="input-wrapper">
               <input 
-                [type]="showConfirmPassword ? 'text' : 'password'"
+                [type]="showConfirmPassword ? 'text' : 'password'" 
                 id="confirmPassword" 
                 formControlName="confirmPassword"
-                placeholder="Confirmez nouveau mot de passe">
+                [placeholder]="'security.confirmPassword' | translate">
               <button type="button" class="password-toggle-btn" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
                 <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
               </button>
             </div>
             <div class="error-message" *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched">
-              <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">La confirmation du mot de passe est requise</span>
+              <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
               <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['mismatch']">Les mots de passe ne correspondent pas</span>
             </div>
           </div>
 
-
           <div class="form-actions">
             <button type="submit" class="btn-primary" [disabled]="passwordForm.invalid || isLoading">
               <span *ngIf="isLoading" class="loading-spinner"></span>
-              {{ isLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe' }}
+              {{ isLoading ? ('form.saving' | translate) : ('form.save' | translate) }}
             </button>
           </div>
         </form>
       </div>
+    </div>
+  </div>
 
-      <div class="security-section danger-zone">
-        <h3>Zone de danger</h3>
-        <p>Les actions suivantes sont irréversibles. Procédez avec prudence.</p>
-        <button class="btn-danger" (click)="confirmDeleteAccount()">
-          Supprimer mon compte
-        </button>
-      </div>
+  <!-- Notifications -->
+  <div class="notification" *ngIf="notification" [class]="notification.type">
+    <div class="notification-content">
+      <p>{{ notification.message }}</p>
+      <button class="notification-close" (click)="notification = null">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 
   <!-- Modal d'adresse -->
   <app-address-modal
-    [isVisible]="isAddressModalVisible"
+    *ngIf="isAddressModalVisible"
     [address]="selectedAddress"
     (close)="onAddressModalClose()"
     (addressSaved)="onAddressSaved($event)">
   </app-address-modal>
-
-  <!-- Messages de notification -->
-  <div class="notification" *ngIf="notification" [class]="notification.type">
-    <div class="notification-content">
-      <svg *ngIf="notification.type === 'success'" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <svg *ngIf="notification.type === 'error'" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>{{ notification.message }}</span>
-    </div>
-    <button class="notification-close" (click)="closeNotification()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
 </div>
 

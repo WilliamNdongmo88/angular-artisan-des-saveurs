@@ -8,6 +8,11 @@ import { UserService, Address, messageResponse } from '../../services/user.servi
 import { AuthUser } from '../../models/auth.models';
 import { AddressModalComponent } from '../../components/address-modal/address.component';
 import { OrdersResponse } from '../../models/product.models';
+import { TranslatePipe } from '../../services/translate.pipe';
+import { CurrencyFormatPipe } from '../../services/currency-format.pipe';
+import { I18nService } from '../../services/i18n.service';
+import { CurrencyService } from '../../services/currency.service';
+import { Users } from '../../models/user';
 
 // Interfaces pour les données
 interface Order {
@@ -40,7 +45,12 @@ interface Notification {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, AddressModalComponent],
+  imports: [CommonModule, RouterModule, 
+            ReactiveFormsModule, 
+            AddressModalComponent, 
+            TranslatePipe, 
+            CurrencyFormatPipe
+          ],
   templateUrl: './profil.html',
   styleUrl: './profil.scss'
 })
@@ -77,6 +87,8 @@ export class ProfilComponent implements OnInit, OnDestroy {
   private authSubscription?: Subscription;
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private i18nService = inject(I18nService);
+  private currencyService = inject(CurrencyService);
   public userData: any = {}; // Pour stocker les données utilisateur
 
   constructor(private formBuilder: FormBuilder) {
@@ -212,18 +224,34 @@ export class ProfilComponent implements OnInit, OnDestroy {
     }
   }
 
-
   private loadUserPreferences() {
-    // Simuler le chargement des préférences depuis l'API
-    // En réalité, cela viendrait du service utilisateur
-    console.log("[ProfileComponent] Simuler le chargement des préférences depuis l'API");
-    this.preferencesForm.patchValue({
-      emailPromotions: true,
-      emailOrderUpdates: true,
-      emailNewProducts: false,
-      language: 'fr',
-      currency: 'Rs'
-    });
+    // Charger les préférences depuis les services
+    // const currentLanguage = this.i18nService.getCurrentLanguage();
+    // const currentCurrency = this.currencyService.getCurrentCurrency();
+    
+    //console.log("[ProfileComponent] Chargement des préférences - Langue:", currentLanguage, "Devise:", currentCurrency);
+    
+
+    if (this.currentUser && this.currentUser.token) {
+      console.log("[ProfileComponent] loadUserPreferences - userId :: ", this.currentUser.id);
+      this.userService.getUserById(this.currentUser.id).subscribe({
+        next: (userData: Users) => {
+          // userData contient les préférences utilisateur
+          if (userData) {
+            this.preferencesForm.patchValue({
+              emailPromotions: userData.emailPromotions,
+              emailOrderUpdates: userData.emailOrderUpdates,
+              emailNewProducts: userData.emailNewProducts,
+              language: userData.language,
+              currency: userData.currency,
+            });
+          }
+        },
+        error: (error: any) => {
+          console.error('Erreur lors de la récupération des préférences utilisateur:', error);
+        }
+      });
+    }
   }
 
   private loadOrders() {
@@ -361,25 +389,70 @@ export class ProfilComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Mise à jour des préférences
-  async updatePreferences() {
+  // Mise à jour des préférences utilisateur via API
+  updatePreferences() {
     if (this.preferencesForm.valid && !this.isLoading) {
       this.isLoading = true;
 
-      try {
-        const formData = this.preferencesForm.value;
-        
-        // Appel au service pour mettre à jour les préférences
-        await this.userService.updatePreferences(formData);
-        
-        this.showNotification('success', 'Préférences mises à jour avec succès');
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour des préférences:', error);
-        this.showNotification('error', 'Erreur lors de la mise à jour des préférences');
-      } finally {
-        this.isLoading = false;
-      }
+      const formData = this.preferencesForm.value;
+      console.log("[ProfileComponent] updatePreferences - formData :: ", formData);
+
+      // Appel API pour mettre à jour les préférences utilisateur
+      this.userService.updatePreferences(formData).subscribe({
+        next: () => {
+          // Mettre à jour la langue et la devise dans les services locaux
+          if (formData.language) {
+            this.i18nService.setLanguage(formData.language);
+          }
+          if (formData.currency) {
+            this.currencyService.setCurrency(formData.currency);
+          }
+          this.showNotification('success', this.i18nService.translate('success.preferencesUpdated'));
+        },
+        error: (error) => {
+          console.error('Erreur lors de la mise à jour des préférences:', error);
+          this.showNotification('error', this.i18nService.translate('error.updatePreferences'));
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
     }
+  }
+  // async updatePreferences() {
+  //   if (this.preferencesForm.valid && !this.isLoading) {
+  //     this.isLoading = true;
+
+  //     try {
+  //       const formData = this.preferencesForm.value;
+  //       console.log("[ProfileComponent] updatePreferences - formData :: ", formData);
+  //       // Mettre à jour la langue et la devise dans les services
+  //       if (formData.language) {
+  //         this.i18nService.setLanguage(formData.language);
+  //       }
+        
+  //       if (formData.currency) {
+  //         this.currencyService.setCurrency(formData.currency);
+  //       }
+        
+  //       // Appel au service pour mettre à jour les préférences
+  //       await this.userService.updatePreferences(formData);
+        
+  //       this.showNotification('success', this.i18nService.translate('success.preferencesUpdated'));
+  //     } catch (error) {
+  //       console.error('Erreur lors de la mise à jour des préférences:', error);
+  //       this.showNotification('error', this.i18nService.translate('error.updatePreferences'));
+  //     } finally {
+  //       this.isLoading = false;
+  //     }
+  //   }
+  // }
+
+  onLanguageChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedLanguage = selectElement.value;
+    console.log('Langue sélectionnée :', selectedLanguage);
+    // this.i18nService.setLanguage(selectedLanguage);
   }
 
   // Gestion de l'avatar
@@ -503,28 +576,26 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   // Utilitaires
-  getOrderStatusText(status: string): string {
-    const statusMap: { [key: string]: string } = {
-      pending: 'En attente',
-      processing: 'En cours de traitement',
-      shipped: 'Expédiée',
-      delivered: 'Livrée',
-      cancelled: 'Annulée'
-    };
-    return statusMap[status] || status;
+  getOrderStatusText(delivered: boolean | string): string {
+    const isDelivered = typeof delivered === 'boolean' ? delivered : delivered === 'true';
+    return isDelivered 
+      ? this.i18nService.translate('orders.status.delivered')
+      : this.i18nService.translate('orders.status.processing');
   }
 
-  // Gestion des notifications
+  // Méthodes utilitaires pour les traductions
+  translate(key: string, params?: any): string {
+    return this.i18nService.translate(key, params);
+  }
+
+  formatPrice(price: number): string {
+    return this.currencyService.formatPrice(price);
+  }
+
   private showNotification(type: 'success' | 'error', message: string) {
     this.notification = { type, message };
-    
-    // Auto-fermeture après 5 secondes
     setTimeout(() => {
-      this.closeNotification();
+      this.notification = null;
     }, 5000);
-  }
-
-  closeNotification() {
-    this.notification = null;
   }
 }

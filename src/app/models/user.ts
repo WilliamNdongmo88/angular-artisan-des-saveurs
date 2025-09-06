@@ -17,6 +17,11 @@ export class Users {
 	lastName!: string;
 	fullName: string = '';
 	email!: string;
+	emailPromotions!: boolean;
+	emailOrderUpdates!: boolean;
+	emailNewProducts!: boolean;
+	currency!: string;
+	language!: string;
 	phone!: string;
  	actif: boolean = false;
 	role: string = '';

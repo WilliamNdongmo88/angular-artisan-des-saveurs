@@ -189,8 +189,8 @@ export class AuthService {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
     //console.log('[AuthService] payload '+  JSON.stringify(payload));
-      const newLocal = {
-        id:payload.id,
+      const newLocal: Users = {
+        id: payload.id,
         firstName: payload.firstname,
         lastName: payload.lastname,
         fullName: payload.firstname + ' ' + payload.lastname,
@@ -199,6 +199,11 @@ export class AuthService {
         actif: true,
         role: payload.role,
         avatar: payload.avatar,
+        emailPromotions: payload.emailPromotions ?? false,
+        emailOrderUpdates: payload.emailOrderUpdates ?? false,
+        emailNewProducts: payload.emailNewProducts ?? false,
+        currency: payload.currency ?? 'EUR',
+        language: payload.language ?? 'fr'
       };
       this.user.set(newLocal);
       //console.log('[AuthService] this.userGoogle '+  JSON.stringify(this.user()));

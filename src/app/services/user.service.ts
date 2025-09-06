@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, map } from 'rxjs';
 import { OrdersResponse } from '../models/product.models';
 import { environment } from '../../environments/environment';
+import { Users } from '../models/user';
 
 // Interfaces pour les données utilisateur
 export interface PersonalInfo {
@@ -66,21 +67,25 @@ export class UserService {
   constructor(private http: HttpClient) {
     // Définir l'URL de l'API selon l'environnement
     if (this.isProd) {
-      this.apiUrl = environment.apiUrlProd + '/';
+      this.apiUrl = environment.apiUrlProd;
     } else {
-      this.apiUrl = environment.apiUrlDev + '/';
+      this.apiUrl = environment.apiUrlDev;
     }
   }
 
   // Récupérer les informations utilisateur complètes
-  getUserProfile(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/profile`, this.httpOptions);
+  // getUserProfile(): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/profile`, this.httpOptions);
+  // }
+
+  getUserById(id: number): Observable<Users> {
+    return this.http.get<Users>(`${this.apiUrl}/users/${id}`, this.httpOptions);
   }
 
   // Mettre à jour les informations personnelles
   updatePersonalInfo(personalInfo: PersonalInfo): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.put(`${this.apiUrl+'users'}/personal-info`, personalInfo, this.httpOptions)
+      this.http.put(`${this.apiUrl+'/users'}/personal-info`, personalInfo, this.httpOptions)
         .subscribe({
           next: (response) => {
             this.userDataSubject.next(response);
@@ -117,20 +122,13 @@ export class UserService {
   }
 
   // Mettre à jour les préférences utilisateur
-  updatePreferences(preferences: UserPreferences): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http.put(`${this.apiUrl}/preferences`, preferences, this.httpOptions)
-        .subscribe({
-          next: (response) => {
-            this.userDataSubject.next(response);
-            resolve(response);
-          },
-          error: (error) => {
-            console.error('Erreur lors de la mise à jour des préférences:', error);
-            reject(error);
-          }
-        });
-    });
+  updatePreferences(preferences: UserPreferences): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/preferences`, preferences, this.httpOptions).pipe(
+      map(response => {
+        this.userDataSubject.next(response);
+        return response;
+      })
+    );
   }
 
   // Upload de l'avatar
@@ -193,7 +191,7 @@ export class UserService {
 
   // Récupérer l'historique des commandes d'un utilisateur
   getOrderHistory(id: number): Observable<OrdersResponse[]> {
-    return this.http.get<OrdersResponse[]>(`${this.apiUrl+'orders'}/${id}`, this.httpOptions).pipe(
+    return this.http.get<OrdersResponse[]>(`${this.apiUrl}/orders/${id}`, this.httpOptions).pipe(
       map(response => {
         console.log('Historique des commandes:', response);
         return response as OrdersResponse[];
@@ -203,7 +201,7 @@ export class UserService {
 
   // Récupérer tous les commandes des utilisateurs
   getAllOrders(): Observable<OrdersResponse[]> {
-    return this.http.get<OrdersResponse[]>(`${this.apiUrl+'orders'}`, this.httpOptions).pipe(
+    return this.http.get<OrdersResponse[]>(`${this.apiUrl}/orders`, this.httpOptions).pipe(
       map(response => {
         console.log('Toutes les commandes:', response);
         return response as OrdersResponse[];
@@ -213,7 +211,7 @@ export class UserService {
 
   // Supprimer le compte utilisateur
   deleteAccount(id: number): Observable<messageResponse> {
-    return this.http.delete<messageResponse>(`${this.apiUrl+'auth'}/${id}`, this.httpOptions).pipe(
+    return this.http.delete<messageResponse>(`${this.apiUrl}/auth/${id}`, this.httpOptions).pipe(
       map(response => {
         console.log('Réponse de la suppression du compte:', response);
         return response;
