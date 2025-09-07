@@ -51,13 +51,13 @@ export class CartService {
   }
 
   // Ajouter un produit au panier
-  addToCart(product: Product, quantity: number = 1): void {
+  addToCart(product: Product, quantity: number = 1, display_quantity: number = 1, selectedUnit: string = 'kg'): void {
     const existingItem = this.cartItems.find(item => item.product.id === product.id);
-
+    console.log("[CartService] Adding to cart: ", existingItem);
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      this.cartItems.push({ product, quantity, displayQuantity: quantity, selectedUnit: product.unit });
+      this.cartItems.push({ product, quantity, displayQuantity: display_quantity, selectedUnit: selectedUnit });
     }
 
     this.updateCartCount();
@@ -106,7 +106,8 @@ export class CartService {
 
   // Mettre à jour le compteur d'articles
   private updateCartCount(): void {
-    const totalCount = this.cartItems.reduce((count, item) => count + item.quantity, 0);
+    const totalCount = this.cartItems.reduce((count, item) => count + item.displayQuantity, 0);
+    console.log("[CartService] Updating cart items : ", this.cartItems);
     this.cartItemCountSubject.next(totalCount);
   }
 

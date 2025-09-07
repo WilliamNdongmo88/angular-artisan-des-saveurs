@@ -5,6 +5,7 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-details',
@@ -21,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   discountPercentage = 10;
   originalPrice = 0;
   discountedPrice = 0;
+  cartIds: number[] = JSON.parse(localStorage.getItem('cartIds') || '[]');
   
   // Nouvelles propriétés pour la gestion des quantités avec unités
   quantity: number = 0.1; // Quantité décimale
@@ -30,7 +32,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -94,6 +97,7 @@ export class ProductDetailsComponent implements OnInit {
   onQuantityChange(): void {
     // Valider que la quantité respecte les limites
     if (this.quantity < this.getMinQuantity()) {
+      this.toastr.error(`La quantité minimale est de ${this.getMinQuantity()} ${this.selectedUnit}.`);
       this.quantity = this.getMinQuantity();
     }
     
@@ -105,16 +109,20 @@ export class ProductDetailsComponent implements OnInit {
    * Gestionnaire de changement d'unité
    */
   onUnitChange(): void {
+    console.log("Unit changed to: ", this.selectedUnit);
     // Convertir la quantité actuelle vers la nouvelle unité
     if (this.selectedUnit === 'g' && this.quantity < 1) {
       // Si on passe en grammes et qu'on a moins de 1 kg, convertir
       this.quantity = this.quantity * 1000;
+      console.log("Converted quantity to grams: ", this.quantity);
     } else if (this.selectedUnit === 'kg' && this.quantity >= 1000) {
       // Si on passe en kg et qu'on a plus de 1000g, convertir
       this.quantity = this.quantity / 1000;
+      console.log("Converted quantity to kg: ", this.quantity);
     } else {
       // Sinon, réinitialiser à la quantité minimale pour la nouvelle unité
       this.quantity = this.getMinQuantity();
+      console.log("Reset quantity to min for new unit: ", this.quantity);
     }
     
     // Arrondir à 2 décimales
@@ -194,16 +202,24 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   /**
-   * Ajoute le produit au panier avec la quantité convertie en kg
+   * Ajoute le produit au panier avec la quantité convertie en kg/g
    */
   addToCart(): void {
-    if (this.product) {
-      const quantityInKg = this.getQuantityInKg();
-      this.cartService.addToCart(this.product, quantityInKg);
-      
-      // Message de confirmation avec l'unité choisie par l'utilisateur
-      console.log(`${this.quantity} ${this.selectedUnit} de ${this.product.name} ajouté(s) au panier !`);
+    if (!this.product) return;
+
+    const quantityInKg = this.getQuantityInKg();
+    const isNew = !this.cartIds.includes(this.product.id);
+
+    if (isNew) {
+      this.cartIds.push(this.product.id);
+      localStorage.setItem('cartIds', JSON.stringify(this.cartIds));
     }
+
+    this.cartService.addToCart( this.product, quantityInKg, isNew ? 1 : 0, this.selectedUnit);
+
+    this.toastr.success(
+      `${this.quantity} ${this.selectedUnit} de ${this.product.name} ajouté(s) au panier !`
+    );
   }
 
   // Vos méthodes existantes restent inchangées
