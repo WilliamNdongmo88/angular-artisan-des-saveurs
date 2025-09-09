@@ -94,10 +94,11 @@ export class I18nService {
       "page_header_subtitle": "Découvrez notre sélection complète de viandes de porc de qualité supérieure",
       "search_placeholder": "Rechercher un produit...",
       "filter_all_products": "Tous les produits",
-      "category.cotes_travers": "Côtes et Travers",
-      "category.rotis_filets": "Rôtis et Filets",
-      "category.saucisses_charcuterie": "Saucisses et Charcuterie",
-      "category.morceaux_braiser": "Morceaux à Braiser",
+      "category.decoupes_porc_classiques": "Découpes de porc classiques",
+      "category.charcuteries_terrines": "Charcuteries & terrines",
+      "category.saucisses_variantes": "Saucisses et variantes",
+      "category.produits_cuisines": "Produits cuisinés/assaisonnés",
+      "boudins":"Boudins",
       "category.produits_transformes": "Produits Transformés",
       "results_found_singular": "{count} produit trouvé",
       "results_found_plural": "{count} produits trouvés",
@@ -477,10 +478,11 @@ export class I18nService {
 
       //Catalog page
       "category": {
-        "cotes_travers": "Ribs and Chops",
-        "rotis_filets": "Roasts and Fillets",
-        "saucisses_charcuterie": "Sausages and Cold Cuts",
-        "morceaux_braiser": "Cuts for Braising",
+        "decoupes_porc_classiques": "Classic pork cuts",
+        "charcuteries_terrines": "Charcuteries & terrines",
+        "saucisses_variantes": "Sausages & variants",
+        "produits_cuisines": "Cooked or seasoned products",
+        "boudins":"Blood sausages",
         "produits_transformes": "Processed Products"
       },
       "catalog": {
@@ -508,8 +510,8 @@ export class I18nService {
         }
       },
 
-      //About page
-      "aboutUs": {
+    //About page
+    "aboutUs": {
       "pageTitle": "About Us",
       "pageSubtitle": "Discover the history and values of our family butcher shop",
       "ourStoryTitle": "Our Story",
@@ -708,20 +710,21 @@ export class I18nService {
         "labelPhone": "📞"
       }
     },
-      //Product cart
-      "product-cart":{
-        "addToCart": "Add to cart",
-        "price": "From Rs {price}/{unit}",
-        "description": "Description",
-        "origin": "Origin",
-        "title": "Product name",
-        "moreInfo": "More info",
-        "moreInfoAlt": "More info...",
-        "category": "Category",
-        "availability": "Availability",
-        "inStock": "In stock",
-        "outOfStock": "Out of stock",
-      },
+
+    //Product cart
+    "product-cart":{
+      "addToCart": "Add to cart",
+      "price": "From Rs {price}/{unit}",
+      "description": "Description",
+      "origin": "Origin",
+      "title": "Product name",
+      "moreInfo": "More info",
+      "moreInfoAlt": "More info...",
+      "category": "Category",
+      "availability": "Availability",
+      "inStock": "In stock",
+      "outOfStock": "Out of stock",
+    },
             
       // Profil utilisateur
       'profile.title': 'My Profile',

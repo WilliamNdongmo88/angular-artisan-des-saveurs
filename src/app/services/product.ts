@@ -122,10 +122,11 @@ export class ProductService {
 
   getCategoryDisplayName(category: ProductCategory): string {
     const categoryKeys = {
-      [ProductCategory.COTES_TRAVERS]: 'category.cotes_travers',
-      [ProductCategory.ROTIS_FILETS]: 'category.rotis_filets',
-      [ProductCategory.SAUCISSES_CHARCUTERIE]: 'category.saucisses_charcuterie',
-      [ProductCategory.MORCEAUX_BRAISER]: 'category.morceaux_braiser',
+      [ProductCategory.DECOUPE_PORC_CLASSIQUE]: 'category.decoupes_porc_classiques',
+      [ProductCategory.CHARCUTERIES_TERRINES]: 'category.charcuteries_terrines',
+      [ProductCategory.SAUCISSES_VIANDE]: 'category.saucisses_variantes',
+      [ProductCategory.PRODUITS_CUISINES]: 'category.produits_cuisines',
+      [ProductCategory.BOUDINS]: 'category.boudins',
       [ProductCategory.PRODUITS_TRANSFORMES]: 'category.produits_transformes'
     };
     return this.i18nService.translate(categoryKeys[category]);

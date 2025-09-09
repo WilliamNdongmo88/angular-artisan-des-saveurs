@@ -15,10 +15,11 @@ export interface Product {
 }
 
 export enum ProductCategory {
-  COTES_TRAVERS = 'cotes-travers',
-  ROTIS_FILETS = 'rotis-filets',
-  SAUCISSES_CHARCUTERIE = 'saucisses-charcuterie',
-  MORCEAUX_BRAISER = 'morceaux-braiser',
+  DECOUPE_PORC_CLASSIQUE = 'decoupes-porc-classiques',
+  CHARCUTERIES_TERRINES = 'charcuteries-terrines',
+  SAUCISSES_VIANDE = 'saucisses-variantes',
+  PRODUITS_CUISINES = 'produits-cuisines',
+  BOUDINS = 'boudins',
   PRODUITS_TRANSFORMES = 'produits-transformes'
 }
 
