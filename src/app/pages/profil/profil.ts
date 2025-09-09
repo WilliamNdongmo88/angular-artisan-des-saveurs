@@ -225,12 +225,6 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   private loadUserPreferences() {
-    // Charger les préférences depuis les services
-    // const currentLanguage = this.i18nService.getCurrentLanguage();
-    // const currentCurrency = this.currencyService.getCurrentCurrency();
-    
-    //console.log("[ProfileComponent] Chargement des préférences - Langue:", currentLanguage, "Devise:", currentCurrency);
-    
 
     if (this.currentUser && this.currentUser.token) {
       console.log("[ProfileComponent] loadUserPreferences - userId :: ", this.currentUser.id);
@@ -409,6 +403,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
           }
           this.showNotification('success', this.i18nService.translate('success.preferencesUpdated'));
         },
+        
         error: (error) => {
           console.error('Erreur lors de la mise à jour des préférences:', error);
           this.showNotification('error', this.i18nService.translate('error.updatePreferences'));

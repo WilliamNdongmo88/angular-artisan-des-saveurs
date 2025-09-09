@@ -6,11 +6,12 @@ import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, TranslatePipe],
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss'
 })
@@ -22,7 +23,6 @@ export class ProductDetailsComponent implements OnInit {
   discountPercentage = 10;
   originalPrice = 0;
   discountedPrice = 0;
-  cartIds: number[] = JSON.parse(localStorage.getItem('cartIds') || '[]');
   
   // Nouvelles propriétés pour la gestion des quantités avec unités
   quantity: number = 0.1; // Quantité décimale
@@ -208,14 +208,12 @@ export class ProductDetailsComponent implements OnInit {
     if (!this.product) return;
 
     const quantityInKg = this.getQuantityInKg();
-    const isNew = !this.cartIds.includes(this.product.id);
+    const carts = JSON.parse(localStorage.getItem("cart") || "[]");
+    const found = !!carts.find((elt: any) => elt.product?.id === this.product?.id);
+    console.log("Do you found ? :: ", found);
 
-    if (isNew) {
-      this.cartIds.push(this.product.id);
-      localStorage.setItem('cartIds', JSON.stringify(this.cartIds));
-    }
 
-    this.cartService.addToCart( this.product, quantityInKg, isNew ? 1 : 0, this.selectedUnit);
+    this.cartService.addToCart( this.product, quantityInKg, found ? 0 : 1, this.selectedUnit);
 
     this.toastr.success(
       `${this.quantity} ${this.selectedUnit} de ${this.product.name} ajouté(s) au panier !`

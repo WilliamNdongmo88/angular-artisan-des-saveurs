@@ -2,9 +2,9 @@
 <section class="page-header">
   <div class="container">
     <div class="header-content">
-      <h1 class="page-title">Notre Catalogue</h1>
+      <h1 class="page-title">{{ 'catalog.header.title' | translate }}</h1>
       <p class="page-subtitle">
-        Découvrez notre sélection complète de viandes de porc de qualité supérieure
+        {{ 'catalog.header.subtitle' | translate }}
       </p>
     </div>
   </div>
@@ -18,7 +18,7 @@
       <div class="search-bar">
         <input 
           type="text" 
-          placeholder="Rechercher un produit..."
+          [placeholder]="'catalog.filters.searchPlaceholder' | translate"
           [(ngModel)]="searchTerm"
           (input)="onSearchChange()"
           class="search-input">
@@ -31,7 +31,7 @@
           class="filter-btn"
           [class.active]="selectedCategory === 'all'"
           (click)="onCategoryChange('all')">
-          Tous les produits
+          {{ 'catalog.filters.allProducts' | translate }}
         </button>
         <button 
           *ngFor="let category of categories"
@@ -51,8 +51,8 @@
     <!-- Results Info -->
     <div class="results-info" *ngIf="searchTerm || selectedCategory !== 'all'">
       <p>
-        {{ filteredProducts.length }} produit(s) trouvé(s)
-        <span *ngIf="searchTerm"> pour "{{ searchTerm }}"</span>
+        {{ (searchTerm ? 'catalog.results.foundWithSearch' : 'catalog.results.found')
+           | translate:{count: filteredProducts.length, term: searchTerm} }}
       </p>
     </div>
 
@@ -60,10 +60,10 @@
     <div class="no-results" *ngIf="filteredProducts.length === 0">
       <div class="no-results-content">
         <div class="no-results-icon">🔍</div>
-        <h3>Aucun produit trouvé</h3>
-        <p>Essayez de modifier vos critères de recherche ou de sélectionner une autre catégorie.</p>
+        <h3>{{ 'catalog.noResults.title' | translate }}</h3>
+        <p>{{ 'catalog.noResults.message' | translate }}</p>
         <button class="btn btn-primary" (click)="selectedCategory = 'all'; searchTerm = ''; filterProducts()">
-          Voir tous les produits
+          {{ 'catalog.noResults.seeAll' | translate }}
         </button>
       </div>
     </div>
@@ -101,10 +101,10 @@
     <!-- Contact CTA -->
     <div class="catalog-cta">
       <div class="cta-content">
-        <h3>Intéressé par nos produits ?</h3>
-        <p>Contactez-nous pour passer commande ou obtenir plus d'informations sur nos produits.</p>
+        <h3>{{ 'catalog.cta.title' | translate }}</h3>
+        <p>{{ 'catalog.cta.message' | translate }}</p>
         <a routerLink="/contact" class="btn btn-primary">
-          Nous Contacter
+          {{ 'catalog.cta.button' | translate }}
         </a>
       </div>
     </div>

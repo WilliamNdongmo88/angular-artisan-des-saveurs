@@ -2,9 +2,9 @@
 <section class="page-header">
   <div class="container">
     <div class="header-content slide-up">
-      <h1 class="page-title">Nous Contacter</h1>
+      <h1 class="page-title">{{ 'CONTACT_PAGE.HEADER_TITLE' | translate }}</h1>
       <p class="page-subtitle">
-        N'hésitez pas à nous contacter pour toute question ou commande spéciale
+        {{ 'CONTACT_PAGE.HEADER_SUBTITLE' | translate }}
       </p>
     </div>
   </div>
@@ -16,7 +16,7 @@
     <div class="contact-content">
       <!-- Contact Form -->
       <div class="contact-form-container slide-up">
-        <h2 class="form-title">Envoyez-nous un message</h2>
+        <h2 class="form-title">{{ 'CONTACT_PAGE.FORM.TITLE' | translate }}</h2>
         
         <!-- Success/Error Message -->
         <div *ngIf="submitMessage" class="alert" [class.alert-success]="submitSuccess" [class.alert-error]="!submitSuccess">
@@ -27,28 +27,32 @@
           @if (!isUserConnected) {
           <div class="form-row">
             <div class="form-group">
-              <label for="firstName" class="form-label">Prénom <span class="required">*</span></label>
+              <label for="firstName" class="form-label">
+                {{ 'CONTACT_PAGE.FORM.FIRSTNAME' | translate }} <span class="required">*</span>
+              </label>
               <input 
                 type="text" 
                 id="firstName"
                 formControlName="firstName"
                 class="form-control"
                 [class.is-invalid]="isFieldInvalid('firstName')"
-                placeholder="Votre prénom">
+                [placeholder]="'CONTACT_PAGE.FORM.PLACEHOLDER.FIRSTNAME' | translate">
               <div *ngIf="getFieldError('firstName')" class="error-message">
                 {{ getFieldError('firstName') }}
               </div>
             </div>
             
             <div class="form-group">
-              <label for="lastName" class="form-label">Nom <span class="required">*</span></label>
+              <label for="lastName" class="form-label">
+                {{ 'CONTACT_PAGE.FORM.LASTNAME' | translate }} <span class="required">*</span>
+              </label>
               <input 
                 type="text" 
                 id="lastName"
                 formControlName="lastName"
                 class="form-control"
                 [class.is-invalid]="isFieldInvalid('lastName')"
-                placeholder="Votre nom">
+                [placeholder]="'CONTACT_PAGE.FORM.PLACEHOLDER.LASTNAME' | translate">
               <div *ngIf="getFieldError('lastName')" class="error-message">
                 {{ getFieldError('lastName') }}
               </div>
@@ -57,47 +61,53 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="email" class="form-label">Email <span class="required">*</span></label>
+              <label for="email" class="form-label">
+                {{ 'CONTACT_PAGE.FORM.EMAIL' | translate }} <span class="required">*</span>
+              </label>
               <input 
                 type="email" 
                 id="email"
                 formControlName="email"
                 class="form-control"
                 [class.is-invalid]="isFieldInvalid('email')"
-                placeholder="votre@email.com">
+                [placeholder]="'CONTACT_PAGE.FORM.PLACEHOLDER.EMAIL' | translate">
               <div *ngIf="getFieldError('email')" class="error-message">
                 {{ getFieldError('email') }}
               </div>
             </div>
             
             <div class="form-group">
-              <label for="phone" class="form-label">Téléphone <span class="required">*</span></label>
+              <label for="phone" class="form-label">
+                {{ 'CONTACT_PAGE.FORM.PHONE' | translate }} <span class="required">*</span>
+              </label>
               <input 
                 type="tel" 
                 id="phone"
                 formControlName="phone"
                 class="form-control"
                 [class.is-invalid]="isFieldInvalid('phone')"
-                placeholder="01 23 45 67 89">
-                <div class="error-message">
-                  @if(getFieldError('phone')){
-                    {{ getFieldError('phone') }}
-                  }@else if(contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched){
-                    Veuillez entrer un numéro au format international, ex. : +230612345678.
-                  }
-                </div>
+                [placeholder]="'CONTACT_PAGE.FORM.PLACEHOLDER.PHONE' | translate">
+              <div class="error-message">
+                @if(getFieldError('phone')){
+                  {{ getFieldError('phone') }}
+                }@else if(contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched){
+                  {{ 'CONTACT_PAGE.FORM.ERRORS.INVALID_PHONE' | translate }}
+                }
+              </div>
             </div>
           </div>
           }
 
           <div class="form-group form-group-select">
-            <label for="subject" class="form-label">Sujet <span class="required">*</span></label>
+            <label for="subject" class="form-label">
+              {{ 'CONTACT_PAGE.FORM.SUBJECT' | translate }} <span class="required">*</span>
+            </label>
             <select 
               id="subject"
               formControlName="subject"
               class="form-control"
               [class.is-invalid]="isFieldInvalid('subject')">
-              <option value="">Choisissez un sujet</option>
+              <option value="">{{ 'CONTACT_PAGE.FORM.PLACEHOLDER.SUBJECT' | translate }}</option>
               <option *ngFor="let subject of subjects" [value]="subject.value">
                 {{ subject.label }}
               </option>
@@ -108,14 +118,16 @@
           </div>
 
           <div class="form-group">
-            <label for="message" class="form-label">Message <span class="required">*</span></label>
+            <label for="message" class="form-label">
+              {{ 'CONTACT_PAGE.FORM.MESSAGE' | translate }} <span class="required">*</span>
+            </label>
             <textarea 
               id="message"
               formControlName="message"
               class="form-control"
               [class.is-invalid]="isFieldInvalid('message')"
               rows="6"
-              placeholder="Décrivez votre demande en détail..."></textarea>
+              [placeholder]="'CONTACT_PAGE.FORM.PLACEHOLDER.MESSAGE' | translate"></textarea>
             <div *ngIf="getFieldError('message')" class="error-message">
               {{ getFieldError('message') }}
             </div>
@@ -130,7 +142,7 @@
                 class="form-checkbox"
                 [class.is-invalid]="isFieldInvalid('consent')">
               <label for="consent" class="checkbox-label">
-                J'accepte que mes données personnelles soient utilisées pour traiter ma demande <span class="required">*</span>
+                {{ 'CONTACT_PAGE.FORM.CONSENT' | translate }} <span class="required">*</span>
               </label>
             </div>
             <div *ngIf="getFieldError('consent')" class="error-message">
@@ -142,8 +154,8 @@
             type="submit" 
             class="btn btn-primary btn-submit"
             [disabled]="isSubmitting">
-            <span *ngIf="!isSubmitting">Envoyer le message</span>
-            <span *ngIf="isSubmitting">Envoi en cours...</span>
+            <span *ngIf="!isSubmitting">{{ 'CONTACT_PAGE.FORM.BUTTON_SUBMIT' | translate }}</span>
+            <span *ngIf="isSubmitting">{{ 'CONTACT_PAGE.FORM.BUTTON_LOADING' | translate }}</span>
           </button>
         </form>
       </div>
@@ -151,93 +163,80 @@
       <!-- Contact Info -->
       <div class="contact-info-container">
         <div class="contact-info-card slide-up">
-          <h3 class="info-title">Nos Coordonnées</h3>
+          <h3 class="info-title">{{ 'CONTACT_PAGE.INFO.CONTACT_TITLE' | translate }}</h3>
           
           <div class="info-item">
             <div class="info-icon">📍</div>
             <div class="info-content">
-              <strong>Adresse</strong>
-              <p>123 Rue de la Boucherie<br>Grand Baie, île Maurice</p>
+              <strong>{{ 'CONTACT_PAGE.INFO.ADDRESS_TITLE' | translate }}</strong>
+              <p>{{ 'CONTACT_PAGE.INFO.ADDRESS' | translate }}</p>
             </div>
           </div>
           
           <div class="info-item">
             <div class="info-icon">📞</div>
             <div class="info-content">
-              <strong>Téléphone</strong>
-              <p>+230 5984 0270</p>
+              <strong>{{ 'CONTACT_PAGE.INFO.PHONE_TITLE' | translate }}</strong>
+              <p>{{ 'CONTACT_PAGE.INFO.PHONE' | translate }}</p>
             </div>
           </div>
           
           <div class="info-item">
             <div class="info-icon">✉️</div>
             <div class="info-content">
-              <strong>Email</strong>
-              <p>contact&#64;boucherie-artisanale.fr</p>
+              <strong>{{ 'CONTACT_PAGE.INFO.EMAIL_TITLE' | translate }}</strong>
+              <p>{{ 'CONTACT_PAGE.INFO.EMAIL' | translate }}</p>
             </div>
           </div>
           
           <div class="info-item">
             <div class="info-icon">🕒</div>
             <div class="info-content">
-              <strong>Horaires d'ouverture</strong>
-              <p>
-                Lundi - Vendredi : 8h00 - 13h00 | 14h00 - 17h00<br>
-                Samedi : 8h00 - 13h00<br>
-                <strong>Dimanche : Fermé</strong>
-              </p>
+              <strong>{{ 'CONTACT_PAGE.INFO.HOURS_TITLE' | translate }}</strong>
+              <p>{{ 'CONTACT_PAGE.INFO.HOURS' | translate }}</p>
             </div>
           </div>
         </div>
 
         <div class="contact-info-card slide-up">
-          <h3 class="info-title">Commandes Spéciales</h3>
-          <p>Nous acceptons les commandes spéciales pour vos événements :</p>
+          <h3 class="info-title">{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS_TITLE' | translate }}</h3>
+          <p>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS_TEXT' | translate }}</p>
           <ul class="special-orders-list">
-            <li>Barbecues et grillades</li>
-            <li>Repas de famille</li>
-            <li>Événements d'entreprise</li>
-            <li>Fêtes et célébrations</li>
+            <li>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.LI1' | translate }}</li>
+            <li>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.LI2' | translate }}</li>
+            <li>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.LI3' | translate }}</li>
+            <li>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.LI4' | translate }}</li>
           </ul>
           <div class="order-info">
-            <p><strong>Délai de préparation :</strong> 48h minimum</p>
-            <p><strong>Commande minimum :</strong> Rs 1000</p>
+            <p><strong>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.DELAY' | translate }}</strong></p>
+            <p><strong>{{ 'CONTACT_PAGE.INFO.SPECIAL_ORDERS.MIN_ORDER' | translate }}</strong></p>
           </div>
         </div>
       </div>
     </div>
     
     <div class="contact-location-card slide-up">
-      <h3 class="info-title">Comment nous trouver</h3>
+      <h3 class="info-title">{{ 'CONTACT_PAGE.INFO.LOCATION_TITLE' | translate }}</h3>
       
       <div class="access-info">
         <div class="info-content">
           <div class="mode transport">
-            <h4>🚗 En voiture</h4>
-            <p>Parking gratuit disponible devant la bouchérie.<br>
-            Accès facile depuis le périphérique.</p>
+            <h4>🚗 {{ 'CONTACT_PAGE.INFO.ACCESS.CAR.TITLE' | translate }}</h4>
+            <p>{{ 'CONTACT_PAGE.INFO.ACCESS.CAR.TEXT' | translate }}</p>
           </div>
           <div class="mode transport">
-            <h4>🚇 En transport en commun</h4>
-            <p>
-              <!-- <strong>Métro :</strong> Ligne 1 - Station Châtelet<br> -->
-              <strong>Bus :</strong> Arrêt Bus 21, 27, 38, 85<br>
-              <strong>RER :</strong> RER A et B - Nom de l'emplacement
-            </p>
+            <h4>🚇 {{ 'CONTACT_PAGE.INFO.ACCESS.PUBLIC.TITLE' | translate }}</h4>
+            <p>{{ 'CONTACT_PAGE.INFO.ACCESS.PUBLIC.TEXT' | translate }}</p>
           </div>
         </div>
         <div class="info-content">
           <div class="mode transport">
-            <h4>🚶 À pied</h4>
-            <p>Situé au cœur du quartier Nom de l'emplacement, notre boucherie est facilement accessible à pied depuis les rues ... .
-            </p>
+            <h4>🚶 {{ 'CONTACT_PAGE.INFO.ACCESS.WALK.TITLE' | translate }}</h4>
+            <p>{{ 'CONTACT_PAGE.INFO.ACCESS.WALK.TEXT' | translate }}</p>
           </div>
           <div class="mode transport">
-            <h4>📦 Livraison</h4>
-            <p>
-              Livraison possible dans un rayon de 50km autour de Grand Baie.<br>
-              Frais de livraison : Rs 100 (gratuit à partir de Rs 3000 d'achat)
-            </p>
+            <h4>📦 {{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.TITLE' | translate }}</h4>
+            <p>{{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.TEXT' | translate }}</p>
           </div>
         </div>
       </div>

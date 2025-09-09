@@ -6,11 +6,12 @@ import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslatePipe],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss'
 })

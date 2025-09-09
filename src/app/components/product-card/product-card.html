@@ -4,9 +4,10 @@
       [src]="product.imageUrl"
       [alt]="product.name"
       (error)="onImageError($event)"
-      loading="lazy">
+      loading="eager"
+      fetchpriority="high">
     <div class="product-overlay">
-      <div class="product-origin">{{ product.origin }}</div>
+    <div class="product-origin">{{ product.origin }}</div>
       <!-- <button
         class="favorite-btn"
         (click)="toggleFavorite()"
@@ -30,8 +31,9 @@
 
     <div class="product-footer">
       <div class="product-price">
-        <span class="price">À partir de Rs {{ product.price | number:'1.2-2' }}/{{ product.unit }}</span>
-        <!-- <span class="unit">/{{ product.unit }}</span> -->
+        <span class="price">
+          {{ 'product-cart.price' | translate:{price: product.price, unit: product.unit} }}
+        </span>        
         <button
           class="add-to-cart btn btn-outline"
           (click)="addToCart()"
@@ -42,15 +44,15 @@
       </div>
 
       <div class="product-actions">
-        @if (showActions) {
-          <button class="btn btn-outline" type="button" [routerLink]="['/products/view', product.id]">
-            Plus d'infos
-          </button>
-        }@else {
-          <button class="btn btn-outline" type="button" [routerLink]="['/product', product.id]">
-           Plus d'infos...
-          </button>
-        }
+          @if (showActions) {
+            <button class="btn btn-outline" [routerLink]="['/products/view', product.id]">
+              {{ 'product-cart.moreInfoAlt' | translate }}
+            </button>
+          } @else {
+            <button class="btn btn-outline" [routerLink]="['/product', product.id]">
+              {{ 'product-cart.moreInfoAlt' | translate }}
+            </button>
+          }
       </div>
     </div>
   </div>

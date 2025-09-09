@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProductResponse } from '../models/product.models';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { I18nService } from './i18n.service';
 
 //const PRODUCTS_API = 'http://localhost:8070/api/products/';
 //const PRODUCTS_API = 'https://artisan-des-saveurs-production.up.railway.app/api/products/';
@@ -24,7 +25,7 @@ export class ProductService {
   private PRODUCTS_API: string | undefined;
   private isProd = environment.production;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private i18nService: I18nService) {
     if (this.isProd) {
       this.PRODUCTS_API = environment.apiUrlProd + '/products/';
     } else {
@@ -119,17 +120,27 @@ export class ProductService {
     return product$;
   }
 
-
   getCategoryDisplayName(category: ProductCategory): string {
-    const categoryNames = {
-      [ProductCategory.COTES_TRAVERS]: 'Côtes et Travers',
-      [ProductCategory.ROTIS_FILETS]: 'Rôtis et Filets',
-      [ProductCategory.SAUCISSES_CHARCUTERIE]: 'Saucisses et Charcuterie',
-      [ProductCategory.MORCEAUX_BRAISER]: 'Morceaux à Braiser',
-      [ProductCategory.PRODUITS_TRANSFORMES]: 'Produits Transformés'
+    const categoryKeys = {
+      [ProductCategory.COTES_TRAVERS]: 'category.cotes_travers',
+      [ProductCategory.ROTIS_FILETS]: 'category.rotis_filets',
+      [ProductCategory.SAUCISSES_CHARCUTERIE]: 'category.saucisses_charcuterie',
+      [ProductCategory.MORCEAUX_BRAISER]: 'category.morceaux_braiser',
+      [ProductCategory.PRODUITS_TRANSFORMES]: 'category.produits_transformes'
     };
-    return categoryNames[category];
+    return this.i18nService.translate(categoryKeys[category]);
   }
+
+  // getCategoryDisplayName(category: ProductCategory): string {
+  //   const categoryNames = {
+  //     [ProductCategory.COTES_TRAVERS]: 'Côtes et Travers',
+  //     [ProductCategory.ROTIS_FILETS]: 'Rôtis et Filets',
+  //     [ProductCategory.SAUCISSES_CHARCUTERIE]: 'Saucisses et Charcuterie',
+  //     [ProductCategory.MORCEAUX_BRAISER]: 'Morceaux à Braiser',
+  //     [ProductCategory.PRODUITS_TRANSFORMES]: 'Produits Transformés'
+  //   };
+  //   return categoryNames[category];
+  // }
 
   getAllCategories(): ProductCategory[] {
     return Object.values(ProductCategory);

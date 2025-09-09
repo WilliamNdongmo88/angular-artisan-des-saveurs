@@ -7,11 +7,12 @@ import { Product, ProductCategory } from '../../models/product';
 import { RouterModule } from '@angular/router';
 import { ScrollToTopComponent } from "../../components/scroll-to-top-button/scroll-to-top.component";
 import { ProductAdminService } from '../../services/product-admin.service';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductCardComponent, RouterModule, ScrollToTopComponent],
+  imports: [CommonModule, FormsModule, ProductCardComponent, RouterModule, ScrollToTopComponent, TranslatePipe],
   templateUrl: './catalog.html',
   styleUrl: './catalog.scss'
 })

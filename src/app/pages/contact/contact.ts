@@ -5,11 +5,12 @@ import { ContactService } from '../../services/contact';
 import { ContactForm } from '../../models/product';
 import { ScrollToTopComponent } from "../../components/scroll-to-top-button/scroll-to-top.component";
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ScrollToTopComponent],
+  imports: [CommonModule, ReactiveFormsModule, ScrollToTopComponent, TranslatePipe],
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })

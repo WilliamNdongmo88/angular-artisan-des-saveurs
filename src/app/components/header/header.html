@@ -1,7 +1,7 @@
 <nav class="navbar">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
-      <h3 class="brand-title">Artisan des Saveurs</h3>
+      <h3 class="brand-title">{{ 'brand.title' | translate }}</h3>
     </a>
     
     <button 
@@ -20,36 +20,36 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
-            Accueil
+            {{ 'nav.home' | translate }}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/catalog" routerLinkActive="active" (click)="closeMenu()">
-            Nos Produits
+            {{ 'nav.products' | translate }}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">
-            À Propos
+            {{ 'nav.about' | translate }}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">
-            Contact
+            {{ 'nav.contact' | translate }}
           </a>
         </li>
         
         <!-- Menu admin -->
         <li class="nav-item" *ngIf="currentUser && isAdmin()">
           <a class="nav-link admin-link" routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">
-            Dashboard
+            {{ 'nav.dashboard' | translate }}
           </a>
         </li>
 
         <!-- Profil utilisateur -->
         <!-- <li class="nav-item" *ngIf="currentUser && this.authService.isAuthenticated() && !isAdmin()">
           <a class="nav-link admin-link" routerLink="/profil" routerLinkActive="active" (click)="closeMenu()">
-            Profil
+            {{ 'nav.profile' | translate }}
           </a>
         </li> -->
       </ul>
@@ -57,13 +57,13 @@
       <!-- Menu utilisateur -->
       <div class="user-menu">
         <div *ngIf="!currentUser" class="auth-links">
-          <a class="nav-link login-link" routerLink="/login" (click)="closeMenu()">Connexion</a>
-          <a class="nav-link register-link" routerLink="/register" (click)="closeMenu()">Inscription</a>
+          <a class="nav-link login-link" routerLink="/login" (click)="closeMenu()">{{ 'nav.login' | translate }}</a>
+          <a class="nav-link register-link" routerLink="/register" (click)="closeMenu()">{{ 'nav.register' | translate }}</a>
         </div>
         
         <div *ngIf="currentUser" class="user-info">
           <span class="user-name">{{ currentUser.username }}</span>
-          <button class="logout-btn" (click)="logout()">Déconnexion</button>
+          <button class="logout-btn" (click)="logout()">{{ 'nav.logout' | translate }}</button>
         </div>
       </div>
     </div>

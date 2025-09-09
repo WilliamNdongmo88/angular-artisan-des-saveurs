@@ -7,6 +7,7 @@ import { OrderPayload, Product } from '../../models/order';
 import { CartItem, CartService } from '../../services/cart.service';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 export interface OrderData {
   subtotal: number;
@@ -32,7 +33,7 @@ export interface ProductItem {
 @Component({
   selector: 'app-order-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LoadingSpinnerComponent],
+  imports: [CommonModule, ReactiveFormsModule, LoadingSpinnerComponent, TranslatePipe],
   templateUrl: './order-modal.component.html',
   styleUrl: './order-modal.component.scss'
 })

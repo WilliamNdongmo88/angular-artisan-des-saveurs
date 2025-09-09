@@ -1,10 +1,120 @@
 {
   "nav.home": "Accueil",
   "nav.catalog": "Catalogue",
+  "nav.products": "Nos Produits",
+  "nav.about": "À Propos",
+  "nav.contact": "Contact",
   "nav.cart": "Panier",
   "nav.profile": "Profil",
   "nav.login": "Connexion",
+  "nav.register": "Inscription",
   "nav.logout": "Déconnexion",
+  "nav.dashboard": "Dashboard",
+  
+  "brand.title": "Artisan des Saveurs",
+
+  "home.hero.subtitle":"Spécialiste du Porc de Qualité",
+  "HERO": {
+    "TITLE1": "L'Artisan des",
+    "TITLE2":"Saveurs",
+    "SUBTITLE": "Spécialiste du Porc de Qualité",
+    "DESCRIPTION": "Découvrez notre sélection de viandes de porc fraîches et de qualité supérieure. Tradition, savoir-faire et passion au service de votre table.",
+    "BUTTON_CATALOG": "Découvrir nos produits"
+  },
+  "FEATURED_PRODUCTS": {
+    "TITLE": "Nos Produits Phares",
+    "BUTTON_ALL": "Voir tous nos produits"
+  },
+  "ABOUT": {
+    "TITLE": "Notre Savoir-Faire Artisanal",
+    "DESCRIPTION": "Depuis 2022, notre boucherie familiale perpétue les traditions de la boucherie Mauricienne. Nous sélectionnons avec soin nos fournisseurs pour vous offrir des viandes d'exception, dans le respect du bien-être animal et de l'environnement.",
+    "HIGHLIGHTS": {
+      "BREEDING": {
+        "TITLE": "Élevage Mauricien",
+        "TEXT": "Partenaires éleveurs sélectionnés"
+      },
+      "KNOWHOW": {
+        "TITLE": "Savoir-Faire",
+        "TEXT": "Techniques traditionnelles maîtrisées"
+      },
+      "FRESHNESS": {
+        "TITLE": "Fraîcheur",
+        "TEXT": "Chaîne du froid respectée"
+      }
+    },
+    "BUTTON_MORE": "En savoir plus sur nous"
+  },
+  "CONTACT": {
+    "TITLE": "Une Question ? Une Commande Spéciale ?",
+    "DESCRIPTION": "Notre équipe est à votre disposition pour vous conseiller et préparer vos commandes sur mesure",
+    "PHONE": "📞 +230 5984 0270",
+    "ADDRESS": "📍 123 Rue de la Boucherie, Grand Baie",
+    "BUTTON_CONTACT": "Nous contacter"
+  },
+  
+  "catalog.title": "Notre Catalogue",
+  "catalog.subtitle": "Découvrez notre sélection complète de viandes de porc de qualité supérieure",
+  "catalog.search": "Rechercher un produit...",
+  "catalog.allProducts": "Tous les produits",
+  "catalog.noResults": "Aucun produit trouvé",
+  "catalog.noResultsDescription": "Essayez de modifier vos critères de recherche",
+  
+  "about.title": "À Propos de Nous",
+  "about.subtitle": "Découvrez l'histoire et les valeurs de notre boucherie familiale",
+  "about.ourStory": "Notre Histoire",
+  "about.philosophy": "Notre Philosophie",
+  "about.commitments": "Nos Engagements Qualité",
+  
+  "contact.title": "Nous Contacter",
+  "contact.subtitle": "N'hésitez pas à nous contacter pour toute question ou commande spéciale",
+  "contact.sendMessage": "Envoyez-nous un message",
+  "contact.firstName": "Prénom",
+  "contact.lastName": "Nom",
+  "contact.email": "Email",
+  "contact.phone": "Téléphone",
+  "contact.subject": "Sujet",
+  "contact.message": "Message",
+  "contact.send": "Envoyer",
+  "contact.sending": "Envoi en cours...",
+  "contact.required": "*",
+  
+  "auth.login.title": "Connexion",
+  "auth.login.subtitle": "Connectez-vous à votre compte",
+  "auth.login.username": "Nom d'utilisateur",
+  "auth.login.password": "Mot de passe",
+  "auth.login.submit": "Se connecter",
+  "auth.login.forgotPassword": "Mot de passe oublié ?",
+  "auth.login.noAccount": "Pas de compte ?",
+  "auth.login.createAccount": "Créer un compte",
+  
+  "auth.register.title": "Inscription",
+  "auth.register.subtitle": "Créez votre compte",
+  "auth.register.submit": "S'inscrire",
+  "auth.register.hasAccount": "Déjà un compte ?",
+  "auth.register.login": "Se connecter",
+  
+  "dashboard.products.title": "Gestion des Produits",
+  "dashboard.products.description": "Créer, modifier et supprimer des produits",
+  "dashboard.products.manage": "Gérer les produits",
+  "dashboard.orders.title": "Commandes",
+  "dashboard.orders.description": "Gérer les commandes clients",
+  "dashboard.orders.manage": "Gérer les commandes",
+  "dashboard.stats.title": "Statistiques",
+  "dashboard.stats.description": "Voir les statistiques de vente",
+  "dashboard.stats.comingSoon": "Bientôt disponible",
+  "dashboard.settings.title": "Paramètres",
+  "dashboard.settings.description": "Configurer l'application",
+  
+  "modal.order.title": "Finaliser votre commande",
+  "modal.order.close": "Fermer",
+  "modal.order.firstName": "Prénom",
+  "modal.order.lastName": "Nom",
+  "modal.order.email": "Email",
+  "modal.order.phone": "Téléphone",
+  "modal.order.address": "Adresse",
+  "modal.order.submit": "Confirmer la commande",
+  "modal.order.required": "requis",
+  
   "profile.title": "Mon Profil",
   "profile.personalInfo": "Informations personnelles",
   "profile.orderHistory": "Historique des commandes",
@@ -14,6 +124,7 @@
   "profile.activeAccount": "Compte actif",
   "profile.inactiveAccount": "Compte inactif",
   "profile.changeAvatar": "Changer l'avatar",
+  
   "form.firstName": "Prénom",
   "form.lastName": "Nom",
   "form.email": "Adresse e-mail",
@@ -22,10 +133,12 @@
   "form.cancel": "Annuler",
   "form.save": "Enregistrer",
   "form.saving": "Enregistrement...",
+  
   "validation.required": "Ce champ est requis",
   "validation.email": "L'adresse e-mail n'est pas valide",
   "validation.phone": "Le numéro de téléphone n'est pas valide",
   "validation.minLength": "Ce champ doit contenir au moins {min} caractères",
+  
   "orders.title": "Historique des commandes",
   "orders.orderNumber": "Commande #",
   "orders.date": "Date",
@@ -39,11 +152,13 @@
   "orders.empty": "Aucune commande",
   "orders.emptyDescription": "Vous n'avez pas encore passé de commande.",
   "orders.discoverProducts": "Découvrir nos produits",
+  
   "addresses.title": "Mes adresses",
   "addresses.add": "Ajouter une adresse",
   "addresses.default": "Adresse par défaut",
   "addresses.empty": "Aucune adresse enregistrée",
   "addresses.emptyDescription": "Ajoutez une adresse pour faciliter vos commandes.",
+  
   "preferences.title": "Préférences",
   "preferences.emailNotifications": "Notifications par e-mail",
   "preferences.promotions": "Recevoir les offres promotionnelles",
@@ -53,17 +168,54 @@
   "preferences.language": "Langue",
   "preferences.currency": "Devise",
   "preferences.savePreferences": "Enregistrer les préférences",
+  
   "security.title": "Sécurité du compte",
   "security.changePassword": "Changer le mot de passe",
   "security.currentPassword": "Mot de passe actuel",
   "security.newPassword": "Nouveau mot de passe",
   "security.confirmPassword": "Confirmer le mot de passe",
+  
   "success.personalInfoUpdated": "Informations personnelles mises à jour avec succès",
   "success.passwordUpdated": "Mot de passe mis à jour avec succès",
   "success.preferencesUpdated": "Préférences mises à jour avec succès",
   "success.avatarUpdated": "Photo mise à jour avec succès",
+  
   "error.updatePersonalInfo": "Erreur lors de la mise à jour des informations",
   "error.updatePassword": "Erreur lors du changement de mot de passe",
   "error.updatePreferences": "Erreur lors de la mise à jour des préférences",
-  "error.uploadAvatar": "Erreur lors de l'upload de l'avatar"
+  "error.uploadAvatar": "Erreur lors de l'upload de l'avatar",
+  
+  "footer.title": "L'Artisan des Saveurs",
+  "footer.description": "Votre spécialiste du porc de qualité depuis 2022",
+  "footer.address": "123 Rue de la Boucherie, Grand Baie",
+  "footer.phone": "+230 5984 0270",
+  "footer.email": "contact@artisan-des-saveurs.fr",
+  "footer.hours": "Horaires d'ouverture",
+  "footer.weekdays": "Lundi - Vendredi : 8h00 - 13h00 | 14h00 - 17h00",
+  "footer.saturday": "Samedi : 8h00 - 13h00",
+  "footer.sunday": "Dimanche : Fermé",
+  "footer.commitments": "Nos Engagements",
+  "footer.commitment1": "Élevage Mauricienne respectueux",
+  "footer.commitment2": "Savoir-faire artisanal",
+  "footer.commitment3": "Chaîne du froid respectée",
+  "footer.commitment4": "Pratiques durables",
+  "footer.copyright": "L'Artisan des Saveurs. Tous droits réservés.",
+  
+  "cart.title": "Mon Panier",
+  "cart.empty": "Votre panier est vide",
+  "cart.emptyDescription": "Découvrez nos produits et ajoutez-les à votre panier",
+  "cart.total": "Total",
+  "cart.checkout": "Commander",
+  "cart.continue": "Continuer mes achats",
+  "cart.remove": "Supprimer",
+  "cart.quantity": "Quantité",
+  
+  "product.addToCart": "Ajouter au panier",
+  "product.price": "Prix",
+  "product.description": "Description",
+  "product.category": "Catégorie",
+  "product.availability": "Disponibilité",
+  "product.inStock": "En stock",
+  "product.outOfStock": "Rupture de stock"
 }
+

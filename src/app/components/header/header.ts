@@ -5,11 +5,12 @@ import { filter, Subscription } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { AuthUser } from '../../models/auth.models';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

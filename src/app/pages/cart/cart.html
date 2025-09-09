@@ -1,22 +1,27 @@
 <div class="cart-container">
   <div class="cart-content">
-    @if (!submitMessage) {
-      <!-- En-tête du panier -->
+    <!-- Header (affiché si pas de message de soumission) -->
+    <div *ngIf="!submitMessage">
       <div class="cart-header">
         <h1 class="cart-title">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Mon Panier
+          {{ 'cart.title' | translate }}
         </h1>
-        <p class="cart-subtitle" *ngIf="cartItems.length > 0">{{ cartItems.length }} article(s) dans votre panier</p>
+
+        <p class="cart-subtitle" *ngIf="cartItems.length > 0">
+          {{ 'cart.itemsCount' | translate:{count: cartItems.length} }}
+        </p>
       </div>
-    }@else if (submitMessage) {
-      <!-- Success/Error Message -->
-      <div *ngIf="submitMessage" class="alert" [class.alert-success]="submitSuccess" [class.alert-error]="!submitSuccess">
+    </div>
+
+    <!-- Success / Error message (après soumission) -->
+    <div *ngIf="submitMessage">
+      <div class="alert" [class.alert-success]="submitSuccess" [class.alert-error]="!submitSuccess">
         {{ submitMessage }}
       </div>
-    }
+    </div>
 
     <!-- Panier vide -->
     <div *ngIf="cartItems.length === 0" class="empty-cart">
@@ -25,9 +30,12 @@
           <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h2>Votre panier est vide</h2>
-      <p>Découvrez nos délicieux produits de porc artisanaux</p>
-      <button class="btn btn-primary" (click)="continueShopping()">Découvrir nos produits</button>
+
+      <h2>{{ 'cart.empty.title' | translate }}</h2>
+      <p>{{ 'cart.empty.description' | translate }}</p>
+      <button class="btn btn-primary" (click)="continueShopping()">
+        {{ 'cart.empty.cta' | translate }}
+      </button>
     </div>
 
     <!-- Articles du panier -->
@@ -39,34 +47,21 @@
               [src]="item.product.image || item.product.imageUrl" 
               [alt]="item.product.name"
               (error)="onImageError($event)"
-              loading="lazy">
-            <!-- <div class="item-origin">{{ item.product.origin }}</div> -->
+              loading="eager">
           </div>
-          
+
           <div class="item-details">
             <h3 class="item-name">{{ item.product.name }}</h3>
             <p class="item-description">{{ item.product.description }}</p>
             <div class="item-price">
-              <span class="unit-price">Rs {{ item.product.price | number:'1.2-2' }}/kg</span>
+              <span class="unit-price">Rs {{ item.product.price | number:'1.2-2' }}{{ 'cart.item.unitPriceSuffix' | translate }}</span>
             </div>
           </div>
-          
-          <!-- Section quantité mise à jour avec unités -->
+
+          <!-- Quantité pour chaque article -->
           <div class="item-quantity">
-            <label>Quantité</label>
-            
-            <!-- Sélecteur d'unité pour chaque article -->
-            <!-- <div class="unit-selector">
-              <select 
-                [(ngModel)]="item.selectedUnit" 
-                (ngModelChange)="onItemUnitChange(item)"
-                class="unit-select">
-                <option value="kg">kg</option>
-                <option value="g">g</option>
-              </select>
-            </div> -->
-            
-            <!-- Contrôles de quantité décimale -->
+            <label>{{ 'cart.item.quantity' | translate }}</label>
+
             <div class="quantity-controls">
               <button 
                 class="quantity-btn" 
@@ -74,7 +69,7 @@
                 [disabled]="item.displayQuantity <= getMinQuantityForUnit(item.selectedUnit)">
                 -
               </button>
-              
+
               <input 
                 type="number" 
                 [(ngModel)]="item.displayQuantity"
@@ -83,23 +78,21 @@
                 [min]="getMinQuantityForUnit(item.selectedUnit)"
                 class="quantity-input"
                 placeholder="0">
-              
+
               <button 
                 class="quantity-btn" 
                 (click)="increaseItemQuantity(item)">
                 +
               </button>
             </div>
-            
-            <!-- Affichage de la quantité avec unité -->
+
             <div class="quantity-display-info">
               <span class="quantity-text">{{ item.displayQuantity }} {{ item.selectedUnit }}</span>
               <small class="quantity-equivalent" *ngIf="item.selectedUnit === 'g'">
-                ({{ (item.displayQuantity / 1000) | number:'1.2-2' }} kg)
+                ({{ (item.displayQuantity / 1000) | number:'1.2-2' }} {{ 'cart.item.unitKg' | translate }})
               </small>
             </div>
           </div>
-          
           <div class="item-total">
             <div class="total-price">Rs {{ getItemTotalPrice(item) | number:'1.2-2' }}</div>
             <button class="remove-btn" (click)="removeItem(item.product.id)" title="Supprimer cet article">
@@ -112,26 +105,26 @@
         </div>
       </div>
 
-      <!-- Résumé de la commande -->
+      <!-- Récapitulatif -->
       <div class="order-summary">
-        <h3>Résumé de la commande</h3>
-        
+        <h3>{{ 'cart.summary.title' | translate }}</h3>
+
         <div class="summary-line">
-          <span>Sous-total</span>
+          <span>{{ 'cart.summary.subtotal' | translate }}</span>
           <span>Rs {{ subtotal | number:'1.2-2' }}</span>
         </div>
-        
+
         <div class="summary-line discount">
-          <span>Réduction ({{ discountPercentage }}%)</span>
+          <span>{{ 'cart.summary.discount' | translate:{percent: discountPercentage} }}</span>
           <span>-Rs {{ discountAmount | number:'1.2-2' }}</span>
         </div>
-        
+
         <div class="summary-line total">
-          <span>Total</span>
+          <span>{{ 'cart.summary.total' | translate }}</span>
           <span>Rs {{ total | number:'1.2-2' }}</span>
         </div>
 
-        <!-- Information livraison -->
+        <!-- Livraison -->
         <div class="shipping-status">
           <div *ngIf="isEligibleForFreeShipping" class="free-shipping">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,31 +133,34 @@
               <circle cx="7.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
               <circle cx="17" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
             </svg>
-            <span>Livraison gratuite incluse !</span>
+            <span>{{ 'cart.shipping.freeIncluded' | translate }}</span>
           </div>
+
           <div *ngIf="!isEligibleForFreeShipping" class="shipping-needed">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
               <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Ajoutez Rs {{ amountNeededForFreeShipping | number:'1.2-2' }} pour la livraison gratuite</span>
+            <span>{{ 'cart.shipping.addMore' | translate:{amount: amountNeededForFreeShipping} }}</span>
           </div>
         </div>
 
         <!-- Actions -->
         <div class="cart-actions">
-          <button class="btn btn-outline" (click)="continueShopping()">Continuer mes achats</button>
+          <button class="btn btn-outline" (click)="continueShopping()">
+            {{ 'cart.actions.continueShopping' | translate }}
+          </button>
           <button class="btn btn-primary submit-order-btn" (click)="submitOrder()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Valider la commande
+            {{ 'cart.actions.submitOrder' | translate }}
           </button>
         </div>
 
         <button class="clear-cart-btn" (click)="clearCart()" *ngIf="cartItems.length > 0">
-          Vider le panier
+          {{ 'cart.actions.clearCart' | translate }}
         </button>
       </div>
     </div>
@@ -180,4 +176,3 @@
   (clearCartEvent)="clearCart()"
   (submitOrderEvent)="onOrderSubmit($event)">
 </app-order-modal>
-

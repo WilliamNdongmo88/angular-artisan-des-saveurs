@@ -2,37 +2,37 @@
   <div class="container">
     <div class="footer-content">
       <div class="footer-section">
-        <h5>L'Artisan des Saveurs</h5>
-        <p>Votre spécialiste du porc de qualité depuis 2022</p>
+        <h5>{{ 'footer.title' | translate }}</h5>
+        <p>{{ 'footer.description' | translate }}</p>
         <div class="contact-info">
-          <p><strong>📍</strong> 123 Rue de la Boucherie, Grand Baie</p>
-          <p><strong>📞</strong> +230 5984 0270</p>
-          <p><strong>✉️</strong> contact&#64;artisan-des-saveurs.fr</p>
+          <p><strong>📍</strong> {{ 'footer.address' | translate }}</p>
+          <p><strong>📞</strong> {{ 'footer.phone' | translate }}</p>
+          <p><strong>✉️</strong> {{ 'footer.email' | translate }}</p>
         </div>
       </div>
       
       <div class="footer-section">
-        <h6>Horaires d'ouverture</h6>
+        <h6>{{ 'footer.hours' | translate }}</h6>
         <div class="hours">
-          <p>Lundi - Vendredi : 8h00 - 13h00 | 14h00 - 17h00</p>
-          <p>Samedi : 8h00 - 13h00</p>
-          <p><strong>Dimanche : Fermé</strong></p>
+          <p>{{ 'footer.weekdays' | translate }}</p>
+          <p>{{ 'footer.saturday' | translate }}</p>
+          <p><strong>{{ 'footer.sunday' | translate }}</strong></p>
         </div>
       </div>
       
       <div class="footer-section">
-        <h6>Nos Engagements</h6>
+        <h6>{{ 'footer.commitments' | translate }}</h6>
         <ul class="commitments">
-          <li>🐷 Élevage Mauricienne respectueux</li>
-          <li>🔪 Savoir-faire artisanal</li>
-          <li>❄️ Chaîne du froid respectée</li>
-          <li>🌱 Pratiques durables</li>
+          <li>🐷 {{ 'footer.commitment1' | translate }}</li>
+          <li>🔪 {{ 'footer.commitment2' | translate }}</li>
+          <li>❄️ {{ 'footer.commitment3' | translate }}</li>
+          <li>🌱 {{ 'footer.commitment4' | translate }}</li>
         </ul>
       </div>
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; {{ currentYear }} L'Artisan des Saveurs. Tous droits réservés.</p>
+      <p>&copy; {{ currentYear }} {{ 'footer.copyright' | translate }}</p>
       <!-- <p class="made-with">Développé avec Angular</p> -->
     </div>
   </div>

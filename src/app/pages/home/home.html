@@ -9,17 +9,14 @@
     <div class="container">
       <div class="hero-text">
         <h1 class="hero-title">
-          L'Artisan des<br>
-          <span class="highlight">Saveurs</span>
+          {{ 'HERO.TITLE1' | translate }}<br>
+          <span class="highlight">{{ 'HERO.TITLE2' | translate }}</span>
         </h1>
-        <p class="hero-subtitle">Spécialiste du Porc de Qualité</p>
-        <p class="hero-description">
-          Découvrez notre sélection de viandes de porc fraîches et de qualité supérieure. 
-          Tradition, savoir-faire et passion au service de votre table.
-        </p>
+        <p class="hero-subtitle">{{ 'HERO.SUBTITLE' | translate }}</p>
+        <p class="hero-description">{{ 'HERO.DESCRIPTION' | translate }}</p>
         <div class="hero-actions">
           <a routerLink="/catalog" class="btn btn-primary">
-            Découvrir nos produits
+            {{ 'HERO.BUTTON_CATALOG' | translate }}
           </a>
         </div>
       </div>
@@ -31,11 +28,8 @@
 <section class="featured-section">
   <div class="container">
     <div class="section-header slide-up">
-      <h2 class="section-title slide-up">Nos Produits Phares</h2>
+      <h2 class="section-title slide-up">{{ 'FEATURED_PRODUCTS.TITLE' | translate }}</h2>
       <div class="section-divider slide-up"></div>
-      <!-- <p class="section-subtitle">
-        Découvrez notre sélection de produits d'exception, préparés avec soin par nos bouchers expérimentés
-      </p> -->
     </div>
     
     <div class="products-grid slide-up">
@@ -48,7 +42,7 @@
     
     <div class="section-footer">
       <a routerLink="/catalog" class="btn btn-outline">
-        Voir tous nos produits
+        {{ 'FEATURED_PRODUCTS.BUTTON_ALL' | translate }}
       </a>
     </div>
   </div>
@@ -59,37 +53,33 @@
   <div class="container">
     <div class="about-content slide-up">
       <div class="about-text slide-up">
-        <h2 class="about-title slide-up">Notre Savoir-Faire Artisanal</h2>
-        <p class="about-description">
-          Depuis 2022, notre boucherie familiale perpétue les traditions de la boucherie Mauricienne. 
-          Nous sélectionnons avec soin nos fournisseurs pour vous offrir des viandes d'exception, 
-          dans le respect du bien-être animal et de l'environnement.
-        </p>
+        <h2 class="about-title slide-up">{{ 'ABOUT.TITLE' | translate }}</h2>
+        <p class="about-description">{{ 'ABOUT.DESCRIPTION' | translate }}</p>
         <div class="about-highlights">
           <div class="highlight-item">
             <div class="highlight-icon">🐷</div>
             <div class="highlight-text">
-              <h4>Élevage Mauricien</h4>
-              <p>Partenaires éleveurs sélectionnés</p>
+              <h4>{{ 'ABOUT.HIGHLIGHTS.BREEDING.TITLE' | translate }}</h4>
+              <p>{{ 'ABOUT.HIGHLIGHTS.BREEDING.TEXT' | translate }}</p>
             </div>
           </div>
           <div class="highlight-item">
             <div class="highlight-icon">🔪</div>
             <div class="highlight-text">
-              <h4>Savoir-Faire</h4>
-              <p>Techniques traditionnelles maîtrisées</p>
+              <h4>{{ 'ABOUT.HIGHLIGHTS.KNOWHOW.TITLE' | translate }}</h4>
+              <p>{{ 'ABOUT.HIGHLIGHTS.KNOWHOW.TEXT' | translate }}</p>
             </div>
           </div>
           <div class="highlight-item">
             <div class="highlight-icon">❄️</div>
             <div class="highlight-text">
-              <h4>Fraîcheur</h4>
-              <p>Chaîne du froid respectée</p>
+              <h4>{{ 'ABOUT.HIGHLIGHTS.FRESHNESS.TITLE' | translate }}</h4>
+              <p>{{ 'ABOUT.HIGHLIGHTS.FRESHNESS.TEXT' | translate }}</p>
             </div>
           </div>
         </div>
-        <a routerLink="/a-propos" class="btn btn-secondary">
-          En savoir plus sur nous
+        <a routerLink="/about" class="btn btn-secondary">
+          {{ 'ABOUT.BUTTON_MORE' | translate }}
         </a>
       </div>
       <div class="about-image">
@@ -103,24 +93,21 @@
 <section class="contact-cta-section">
   <div class="container slide-up">
     <div class="cta-content">
-      <h2 class="cta-title slide-up">Une Question ? Une Commande Spéciale ?</h2>
-      <p class="cta-description slide-up">
-        Notre équipe est à votre disposition pour vous conseiller et préparer vos commandes sur mesure
-      </p>
+      <h2 class="cta-title slide-up">{{ 'CONTACT.TITLE' | translate }}</h2>
+      <p class="cta-description slide-up">{{ 'CONTACT.DESCRIPTION' | translate }}</p>
       <div class="cta-info">
         <div class="info-item">
-          <strong>📞 +230 5984 0270</strong>
+          <strong>{{ 'CONTACT.PHONE' | translate }}</strong>
         </div>
         <div class="info-item">
-          <strong>📍 123 Rue de la Boucherie, Grand Baie</strong>
+          <strong>{{ 'CONTACT.ADDRESS' | translate }}</strong>
         </div>
       </div>
       <a routerLink="/contact" class="btn btn-primary">
-        Nous contacter
+        {{ 'CONTACT.BUTTON_CONTACT' | translate }}
       </a>
     </div>
   </div>
 </section>
 
 <app-scroll-to-top></app-scroll-to-top>
-

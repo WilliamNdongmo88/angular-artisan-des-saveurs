@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../../services/sharedService';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './footer.html',
   styleUrl: './footer.scss'
 })

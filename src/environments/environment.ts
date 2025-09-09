@@ -1,6 +1,10 @@
 export const environment = {
-  production: true, // Change to true to activate production environment
+  production: false, // Change to true to activate production environment
   apiUrlDev: 'http://localhost:8070/api',
   apiUrlProd: 'https://artisan-des-saveurs-production.up.railway.app/api'
 };
-console.log("✅ Fichier environment.ts chargé !");
+if (environment.production) {
+  console.log("✅ Environment de Prduction chargé !");
+}else{
+  console.log("✅ Environment de Développement chargé !");
+}

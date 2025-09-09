@@ -1,10 +1,129 @@
 {
   "nav.home": "Home",
   "nav.catalog": "Catalog",
+  "nav.products": "Our Products",
+  "nav.about": "About",
+  "nav.contact": "Contact",
   "nav.cart": "Cart",
   "nav.profile": "Profile",
   "nav.login": "Login",
+  "nav.register": "Register",
   "nav.logout": "Logout",
+  "nav.dashboard": "Dashboard",
+
+  "HERO": {
+    "TITLE1": "Artisan des",
+    "TITLE2":"Saveurs",
+    "SUBTITLE": "Quality Pork Specialist",
+    "DESCRIPTION": "Discover our selection of fresh, top-quality pork. Tradition, know-how, and passion at the service of your table.",
+    "BUTTON_CATALOG": "Discover our products"
+  },
+  "FEATURED_PRODUCTS": {
+    "TITLE": "Featured Products",
+    "BUTTON_ALL": "See all our products"
+  },
+  "ABOUT": {
+    "TITLE": "Our Artisan Know-How",
+    "DESCRIPTION": "Since 2022, our family butcher shop has been preserving Mauritian butchery traditions. We carefully select our suppliers to offer you exceptional meats, respecting animal welfare and the environment.",
+    "HIGHLIGHTS": {
+      "BREEDING": {
+        "TITLE": "Mauritian Breeding",
+        "TEXT": "Selected partner breeders"
+      },
+      "KNOWHOW": {
+        "TITLE": "Know-How",
+        "TEXT": "Traditional techniques mastered"
+      },
+      "FRESHNESS": {
+        "TITLE": "Freshness",
+        "TEXT": "Cold chain respected"
+      }
+    },
+    "BUTTON_MORE": "Learn more about us"
+  },
+  "CONTACT": {
+    "TITLE": "Any Question? Special Order?",
+    "DESCRIPTION": "Our team is available to advise you and prepare custom orders",
+    "PHONE": "📞 +230 5984 0270",
+    "ADDRESS": "📍 123 Rue de la Boucherie, Grand Baie",
+    "BUTTON_CONTACT": "Contact us"
+  },
+  
+  "brand.title": "Artisan des Saveurs",
+  
+  "hero.title": "Artisan des Saveurs",
+  "hero.subtitle": "Quality Pork Specialist",
+  "hero.description": "Discover our selection of fresh, superior quality pork meats. Tradition, craftsmanship and passion at the service of your table.",
+  "hero.discoverProducts": "Discover our products",
+  
+  "featured.title": "Our Featured Products",
+  "featured.viewAll": "View all products",
+
+  "home.hero.subtitle":"Quality Pork Specialist",
+  
+  "catalog.title": "Our Catalog",
+  "catalog.subtitle": "Discover our complete selection of superior quality pork meats",
+  "catalog.search": "Search for a product...",
+  "catalog.allProducts": "All products",
+  "catalog.noResults": "No products found",
+  "catalog.noResultsDescription": "Try modifying your search criteria",
+  
+  "about.title": "About Us",
+  "about.subtitle": "Discover the history and values of our family butcher shop",
+  "about.ourStory": "Our Story",
+  "about.philosophy": "Our Philosophy",
+  "about.commitments": "Our Quality Commitments",
+  
+  "contact.title": "Contact Us",
+  "contact.subtitle": "Don't hesitate to contact us for any questions or special orders",
+  "contact.sendMessage": "Send us a message",
+  "contact.firstName": "First Name",
+  "contact.lastName": "Last Name",
+  "contact.email": "Email",
+  "contact.phone": "Phone",
+  "contact.subject": "Subject",
+  "contact.message": "Message",
+  "contact.send": "Send",
+  "contact.sending": "Sending...",
+  "contact.required": "*",
+  
+  "auth.login.title": "Login",
+  "auth.login.subtitle": "Sign in to your account",
+  "auth.login.username": "Username",
+  "auth.login.password": "Password",
+  "auth.login.submit": "Sign In",
+  "auth.login.forgotPassword": "Forgot password?",
+  "auth.login.noAccount": "No account?",
+  "auth.login.createAccount": "Create account",
+  
+  "auth.register.title": "Register",
+  "auth.register.subtitle": "Create your account",
+  "auth.register.submit": "Sign Up",
+  "auth.register.hasAccount": "Already have an account?",
+  "auth.register.login": "Sign in",
+  
+  "dashboard.products.title": "Product Management",
+  "dashboard.products.description": "Create, edit and delete products",
+  "dashboard.products.manage": "Manage products",
+  "dashboard.orders.title": "Orders",
+  "dashboard.orders.description": "Manage customer orders",
+  "dashboard.orders.manage": "Manage orders",
+  "dashboard.stats.title": "Statistics",
+  "dashboard.stats.description": "View sales statistics",
+  "dashboard.stats.comingSoon": "Coming soon",
+  "dashboard.settings.title": "Settings",
+  "dashboard.settings.description": "Configure the application",
+  
+  "modal.order.title": "Complete your order",
+  "modal.order.close": "Close",
+  "modal.order.firstName": "First Name",
+  "modal.order.lastName": "Last Name",
+  "modal.order.email": "Email",
+  "modal.order.phone": "Phone",
+  "modal.order.address": "Address",
+  "modal.order.submit": "Confirm order",
+  "modal.order.required": "required",
+  
   "profile.title": "My Profile",
   "profile.personalInfo": "Personal Information",
   "profile.orderHistory": "Order History",
@@ -14,6 +133,7 @@
   "profile.activeAccount": "Active Account",
   "profile.inactiveAccount": "Inactive Account",
   "profile.changeAvatar": "Change avatar",
+  
   "form.firstName": "First Name",
   "form.lastName": "Last Name",
   "form.email": "Email Address",
@@ -22,10 +142,12 @@
   "form.cancel": "Cancel",
   "form.save": "Save",
   "form.saving": "Saving...",
+  
   "validation.required": "This field is required",
   "validation.email": "The email address is not valid",
   "validation.phone": "The phone number is not valid",
   "validation.minLength": "This field must contain at least {min} characters",
+  
   "orders.title": "Order History",
   "orders.orderNumber": "Order #",
   "orders.date": "Date",
@@ -39,11 +161,13 @@
   "orders.empty": "No Orders",
   "orders.emptyDescription": "You haven't placed any orders yet.",
   "orders.discoverProducts": "Discover Our Products",
+  
   "addresses.title": "My Addresses",
   "addresses.add": "Add Address",
   "addresses.default": "Default Address",
   "addresses.empty": "No Saved Addresses",
   "addresses.emptyDescription": "Add an address to make ordering easier.",
+  
   "preferences.title": "Preferences",
   "preferences.emailNotifications": "Email Notifications",
   "preferences.promotions": "Receive promotional offers",
@@ -53,17 +177,54 @@
   "preferences.language": "Language",
   "preferences.currency": "Currency",
   "preferences.savePreferences": "Save Preferences",
+  
   "security.title": "Account Security",
   "security.changePassword": "Change Password",
   "security.currentPassword": "Current Password",
   "security.newPassword": "New Password",
   "security.confirmPassword": "Confirm Password",
+  
   "success.personalInfoUpdated": "Personal information updated successfully",
   "success.passwordUpdated": "Password updated successfully",
   "success.preferencesUpdated": "Preferences updated successfully",
   "success.avatarUpdated": "Photo updated successfully",
+  
   "error.updatePersonalInfo": "Error updating information",
   "error.updatePassword": "Error changing password",
   "error.updatePreferences": "Error updating preferences",
-  "error.uploadAvatar": "Error uploading avatar"
+  "error.uploadAvatar": "Error uploading avatar",
+  
+  "footer.title": "Artisan des Saveurs",
+  "footer.description": "Your quality pork specialist since 2022",
+  "footer.address": "123 Butcher Street, Grand Baie",
+  "footer.phone": "+230 5984 0270",
+  "footer.email": "contact@artisan-des-saveurs.fr",
+  "footer.hours": "Opening Hours",
+  "footer.weekdays": "Monday - Friday: 8:00 AM - 1:00 PM | 2:00 PM - 5:00 PM",
+  "footer.saturday": "Saturday: 8:00 AM - 1:00 PM",
+  "footer.sunday": "Sunday: Closed",
+  "footer.commitments": "Our Commitments",
+  "footer.commitment1": "Respectful Mauritian farming",
+  "footer.commitment2": "Artisanal know-how",
+  "footer.commitment3": "Cold chain respected",
+  "footer.commitment4": "Sustainable practices",
+  "footer.copyright": "Artisan des Saveurs. All rights reserved.",
+  
+  "cart.title": "My Cart",
+  "cart.empty": "Your cart is empty",
+  "cart.emptyDescription": "Discover our products and add them to your cart",
+  "cart.total": "Total",
+  "cart.checkout": "Checkout",
+  "cart.continue": "Continue shopping",
+  "cart.remove": "Remove",
+  "cart.quantity": "Quantity",
+  
+  "product.addToCart": "Add to cart",
+  "product.price": "Price",
+  "product.description": "Description",
+  "product.category": "Category",
+  "product.availability": "Availability",
+  "product.inStock": "In stock",
+  "product.outOfStock": "Out of stock"
 }
+

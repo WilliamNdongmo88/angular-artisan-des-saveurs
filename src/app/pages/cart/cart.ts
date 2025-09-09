@@ -9,6 +9,7 @@ import { OrderModalComponent, OrderData, OrderFormData } from '../../components/
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 // Interface étendue pour les articles du panier avec unités
 interface ExtendedCartItem extends CartItem {
@@ -19,7 +20,7 @@ interface ExtendedCartItem extends CartItem {
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, OrderModalComponent, FormsModule],
+  imports: [CommonModule, OrderModalComponent, FormsModule, TranslatePipe],
   templateUrl: './cart.html',
   styleUrl: './cart.scss'
 })
