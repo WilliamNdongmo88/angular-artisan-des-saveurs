@@ -49,7 +49,7 @@ export class OrderModalComponent implements OnInit {
   isSubmitting = false;
   isLoading = false;
   isUserConnected = false; // Pour cacher le formulaire si l'utilisateur est connecté
-  isDisabled = false;
+  isDisabled = true;
   user = {
     firstName: '',
     lastName: '',
@@ -70,14 +70,13 @@ export class OrderModalComponent implements OnInit {
     //const data = JSON.parse(localStorage.getItem('currentUser') || '{}');
     const currentUser = this.authService.currentUserValue;
     //this.authService.isAuthenticated(); // Vérifie si le token est encore valide
-    console.log('[OrderModalComponent] currentUser :: ', currentUser);
-    if(currentUser)
-    if (currentUser && currentUser.token) {
+    console.log('[OrderModalComponent] currentUser :1: ', currentUser);
+    if (currentUser && currentUser?.token) {
       this.isUserConnected = true;
-      this.isDisabled = true; // Activer le mode désactivé si l'utilisateur est connecté
+      this.isDisabled = false; // Activer le mode désactivé si l'utilisateur est connecté
       console.log('[OrderModalComponent] isDisabled :: ', this.isDisabled);
       this.authService.extractUserFromToken(currentUser.token); // Restaure le user en mémoire
-      console.log('[OrderModalComponent] currentUser :: ', this.authService.getUser());
+      console.log('[OrderModalComponent] currentUser :2: ', this.authService.getUser());
       const userData = this.authService.getUser();
       if (userData) {
         this.user = {
