@@ -71,13 +71,16 @@
             class="form-control"
             [class.is-invalid]="submitted && f['category'].errors">
             <option value="" disabled selected>-- Sélectionner une catégorie --</option>
-            <option value="decoupes_porc_classiques">Découpe de porc classiques</option>
+            <option value="decoupes-porc-classiques">Découpe de porc classiques</option>
             <option value="charcuteries-terrines">Charcuteries et terrines</option>
             <option value="produits_cuisines">Saucisses et variantes</option>
             <option value="morceaux-braiser">Produits cuisinés/assaisonnés</option>
             <option value="boudins">Boudins</option>
             <option value="produits-transformes">Produits transformés</option>
-          </select>
+          </select>"saucisses_variantes": "",
+        "produits_cuisines": "Cooked or seasoned products",
+        "boudins":"Blood sausages",
+        "produits_transformes": "Processed Products"
 
           <div *ngIf="submitted && f['category'].errors" class="invalid-feedback">
             <div *ngIf="f['category'].errors['maxlength']">
