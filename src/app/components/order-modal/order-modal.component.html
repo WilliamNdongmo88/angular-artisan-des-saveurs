@@ -14,6 +14,7 @@
             type="text" 
             id="firstName" 
             formControlName="firstName"
+            (change)="handleChange($event)"
             [class.error]="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched"
             [placeholder]="'orderModal.placeholders.firstName' | translate">
           <div class="error-message" *ngIf="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched">
@@ -21,18 +22,21 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="lastName">{{ 'orderModal.labels.lastName' | translate }}</label>
-          <input 
-            type="text" 
-            id="lastName" 
-            formControlName="lastName"
-            [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
-            [placeholder]="'orderModal.placeholders.lastName' | translate">
-          <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
-            {{ 'orderModal.errors.lastNameRequired' | translate }}
-          </div>
+      <div class="form-group">
+        <label for="lastName">{{ 'orderModal.labels.lastName' | translate }}</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          formControlName="lastName"
+          (change)="handleChange($event)"
+          [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
+          [placeholder]="'orderModal.placeholders.lastName' | translate">
+        
+        <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
+          {{ 'orderModal.errors.lastNameRequired' | translate }}
         </div>
+      </div>
+
 
         <div class="form-group">
           <label for="email">{{ 'orderModal.labels.email' | translate }}</label>
@@ -40,6 +44,7 @@
             type="email" 
             id="email" 
             formControlName="email"
+            (change)="handleChange($event)"
             [class.error]="orderForm.get('email')?.invalid && orderForm.get('email')?.touched"
             [placeholder]="'orderModal.placeholders.email' | translate">
           <div class="error-message" *ngIf="orderForm.get('email')?.invalid && orderForm.get('email')?.touched">
@@ -54,6 +59,7 @@
             type="tel" 
             id="phone" 
             formControlName="phone"
+            (change)="handleChange($event)"
             [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
             [placeholder]="'orderModal.placeholders.phone' | translate">
           <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">

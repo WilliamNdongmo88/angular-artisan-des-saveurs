@@ -96,13 +96,26 @@ export class OrderModalComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(10)]]
     });
+    console.log("this.orderForm.valid :: ", this.orderForm.valid);
   }
 
   closeModal() {
     this.closeModalEvent.emit();
   }
 
+  handleChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    console.log('Nouvelle valeur du champ lastName :', input.value);
+    console.log('this.orderForm.valid :', this.orderForm.valid);
+    if (this.orderForm.valid) {
+      this.isDisabled = false;
+    }else{
+      this.isDisabled = true;
+    }
+  }
+
   onSubmit() {
+
     if (this.orderForm.valid) {
       this.isSubmitting = true;
       const formData: OrderFormData = this.orderForm.value;
