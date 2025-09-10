@@ -92,8 +92,8 @@ export class I18nService {
       //Catalog page
       "page_header_title": "Nos Produits",
       "page_header_subtitle": "Découvrez notre sélection complète de viandes de porc de qualité supérieure",
-      "search_placeholder": "Rechercher un produit...",
-      "filter_all_products": "Tous les produits",
+      "catalog.filters.searchPlaceholder": "Rechercher un produit...",
+      "catalog.filters.allProducts": "Tous les produits",
       "category.decoupes_porc_classiques": "Découpes de porc classiques",
       "category.charcuteries_terrines": "Charcuteries & terrines",
       "category.saucisses_variantes": "Saucisses et variantes",
