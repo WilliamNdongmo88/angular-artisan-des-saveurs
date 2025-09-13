@@ -129,8 +129,8 @@ export class I18nService {
       //Activation page
       "confirmation": {
         "title": "Confirmez votre adresse email",
-        "intro": "Avant d’effectuer votre démarche, nous avons besoin de vérifier votre adresse <strong>{{email}}</strong>.",
-        "highlight": "Ouvrez votre boîte email, et <strong>cliquez sur le lien d’activation</strong> dans le message que vous avez reçu.",
+        "intro": "Avant d’effectuer votre démarche, nous avons besoin de vérifier votre adresse <strong>{email}</strong>.",
+        "highlight": "Ouvrez votre boîte email, et cliquez sur le lien d’activation dans le message que vous avez reçu.",
         "resend": {
           "text": "Si vous n’avez pas reçu notre message (avez-vous vérifié les indésirables ?), nous pouvons vous le renvoyer.",
           "label": "Votre email",
@@ -372,7 +372,7 @@ export class I18nService {
         "priceTotal": "Prix total :",
         "addToCart": "Ajouter au panier",
         "freeShippingTitle": "Livraison gratuite",
-        "freeShippingText": "Profitez de la livraison gratuite pour toute commande à partir de <strong>Rs 3,000</strong>"
+        "freeShippingText": "Profitez de la livraison gratuite pour toute commande à pa Rs 3,000</strong>"
       },
 
       //Cart page
@@ -680,8 +680,8 @@ export class I18nService {
       //Activation page
       "confirmation": {
         "title": "Confirm your email address",
-        "intro": "Before proceeding, we need to verify your email address <strong>{{email}}</strong>.",
-        "highlight": "Open your mailbox and <strong>click on the activation link</strong> in the message you received.",
+        "intro": "Before proceeding, we need to verify your email  {email}</strong>.",
+        "highlight": "Open your mailbox and click on the activation link in the message you received.",
         "resend": {
           "text": "If you have not received our message (did you check your spam folder?), we can resend it to you.",
           "label": "Your email",
