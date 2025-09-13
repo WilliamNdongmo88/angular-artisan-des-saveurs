@@ -107,7 +107,7 @@ export class UserService {
     };
     console.log('Données de mot de passe à envoyer:', passwordData);
     return new Promise((resolve, reject) => {
-      this.http.post(`${this.apiUrl+'auth'}/update-password`, passwordData, this.httpOptions)
+      this.http.post(`${this.apiUrl+'/auth'}/update-password`, passwordData, this.httpOptions)
         .subscribe({
           next: (response) => {
             console.log('Réponse du serveur:', response);
