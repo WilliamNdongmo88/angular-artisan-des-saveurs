@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ResetPasswordRequest } from '../../../models/auth.models';
+import { TranslatePipe } from "../../../services/translate.pipe";
 
 @Component({
   selector: 'app-new-password',
   standalone: true,
   templateUrl:'./new-password.component.html',
   styleUrl: './new-password.component.scss',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, TranslatePipe],
 })
 export class NewPasswordComponent implements OnInit {
   newpassForm!: FormGroup;

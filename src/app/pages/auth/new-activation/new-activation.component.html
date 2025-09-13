@@ -1,22 +1,24 @@
 <div class="auth-container">
   <div class="auth-card">
     <div class="auth-header">
-      <h2>Activation</h2>
-      <p>Recevoir un nouveau lien d'activation</p>
+      <h2>{{ 'activation.title' | translate }}</h2>
+      <p>{{ 'activation.subtitle' | translate }}</p>
     </div>
 
     <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
-        <label for="username">Email</label>
+        <label for="username">{{ 'activation.form.label' | translate }}</label>
         <input 
           type="text" 
           id="username"
           formControlName="username" 
           class="form-control"
           [class.is-invalid]="submitted && f['username'].errors"
-          placeholder="Votre email">
+          [placeholder]="'activation.form.placeholder' | translate">
         <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-          <div *ngIf="f['username'].errors['required']">L'email d'utilisateur est requis</div>
+          <div *ngIf="f['username'].errors['required']">
+            {{ 'activation.form.required' | translate }}
+          </div>
         </div>
       </div>
 
@@ -26,16 +28,14 @@
           class="btn btn-primary btn-block"
           [disabled]="loading">
           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Envoyer
+          {{ 'activation.form.button' | translate }}
         </button>
       </div>
 
       <div class="auth-links">
-        <p> Retourner a la  ? </p>
-        <!-- <div class="separator">•</div> -->
-        <a routerLink="/login" class="link">Connexion</a>
+        <p>{{ 'activation.links.returnText' | translate }}</p>
+        <a routerLink="/login" class="link">{{ 'activation.links.login' | translate }}</a>
       </div>
     </form>
   </div>
 </div>
-

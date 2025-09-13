@@ -13,6 +13,7 @@ import { CurrencyFormatPipe } from '../../services/currency-format.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { CurrencyService } from '../../services/currency.service';
 import { Users } from '../../models/user';
+import { SharedService } from '../../services/sharedService';
 
 // Interfaces pour les données
 interface Order {
@@ -91,7 +92,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
   private currencyService = inject(CurrencyService);
   public userData: any = {}; // Pour stocker les données utilisateur
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private sharedService: SharedService) {
     this.initializeForms();
   }
 
@@ -414,34 +415,6 @@ export class ProfilComponent implements OnInit, OnDestroy {
       });
     }
   }
-  // async updatePreferences() {
-  //   if (this.preferencesForm.valid && !this.isLoading) {
-  //     this.isLoading = true;
-
-  //     try {
-  //       const formData = this.preferencesForm.value;
-  //       console.log("[ProfileComponent] updatePreferences - formData :: ", formData);
-  //       // Mettre à jour la langue et la devise dans les services
-  //       if (formData.language) {
-  //         this.i18nService.setLanguage(formData.language);
-  //       }
-        
-  //       if (formData.currency) {
-  //         this.currencyService.setCurrency(formData.currency);
-  //       }
-        
-  //       // Appel au service pour mettre à jour les préférences
-  //       await this.userService.updatePreferences(formData);
-        
-  //       this.showNotification('success', this.i18nService.translate('success.preferencesUpdated'));
-  //     } catch (error) {
-  //       console.error('Erreur lors de la mise à jour des préférences:', error);
-  //       this.showNotification('error', this.i18nService.translate('error.updatePreferences'));
-  //     } finally {
-  //       this.isLoading = false;
-  //     }
-  //   }
-  // }
 
   onLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
@@ -459,6 +432,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
       next: (res: FileDTO) => {
         console.log("Fichier uploadé :", res);
         this.userAvatar = res.filePath;
+        this.sharedService.sendAvatar(this.userAvatar);
         console.log("Réponse backend :", res);
         console.log("Chemin image :", res.filePath);
         this.showNotification('success', 'Photo mis à jour avec succès');

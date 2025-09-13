@@ -4,10 +4,11 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from "../../services/translate.pipe";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe],
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
-      phone: ['', [Validators.maxLength(20)]],
+      phone: ['', [Validators.maxLength(20), Validators.required, Validators.pattern(/^[+]?[0-9\s\-\(\)]{10,}$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
       confirmPassword: ['', Validators.required]
     }, {

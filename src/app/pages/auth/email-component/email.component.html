@@ -1,22 +1,24 @@
 <div class="auth-container">
   <div class="auth-card">
-      <div class="auth-header">
-        <h2>Reset password</h2>
-        <p>Réinitialisez votre mot de passe</p>
-      </div>
+    <div class="auth-header">
+      <h2>{{ 'RESET.TITLE' | translate }}</h2>
+      <p>{{ 'RESET.SUBTITLE' | translate }}</p>
+    </div>
 
     <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">{{ 'RESET.EMAIL' | translate }}</label>
         <input 
           type="text" 
           id="email"
           formControlName="email" 
           class="form-control"
           [class.is-invalid]="submitted && f['email'].errors"
-          placeholder="Votre email">
+          [placeholder]="'RESET.EMAIL_PLACEHOLDER' | translate">
         <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-          <div *ngIf="f['email'].errors['required']">L'email d'utilisateur est requis</div>
+          <div *ngIf="f['email'].errors['required']">
+            {{ 'RESET.EMAIL_REQUIRED' | translate }}
+          </div>
         </div>
       </div>
 
@@ -26,15 +28,14 @@
           class="btn btn-primary btn-block"
           [disabled]="loading">
           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Envoyer
+          {{ 'RESET.SEND' | translate }}
         </button>
       </div>
 
       <div class="auth-links">
-        <a routerLink="/login" class="link">Retour</a>
+        <a routerLink="/login" class="link">{{ 'RESET.BACK' | translate }}</a>
         <div class="separator">•</div>
       </div>
     </form>
   </div>
 </div>
-

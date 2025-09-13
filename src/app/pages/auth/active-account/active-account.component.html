@@ -1,70 +1,62 @@
 <div class="auth-container">
-<div class="confirmation-container">
-  @if (!isValid) {
-  <h1>Confirmez votre adresse email</h1>
+  <div class="confirmation-container">
+    @if (!isValid) {
+      <h1>{{ 'confirmation.title' | translate }}</h1>
 
-  <p class="intro-text">
-    Avant d’effectuer votre démarche, nous avons besoin de vérifier votre adresse
-    <strong>{{ email }}</strong>.
-  </p>
+      <p class="intro-text" [innerHTML]="'confirmation.intro' | translate:{ email: email }"></p>
 
-  <div class="highlight-box">
-    Ouvrez votre boîte email, et <strong>cliquez sur le lien d’activation</strong>
-    dans le message que vous avez reçu.
-  </div>
-
-  <div class="resend-section">
-    <p>
-      Si vous n’avez pas reçu notre message (avez-vous vérifié les indésirables ?),
-      nous pouvons vous le renvoyer.
-    </p>
-
-    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="auth-form">
-      <div class="form-group">
-        <label for="email">Votre email</label>
-        <input 
-          type="email" 
-          id="email"
-          formControlName="email" 
-          class="form-control"
-          [class.is-invalid]="submitted && f['email'].errors"
-          placeholder="Email">
-        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-          <div *ngIf="f['email'].errors['required']">L'email d'utilisateur est requis</div>
-        </div>
+      <div class="highlight-box">
+        {{ 'confirmation.highlight' | translate }}
       </div>
+
+      <div class="resend-section">
+        <p>
+          {{ 'confirmation.resend.text' | translate }}
+        </p>
+
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="auth-form">
+          <div class="form-group">
+            <label for="email">{{ 'confirmation.resend.label' | translate }}</label>
+            <input 
+              type="email" 
+              id="email"
+              formControlName="email" 
+              class="form-control"
+              [class.is-invalid]="submitted && f['email'].errors"
+              [placeholder]="'confirmation.resend.label' | translate">
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">
+                {{ 'confirmation.resend.required' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-block"
+              [disabled]="loading">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              {{ 'confirmation.resend.button' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }@else {
+      <div class="icon">✅</div>
+
+      <h1>{{ 'confirmation.activated.title' | translate }}</h1>
+
+      <p>{{ 'confirmation.activated.message' | translate }}</p>
 
       <div class="form-actions">
         <button 
           type="submit" 
           class="btn btn-primary btn-block"
-          [disabled]="loading">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Renvoyer un email de confirmation
+          (click)="goToLogin()">
+          {{ 'confirmation.activated.button' | translate }}
         </button>
       </div>
-    </form>
+    }
   </div>
-  }@else {
-    <div class="icon">✅</div>
-
-    <h1>Votre compte a été activé</h1>
-
-    <p>
-      🎉 Bienvenue ! Vous pouvez maintenant vous connecter à votre espace personnel.
-    </p>
-
-    <div class="form-actions">
-      <button 
-        type="submit" 
-        class="btn btn-primary btn-block"
-        (click)="goToLogin()"
-        >
-        Se connecter
-      </button>
-    </div>
-  }
 </div>
-
-</div>
-

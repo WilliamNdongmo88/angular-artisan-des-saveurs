@@ -136,7 +136,7 @@ export class UserService {
     const formData = new FormData();
     formData.append('file', file);  // doit matcher @RequestParam("file") côté backend
 
-    return this.http.post<FileDTO>(`${this.apiUrl}users/avatar`, formData);
+    return this.http.post<FileDTO>(`${this.apiUrl}/users/avatar`, formData);
   }
 
   // Gestion des adresses

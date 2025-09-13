@@ -28,16 +28,16 @@
             {{ 'nav.products' | translate }}
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">
             {{ 'nav.about' | translate }}
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">
             {{ 'nav.contact' | translate }}
           </a>
-        </li>
+        </li> 
         
         <!-- Menu admin -->
         <li class="nav-item" *ngIf="currentUser && isAdmin()">
@@ -69,13 +69,23 @@
     </div>
 
     <!-- Icône profil (click)="toggleProfileMenu()" -->
-    <div class="profile-icon" *ngIf="currentUser && this.authService.isAuthenticated() && !isAdmin()">
-      <img [src]="userAvatar || 'img/hero/avatar.webp'"
-      alt="Profil" 
-      routerLink="/profil" 
-      routerLinkActive="active" 
-      class="profile-image" />
-    </div>
+     @if (currentUser && this.authService.isAuthenticated() && !isAdmin()) {
+      <div class="profile-icon">
+        <img [src]="userAvatar || 'img/hero/avatar.webp'"
+        alt="Profil" 
+        routerLink="/profil" 
+        routerLinkActive="active" 
+        class="profile-image profile-connected" />
+      </div>
+     }@else {
+      <div class="profile-icon">
+        <img [src]="userAvatar || 'img/hero/avatar.webp'"
+        alt="Profil" 
+        routerLink="/login" 
+        routerLinkActive="active" 
+        class="profile-image" />
+      </div>
+     }
 
     
     <!-- Icône panier -->

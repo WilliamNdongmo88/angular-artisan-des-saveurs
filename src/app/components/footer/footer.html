@@ -18,6 +18,19 @@
           <p>{{ 'footer.saturday' | translate }}</p>
           <p><strong>{{ 'footer.sunday' | translate }}</strong></p>
         </div>
+        <div class="language-selector">
+          <label for="lang" class="lang-label">🌐</label>
+          <select 
+            id="lang" 
+            [(ngModel)]="currentLang" 
+            (ngModelChange)="changeLanguage($event)" 
+            class="lang-select"
+          >
+            <option *ngFor="let lang of languages" [value]="lang.code">
+              {{ lang.label }}
+            </option>
+          </select>
+        </div>
       </div>
       
       <div class="footer-section">

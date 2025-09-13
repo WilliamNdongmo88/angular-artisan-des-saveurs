@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MessageResponse } from '../../../models/auth.models';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from "../../../services/translate.pipe";
 
 @Component({
   selector: 'app-activation-code',
   standalone: true,
   templateUrl:'./active-account.component.html',
   styleUrl: './active-account.component.scss',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, TranslatePipe],
 })
 export class ActiveAccountComponent implements OnInit {
   message: string = "Un lien d'activation de votre compte vous a été envoyé par e-mail.";

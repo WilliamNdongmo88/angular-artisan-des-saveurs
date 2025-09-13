@@ -1,0 +1,109 @@
+<div class="payment-container">
+  <div class="payment-card">
+    <h2>Effectuer un paiement</h2>
+    
+    <!-- Messages d'état -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      <i class="icon-check"></i>
+      {{ successMessage }}
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-error">
+      <i class="icon-error"></i>
+      {{ errorMessage }}
+    </div>
+    
+    <!-- Formulaire de paiement -->
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+      
+      <!-- Méthode de paiement -->
+      <div class="form-group">
+        <label for="method">Méthode de paiement *</label>
+        <select 
+          id="method" 
+          formControlName="method" 
+          class="form-control"
+          [class.error]="hasError('method')">
+          <option value="">Sélectionnez une méthode</option>
+          <option *ngFor="let method of paymentMethods" [value]="method">
+            {{ method === 'paypal' ? 'PayPal' : 'Carte de crédit' }}
+          </option>
+        </select>
+        <div *ngIf="hasError('method')" class="error-message">
+          {{ getErrorMessage('method') }}
+        </div>
+      </div>
+      
+      <!-- Montant -->
+      <div class="form-group">
+        <label for="amount">Montant *</label>
+        <input 
+          type="number" 
+          id="amount" 
+          formControlName="amount" 
+          class="form-control"
+          [class.error]="hasError('amount')"
+          placeholder="0.00"
+          step="0.01"
+          min="0.01">
+        <div *ngIf="hasError('amount')" class="error-message">
+          {{ getErrorMessage('amount') }}
+        </div>
+      </div>
+      
+      <!-- Devise -->
+      <div class="form-group">
+        <label for="currency">Devise *</label>
+        <select 
+          id="currency" 
+          formControlName="currency" 
+          class="form-control"
+          [class.error]="hasError('currency')">
+          <option value="">Sélectionnez une devise</option>
+          <option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency }}
+          </option>
+        </select>
+        <div *ngIf="hasError('currency')" class="error-message">
+          {{ getErrorMessage('currency') }}
+        </div>
+      </div>
+      
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          class="form-control"
+          [class.error]="hasError('description')"
+          placeholder="Description du paiement"
+          rows="3"
+          maxlength="255"></textarea>
+        <div *ngIf="hasError('description')" class="error-message">
+          {{ getErrorMessage('description') }}
+        </div>
+      </div>
+      
+      <!-- Bouton de soumission -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="isLoading || paymentForm.invalid">
+          <span *ngIf="isLoading" class="spinner"></span>
+          {{ isLoading ? 'Traitement en cours...' : 'Procéder au paiement' }}
+        </button>
+      </div>
+      
+    </form>
+    
+    <!-- Informations de sécurité -->
+    <div class="security-info">
+      <p><i class="icon-shield"></i> Vos informations de paiement sont sécurisées</p>
+      <p>Vous serez redirigé vers PayPal pour finaliser votre paiement</p>
+    </div>
+    
+  </div>
+</div>
+

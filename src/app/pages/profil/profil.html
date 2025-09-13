@@ -283,15 +283,14 @@
             <select id="language" formControlName="language" (change)="onLanguageChange($event)">
               <option value="fr">Français</option>
               <option value="en">English</option>
-              <option value="es">Español</option>
             </select>
           </div>
           <div class="preference-item">
             <label for="currency">{{ 'preferences.currency' | translate }}</label>
             <select id="currency" formControlName="currency">
               <option value="RS">Roupie (Rs)</option>
-              <option value="EUR">Euro (€)</option>
-              <option value="USD">Dollar US ($)</option>
+              <!-- <option value="EUR">Euro (€)</option>
+              <option value="USD">Dollar US ($)</option> -->
             </select>
           </div>
         </div>

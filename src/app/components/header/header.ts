@@ -6,6 +6,7 @@ import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { AuthUser } from '../../models/auth.models';
 import { TranslatePipe } from "../../services/translate.pipe";
+import { SharedService } from '../../services/sharedService';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router, 
-    private cartService: CartService
+    private cartService: CartService,
+    private sharedService: SharedService
   ) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -45,9 +47,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if(this.currentUser)
     this.authService.extractUserFromToken(this.currentUser.token);
     const userData = this.authService.getUser();
+    //console.log('[HeaderComponent] userData :: ', userData);
     if (userData) {
-      this.userAvatar = userData.avatar || null;
+      this.userAvatar = userData.avatar || localStorage.getItem("avatar");
     }
+    this.sharedService.signalAvatar$.subscribe(avatar  => {
+      localStorage.setItem("avatar", avatar);
+      this.userAvatar = avatar;
+    })
   }
 
   ngOnDestroy() {
@@ -81,6 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+    localStorage.removeItem("avatar");
     this.router.navigate(['/']);
     this.closeMenu();
   }

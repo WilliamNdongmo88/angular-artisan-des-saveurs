@@ -1,0 +1,70 @@
+<div class="status-container">
+  <div class="status-card">
+    
+    <!-- État de chargement -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner-large"></div>
+      <h2>Traitement en cours...</h2>
+      <p>Veuillez patienter pendant que nous traitons votre paiement.</p>
+    </div>
+    
+    <!-- État final -->
+    <div *ngIf="!isLoading" class="final-state">
+      <div class="status-icon" [ngClass]="getStatusClass()">
+        {{ getStatusIcon() }}
+      </div>
+      
+      <h2 [ngClass]="getStatusClass()">
+        <span *ngIf="status === 'success'">Paiement réussi !</span>
+        <span *ngIf="status === 'cancelled'">Paiement annulé</span>
+        <span *ngIf="status === 'error'">Erreur de paiement</span>
+      </h2>
+      
+      <div class="status-message">
+        <p>{{ message }}</p>
+      </div>
+      
+      <!-- Actions selon le statut -->
+      <div class="status-actions">
+        <button 
+          *ngIf="status === 'success'" 
+          class="btn btn-primary"
+          (click)="goBackToPayment()">
+          Effectuer un nouveau paiement
+        </button>
+        
+        <button 
+          *ngIf="status === 'cancelled' || status === 'error'" 
+          class="btn btn-secondary"
+          (click)="goBackToPayment()">
+          Réessayer le paiement
+        </button>
+      </div>
+      
+      <!-- Informations supplémentaires -->
+      <div class="additional-info">
+        <div *ngIf="status === 'success'" class="success-info">
+          <p><strong>Que se passe-t-il maintenant ?</strong></p>
+          <ul>
+            <li>Vous recevrez un email de confirmation</li>
+            <li>Le montant sera débité de votre compte</li>
+            <li>Votre commande sera traitée dans les plus brefs délais</li>
+          </ul>
+        </div>
+        
+        <div *ngIf="status === 'cancelled'" class="cancelled-info">
+          <p><strong>Votre paiement a été annulé</strong></p>
+          <p>Aucun montant n'a été débité de votre compte. Vous pouvez réessayer le paiement à tout moment.</p>
+        </div>
+        
+        <div *ngIf="status === 'error'" class="error-info">
+          <p><strong>Une erreur est survenue</strong></p>
+          <p>Si le problème persiste, veuillez contacter notre support client.</p>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+

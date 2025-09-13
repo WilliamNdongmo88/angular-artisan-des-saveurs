@@ -4,13 +4,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from "../../../services/translate.pipe";
 
 @Component({
   selector: 'app-email',
   standalone: true,
   templateUrl:'./email.component.html',
   styleUrl: './email.component.scss',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, TranslatePipe],
 })
 export class EmailComponent implements OnInit {
   emailForm!: FormGroup;

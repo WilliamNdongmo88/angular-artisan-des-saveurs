@@ -17,27 +17,29 @@ import { ProductListComponent } from './pages/dashboard/products/product-list.co
 import { ProductFormComponent } from './pages/dashboard/products/product-form.component';
 import { NewPasswordComponent } from './pages/auth/new-password/new-password.component';
 import { ActiveAccountComponent } from './pages/auth/active-account/active-account.component';
-import { NewActivatioComponent } from './pages/auth/new-activation/new-activation.component';
+import { NewActivationComponent } from './pages/auth/new-activation/new-activation.component';
 import { EmailComponent } from './pages/auth/email-component/email.component';
 import { DummyComponent } from './pages/dummy-component';
 import { ProfilComponent } from './pages/profil/profil';
 import { FileUploadComponent } from './components/file-upload/file-upload';
 import { OrderListComponent } from './pages/dashboard/orders/order-list.component';
 import { OrderDetailComponent } from './pages/dashboard/order-detail/order-detail.component';
+import { PaymentComponent } from './pages/payment/interface/payment.component';
+import { PaymentStatusComponent } from './pages/payment/status/payment-status.component';
 
 
 export const routes: Routes = [
   // --- Routes publiques et d'authentification (inchangées) ---
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  {path: 'sent-email', component: EmailComponent},
-  {path: 'reset-password', component: NewPasswordComponent},
-  {path: 'activate', component: ActiveAccountComponent},
-  {path: 'new-activation', component: NewActivatioComponent},
+  { path: 'sent-email', component: EmailComponent},
+  { path: 'reset-password', component: NewPasswordComponent},
+  { path: 'activate', component: ActiveAccountComponent},
+  { path: 'new-activation', component: NewActivationComponent},
   // ... autres routes publiques
   { path: '', component: HomeComponent },
   { path: 'catalog', component: CatalogComponent },
-  { path: 'about', component: AboutComponent },
+  // { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'cart', component: CartComponent },
   { path: 'profil', component: ProfilComponent },
@@ -91,7 +93,22 @@ export const routes: Routes = [
     data: { roles: ['ROLE_USER'] }
   },
   { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
-  
+  // {
+  //   path: 'payment',
+  //   component: PaymentComponent, canActivate: [AuthGuard], data: { roles: [] }
+  // },
+  // {
+  //   path: 'success',
+  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
+  // },
+  // {
+  //   path: 'cancel',
+  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
+  // },
+  // {
+  //   path: 'error',
+  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
+  // },
   // --- Route par défaut (inchangée) ---
   { path: '**', redirectTo: '' }
 ];
