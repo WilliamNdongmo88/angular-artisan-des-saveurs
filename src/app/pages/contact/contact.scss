@@ -502,6 +502,13 @@
     display: flex;
     gap: 7rem;
 
+    .map-container {
+      margin-top: 15px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     .map-action {
       margin-top: 1rem;
       display: flex;
