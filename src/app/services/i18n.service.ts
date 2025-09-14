@@ -313,7 +313,7 @@ export class I18nService {
         "INFO": {
           "CONTACT_TITLE": "Nos Coordonnées",
           "ADDRESS_TITLE": "Adresse",
-          "ADDRESS": "123 Rue de la Boucherie, Grand Baie, île Maurice",
+          "ADDRESS": "Aspenvillas, Topize Rd, Grand Baie",
           "PHONE_TITLE": "Téléphone",
           "PHONE": "+230 5984 0270",
           "EMAIL_TITLE": "Email",
@@ -869,7 +869,7 @@ export class I18nService {
         "INFO": {
           "CONTACT_TITLE": "Our Contact Details",
           "ADDRESS_TITLE": "Address",
-          "ADDRESS": "123 Rue de la Boucherie, Grand Baie, Mauritius",
+          "ADDRESS": "Aspenvillas, Topize Rd, Grand Baie",
           "PHONE_TITLE": "Phone",
           "PHONE": "+230 5984 0270",
           "EMAIL_TITLE": "Email",
