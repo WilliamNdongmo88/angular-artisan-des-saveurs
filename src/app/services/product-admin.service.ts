@@ -109,10 +109,6 @@ export class ProductAdminService {
         })
       );
   }
-  // deleteProduct(id: number): Observable<MessageResponse> {
-  //   return this.http.delete<MessageResponse>(`${this.PRODUCTS_API}${id}`);
-  // }
-
 
   getProductById(id: number): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${this.PRODUCTS_API}${id}`);

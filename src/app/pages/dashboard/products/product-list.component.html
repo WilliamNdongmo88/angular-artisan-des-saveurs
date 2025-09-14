@@ -208,6 +208,17 @@
               <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
                 ✏️
               </button>
+              <!-- <div class="action-container btn btn-sm btn-primary">
+                <span class="edit-icon">✏️</span>
+                <select 
+                  [(ngModel)]="selectedAction" 
+                  (ngModelChange)="onActionChange($event, product.id)" 
+                  class="action-select"
+                >
+                  <option value="edit">Modifier</option>
+                  <option value="disable">Rendre indisponible</option>
+                </select>
+              </div> -->
               <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
                 🗑️
               </button>

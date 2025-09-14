@@ -651,6 +651,27 @@ $desktop-width: 1024px;
   align-items: center;
 }
 
+.action-container {
+  position: relative;
+  display: inline-block;
+}
+
+.edit-icon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.action-select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* rend invisible */
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+
 /* Styles pour les boutons */
 .btn {
   display: inline-flex;

@@ -39,6 +39,7 @@ export class ProductListComponent implements OnInit {
   loading = false;
   searchTerm = '';
   selectedCategory = '';
+  selectedAction: string = '';
 
   // Nouvelle propriété pour gérer le mode d'affichage
   viewMode: 'grid' | 'table' = 'grid'; // Mode par défaut : grille
@@ -198,8 +199,31 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/dashboard/products/create']);
   }
 
+  onActionChange(action: string, id: number) {
+    if (action === 'edit') {
+      this.editProduct(id); // méthode pour modifier le produit
+    } else if (action === 'disable') {
+      this.disableProduct(id); // méthode pour rendre indisponible
+    }
+    
+    // Reset du select après action
+    this.selectedAction = '';
+  }
+
   editProduct(id: number) {
     this.router.navigate(['/dashboard/products/edit', id]);
+  }
+
+  disableProduct(id: number) {
+    console.log('Produit rendu indisponible');
+    this.productService.toggleProductAvailability(id).subscribe({
+      next: (response) => {
+          this.toastr.success('Produit rendu indisponible avec succès', 'Succès');
+        },
+        error: (error: any) => {
+          this.toastr.error('Erreur lors de la mise a jour', 'Erreur');
+        }
+    });
   }
 
   viewProduct(id: number) {
