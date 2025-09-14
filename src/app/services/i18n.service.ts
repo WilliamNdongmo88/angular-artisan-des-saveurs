@@ -328,16 +328,20 @@ export class I18nService {
             "LI2": "Repas de famille",
             "LI3": "Événements d'entreprise",
             "LI4": "Fêtes et célébrations",
-            "DELAY": "Délai de préparation : 24h minimum",
-            "MIN_ORDER": "Commande minimum : Rs 1000"
+            "DELAY": "Délai de préparation : 72h minimum",
+            "MIN_ORDER": "Commande minimum : Rs 500"
           },
 
           "LOCATION_TITLE": "Comment nous trouver",
 
           "ACCESS": {
+            "LOCATION":{
+              "TITLE":"Localisation",
+              "TEXT_2":"Voir sur Google Maps",
+              "TEXT_1":"Retrouvez-nous directement sur la carte :"
+            },
             "CAR": {
-              "TITLE": "En voiture",
-              "TEXT": "Parking gratuit disponible devant la bouchérie. Accès facile depuis le périphérique."
+              "TITLE": "Itinéraire",
             },
             "PUBLIC": {
               "TITLE": "En transport en commun",
@@ -880,16 +884,20 @@ export class I18nService {
             "LI2": "Family meals",
             "LI3": "Corporate events",
             "LI4": "Parties and celebrations",
-            "DELAY": "Preparation time: minimum 24h",
-            "MIN_ORDER": "Minimum order: Rs 1000"
+            "DELAY": "Preparation time: minimum 72h",
+            "MIN_ORDER": "Minimum order: Rs 500"
           },
 
           "LOCATION_TITLE": "How to find us",
 
           "ACCESS": {
+            "LOCATION":{
+              "TITLE":"Location",
+              "TEXT_2":"See on Google Maps",
+              "TEXT_1":"Find us directly on the map:"
+            },
             "CAR": {
-              "TITLE": "By car",
-              "TEXT": "Free parking available in front of the butcher shop. Easy access from the ring road."
+              "TITLE": "Itinerary",
             },
             "PUBLIC": {
               "TITLE": "By public transport",

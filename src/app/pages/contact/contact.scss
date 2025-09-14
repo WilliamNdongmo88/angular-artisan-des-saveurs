@@ -350,6 +350,7 @@
       list-style: none;
       padding: 0;
       margin: 1rem 0;
+      margin-left: 8px;
 
       li {
         padding: 0.3rem 0;
@@ -398,7 +399,7 @@
 
       p {
         color: #7f8c8d;
-        margin: 0 0 1rem;
+        margin: 20px 7px 0rem;
         line-height: 1.5;
         font-size: 0.9rem;
 
@@ -464,6 +465,7 @@
     list-style: none;
     padding: 0;
     margin: 1rem 0;
+    margin-left: 8px;
 
     li {
       padding: 0.3rem 0;
@@ -543,13 +545,14 @@
       margin: 1.5rem 0 0.5rem;
 
       &:first-child {
-        margin-top: 0;
+        margin-top: 5px;
+        margin-bottom: -15px;
       }
     }
 
     p {
       color: #7f8c8d;
-      margin: 0 0 1rem;
+      margin: 20px 7px 0rem;
       line-height: 1.5;
       font-size: 1.2rem;
 
