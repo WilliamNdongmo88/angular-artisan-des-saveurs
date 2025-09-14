@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductAdminService } from '../../../services/product-admin.service';
-import { ProductResponse } from '../../../models/product.models';
+import { ProductDto, ProductResponse } from '../../../models/product.models';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -203,7 +203,7 @@ export class ProductListComponent implements OnInit {
     if (action === 'edit') {
       this.editProduct(id); // méthode pour modifier le produit
     } else if (action === 'disable') {
-      this.disableProduct(id); // méthode pour rendre indisponible
+      this.toggleAvailability(id); // méthode pour rendre indisponible
     }
     
     // Reset du select après action
@@ -214,26 +214,14 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/dashboard/products/edit', id]);
   }
 
-  disableProduct(id: number) {
-    console.log('Produit rendu indisponible');
-    this.productService.toggleProductAvailability(id).subscribe({
-      next: (response) => {
-          this.toastr.success('Produit rendu indisponible avec succès', 'Succès');
-        },
-        error: (error: any) => {
-          this.toastr.error('Erreur lors de la mise a jour', 'Erreur');
-        }
-    });
-  }
-
   viewProduct(id: number) {
     this.router.navigate(['/dashboard/products/view', id]);
   }
 
-  toggleAvailability(product: ProductResponse) {
-    this.productService.toggleProductAvailability(product.id).subscribe({
+  toggleAvailability(id: number) {
+    this.productService.toggleProductAvailability(id).subscribe({
       next: (updatedProduct) => {
-        const index = this.products.findIndex(p => p.id === product.id);
+        const index = this.products.findIndex(p => p.id === id);
         if (index !== -1) {
           this.products[index] = updatedProduct;
           this.filterProducts();
@@ -319,7 +307,7 @@ export class ProductListComponent implements OnInit {
     return counts;
   }
 
-  deleteProduct(product: ProductResponse) {
+  deleteProduct(product: ProductDto) {
     if (confirm(`Êtes-vous sûr de vouloir supprimer "${product.name}" ?`)) {
       this.productService.deleteProduct(product.id).subscribe({
         next: (response) => {

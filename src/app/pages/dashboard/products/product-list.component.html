@@ -197,10 +197,10 @@
               <button class="btn btn-sm btn-outline" (click)="viewProduct(product.id)" title="Voir">
                 👁️
               </button>
-              <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
+              <!-- <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
                 ✏️
-              </button>
-              <!-- <div class="action-container btn btn-sm btn-primary">
+              </button> -->
+              <div class="action-container btn btn-sm btn-primary">
                 <span class="edit-icon">✏️</span>
                 <select 
                   [(ngModel)]="selectedAction" 
@@ -208,9 +208,9 @@
                   class="action-select"
                 >
                   <option value="edit">Modifier</option>
-                  <option value="disable">Rendre indisponible</option>
+                  <option value="disable">Disponibilité</option>
                 </select>
-              </div> -->
+              </div>
               <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
                 🗑️
               </button>
