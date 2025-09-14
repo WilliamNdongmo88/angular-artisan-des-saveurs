@@ -680,7 +680,7 @@ export class I18nService {
       //Activation page
       "confirmation": {
         "title": "Confirm your email address",
-        "intro": "Before proceeding, we need to verify your email  {email}</strong>.",
+        "intro": "Before proceeding, we need to verify your email <strong>{email}</strong>.",
         "highlight": "Open your mailbox and click on the activation link in the message you received.",
         "resend": {
           "text": "If you have not received our message (did you check your spam folder?), we can resend it to you.",

@@ -117,13 +117,13 @@ $desktop-width: 1024px;
     flex-grow: 1;
 
     .form-control {
-      padding-right: 40px; // Espace pour l'icône
+      padding-right: 15px; // Espace pour l'icône
       //width: $width;
     }
 
     .search-icon-desktop{
       position: absolute;
-      right: 50px;
+      right: 30px;
       top: 50%;
       transform: translateY(-50%);
       color: $text-color-light;
@@ -174,6 +174,7 @@ $desktop-width: 1024px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 28rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
@@ -184,7 +185,7 @@ $desktop-width: 1024px;
   .product-image {
     position: relative;
     width: 100%;
-    padding-top: 75%; // Ratio 4:3
+    padding-top: 59%; // Ratio 4:3
     background-color: #eee;
 
     img {
@@ -212,28 +213,28 @@ $desktop-width: 1024px;
   }
 
   .product-info {
-    padding: ($spacing-unit * 2);
+    padding: 10px;//($spacing-unit * 2);
     flex-grow: 1; // Permet à cette section de grandir
     
     .product-name {
       font-size: 1.25rem;
       font-weight: 600;
-      margin: 0 0 ($spacing-unit * 0.5);
+      margin: 0 0 ($spacing-unit * 0);
       color: $text-color;
     }
 
     .product-category {
       font-size: 0.9rem;
       color: $text-color-light;
-      margin-bottom: $spacing-unit * 1.5;
+      margin-bottom: $spacing-unit * 1.2;
     }
 
     .product-description {
       font-size: 0.9rem;
       color: $text-color-light;
       line-height: 1.5;
-      margin-bottom: $spacing-unit * 2;
-      min-height: 4.5em; // Réserve l'espace pour 3 lignes
+      margin-bottom: $spacing-unit * 0;
+      min-height: 4rem; // Réserve l'espace pour 3 lignes
     }
 
     .product-details {
@@ -253,12 +254,18 @@ $desktop-width: 1024px;
   }
 
   .product-actions {
+    // display: flex;
+    // justify-content: flex-end;
+    // gap: $spacing-unit;
+    // padding: 0 ($spacing-unit * 2) ($spacing-unit * 2);
+    // border-top: 1px solid $border-color;
+    // padding-top: ($spacing-unit * 2);
     display: flex;
     justify-content: flex-end;
-    gap: $spacing-unit;
-    padding: 0 ($spacing-unit * 2) ($spacing-unit * 2);
-    border-top: 1px solid $border-color;
-    padding-top: ($spacing-unit * 2);
+    gap: 6px;
+    padding: 5px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 4px;
   }
 }
 
@@ -338,8 +345,8 @@ $desktop-width: 1024px;
   &.btn-success { background-color: $success-color; color: $white-color; }
 
   &.btn-sm {
-    padding: ($spacing-unit * 0.75) ($spacing-unit * 1.5);
-    font-size: 1.2rem; // Pour les emojis
+    padding: ($spacing-unit * 0) ($spacing-unit * 0);
+    font-size: 14px; // Pour les emojis
     line-height: 1;
   }
 }
@@ -360,6 +367,44 @@ $desktop-width: 1024px;
   }
 }
 
+@media (max-width: 859px) and (min-width: 768px){
+    /* SECTION FILTRES */
+    .filters-section {
+      .filters-row {
+        @include tablet {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+      // .search-box {
+      //   position: relative;
+      //   flex-grow: 1;
+
+      //   .form-control {
+      //     padding-right: 15px; // Espace pour l'icône
+      //     //width: $width;
+      //   }
+
+      //   .search-icon-desktop{
+      //     position: absolute;
+      //     right: 15px;
+      //     top: 50%;
+      //     transform: translateY(-50%);
+      //     color: $text-color-light;
+      //     pointer-events: none;
+      //   }
+
+      //   .search-icon {
+      //     position: absolute;
+      //     right: 12px;
+      //     top: 50%;
+      //     transform: translateY(-50%);
+      //     color: $text-color-light;
+      //     pointer-events: none;
+      //   }
+      // }
+    }
+}
 
 @mixin search-box-width($breakpoint, $width) {
   @media (max-width: $breakpoint) {
@@ -375,26 +420,27 @@ $desktop-width: 1024px;
   }
 }
 
-@include search-box-width(2524px, 94%);
-@include search-box-width(1524px, 94%);
-@include search-box-width(1224px, 93%);
-@include search-box-width(1118px, 91%);
+@include search-box-width(2524px, 93%);
+@include search-box-width(1524px, 92%);
+@include search-box-width(1224px, 91%);
+@include search-box-width(1118px, 90%);
 @include search-box-width(1024px, 89%);
-@include search-box-width(940px, 84%);
-@include search-box-width(840px, 84%);
-@include search-box-width(768px, 92%);
-@include search-box-width(668px, 90%);
-@include search-box-width(625px, 90%);
-@include search-box-width(606px, 90%);
-@include search-box-width(554px, 89%);
-@include search-box-width(542px, 87%);
-@include search-box-width(465px, 86%);
-@include search-box-width(453px, 80%);
-@include search-box-width(442px, 87%);
-@include search-box-width(388px, 81%);
-@include search-box-width(360px, 80%);
-@include search-box-width(340px, 78%);
-@include search-box-width(333px, 78%);
+@include search-box-width(940px, 88%);
+@include search-box-width(859px, 87%);
+@include search-box-width(858px, 96%);
+@include search-box-width(768px, 95%);
+@include search-box-width(668px, 94%);
+@include search-box-width(625px, 93%);
+@include search-box-width(606px, 93%);
+@include search-box-width(554px, 92%);
+@include search-box-width(542px, 92%);
+@include search-box-width(465px, 91%);
+@include search-box-width(453px, 91%);
+@include search-box-width(442px, 90%);
+@include search-box-width(388px, 89%);
+@include search-box-width(360px, 89%);
+@include search-box-width(340px, 89%);
+@include search-box-width(333px, 89%);
 @include search-box-width(320px, 77%);
 
 /* Styles pour le tableau des produits */
@@ -709,7 +755,7 @@ $desktop-width: 1024px;
   }
   
   .product-actions {
-    flex-direction: column;
+    flex-direction: row;
     gap: 4px;
   }
   
@@ -971,7 +1017,7 @@ $desktop-width: 1024px;
   display: block;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 495px) {
   .texte-mobile {
     display: block;   /* on l'affiche */
   }

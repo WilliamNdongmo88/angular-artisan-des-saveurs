@@ -33,47 +33,36 @@ export class ProductAdminService {
   }
 
   /** Ajout d'un produit */
-createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
-  const formData = new FormData();
+  createProduct(product: ProductDto, file: File): Observable<ProductResponse> {
+    const formData = new FormData();
 
-  // fichier
-  formData.append('file', file);
+    // fichier
+    formData.append('file', file);
 
-  // JSON -> Blob avec type application/json
-  formData.append(
-    'product',
-    new Blob([JSON.stringify(product)], { type: 'application/json' })
-  );
+    // JSON -> Blob avec type application/json
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(product)], { type: 'application/json' })
+    );
 
-  return this.http.post<ProductResponse>(
-    this.PRODUCTS_API + 'create',
-    formData,
-    {
-      headers: {
-        // ⚠️ NE PAS mettre "Content-Type": multipart/form-data ici,
-        // HttpClient le gère automatiquement
+    return this.http.post<ProductResponse>(
+      this.PRODUCTS_API + 'create',
+      formData,
+      {
+        headers: {
+          // A ne pas mettre "Content-Type": multipart/form-data ici,
+          // HttpClient le gère automatiquement
+        }
       }
-    }
-  ).pipe(
-    tap((newProduct) => {
-      this.productsSubject.next([...this.productsSubject.value, newProduct]);
-    })
-  );
-}
+    ).pipe(
+      tap((newProduct) => {
+        this.productsSubject.next([...this.productsSubject.value, newProduct]);
+      })
+    );
+  }
 
-  // createProduct(product: ProductToSend): Observable<ProductResponse> {
-  //   return this.http.post<ProductResponse>(this.PRODUCTS_API + 'create', product, httpOptions);
-  // }
-
-  /** Récupère tous les produits disponibles et met à jour le BehaviorSubject */
-  /*getAvailableProducts(): void {
-    this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'available')
-      .subscribe((products) => {
-        this.productsSubject.next(products);
-      });
-  }*/
-  getAvailableProducts() {
-    return this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'available');
+  getAllProducts() {
+    return this.http.get<ProductResponse[]>(this.PRODUCTS_API + 'all-products');
   }
 
 

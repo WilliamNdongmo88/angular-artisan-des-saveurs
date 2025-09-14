@@ -45,6 +45,8 @@ export class ProductListComponent implements OnInit {
     currentPage: number = 1;
   itemsPerPage: number = 8;
 
+  availableProducts: boolean = false;
+
   constructor(
     private productService: ProductAdminService,
     private router: Router,
@@ -93,7 +95,7 @@ export class ProductListComponent implements OnInit {
   loadProducts() {
     this.loading = true;
     // Charge les produits disponibles
-    this.productService.getAvailableProducts().subscribe({
+    this.productService.getAllProducts().subscribe({
       next: (products) => {
         console.log("[productService] : ", products);
         console.log("[productService] Chemin image :", products[0].mainImage.filePath);
@@ -121,14 +123,26 @@ export class ProductListComponent implements OnInit {
   }
 
   filterProducts() {
-    this.filteredProducts = this.products.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesCategory = !this.selectedCategory || product.category === this.selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
+    if (this.availableProducts) {
+      this.filteredProducts = this.products.filter(product => {
+        const isAvailable = product.available === false;
+        return isAvailable;
+      });
+    }else{
+      this.filteredProducts = this.products.filter(product => {
+        const matchesSearch =
+          product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
+
+        const matchesCategory =
+          !this.selectedCategory || product.category === this.selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+    }
+
     // Revenir à la première page après chaque filtre
-    this.currentPage = 1; 
+    this.currentPage = 1;
   }
 
   onSearchChange() {
@@ -143,6 +157,7 @@ export class ProductListComponent implements OnInit {
     this.searchTerm = '';
     this.selectedCategory = '';
     this.filteredProducts = this.products;
+    this.availableProducts = false;
     this.currentPage = 1; // Réinitialise la page
   }
 
@@ -208,32 +223,6 @@ export class ProductListComponent implements OnInit {
         this.toastr.error('Erreur lors de la modification', 'Erreur');
       }
     });
-  }
-
-  
-  //Met à jour le statut de la commande pour un produit
-  updateOrderStatus(product: any, event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const newStatus = target.value;
-    
-    // Mettre à jour le statut localement
-    product.orderStatus = newStatus;
-    
-    // Appeler votre service pour sauvegarder en base de données
-    // this.productService.updateProductOrderStatus(product.id, newStatus).subscribe({
-    //   next: (response) => {
-    //     console.log('Statut de commande mis à jour avec succès:', response);
-    //     // Optionnel : afficher une notification de succès
-    //     this.showSuccessMessage(`Statut mis à jour vers "${this.getStatusLabel(newStatus)}"`);
-    //   },
-    //   error: (error) => {
-    //     console.error('Erreur lors de la mise à jour du statut:', error);
-    //     // Revenir à l'ancien statut en cas d'erreur
-    //     target.value = product.orderStatus || 'pending';
-    //     // Optionnel : afficher une notification d'erreur
-    //     this.showErrorMessage('Erreur lors de la mise à jour du statut');
-    //   }
-    // });
   }
 
   /**

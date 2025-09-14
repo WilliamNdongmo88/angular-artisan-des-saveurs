@@ -60,7 +60,17 @@
           </option>
         </select>
       </div>
-
+      <div class="form-group">
+        <label>
+          <input 
+            type="checkbox" 
+            [(ngModel)]="availableProducts" 
+            (change)="onCategoryChange()"
+            name="availableProducts"
+          />
+          Indisponible
+        </label>
+      </div>
       <button class="btn btn-outline" (click)="clearFilters()">
         Effacer les filtres
       </button>
@@ -101,7 +111,7 @@
 
         <div class="product-details">
           <div class="price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</div>
-          <div class="stock">Stock: {{ product.stockQuantity }} {{ product.unit }}</div>
+          <!-- <div class="stock">Stock: {{ product.stockQuantity }} {{ product.unit }}</div> -->
         </div>
       </div>
 
@@ -137,7 +147,7 @@
           <th>Catégorie</th>
           <th>Description</th>
           <th>Prix</th>
-          <th>Stock</th>
+          <!-- <th>Stock</th> -->
           <th>Disponibilité</th>
           <!-- <th>Statut de la commande</th> -->
           <th>Actions</th>
@@ -178,9 +188,9 @@
           </td>
 
           <!-- Stock -->
-          <td class="product-stock-cell">
+          <!-- <td class="product-stock-cell">
             <div class="stock">{{ product.stockQuantity }} {{ product.unit }}</div>
-          </td>
+          </td> -->
 
           <!-- Disponibilité -->
           <td class="product-availability-cell">
@@ -188,21 +198,6 @@
               {{ product.available ? 'Disponible' : 'Indisponible' }}
             </div>
           </td>
-
-          <!-- Statut de la commande -->
-          <!-- <td class="product-order-status-cell">
-            <select 
-              class="order-status-select" 
-              [value]=" 'pending'" 
-              (change)="updateOrderStatus(product, $event)"
-              [class]="'status-' + ('pending')">
-              <option value="pending">En attente</option>
-              <option value="processing">En traitement</option>
-              <option value="shipped">Expédié</option>
-              <option value="delivered">Livré</option>
-              <option value="cancelled">Annulé</option>
-            </select>
-          </td> -->
 
           <!-- Actions -->
           <td class="product-actions-cell">
@@ -213,14 +208,6 @@
               <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
                 ✏️
               </button>
-              <!-- <button
-                class="btn btn-sm"
-                [class.btn-success]="!product.available"
-                [class.btn-warning]="product.available"
-                (click)="toggleAvailability(product)"
-                [title]="product.available ? 'Désactiver' : 'Activer'">
-                {{ product.available ? '🔒' : '🔓' }}
-              </button> -->
               <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
                 🗑️
               </button>
