@@ -122,14 +122,6 @@
         <button class="btn btn-sm btn-primary" (click)="editProduct(product.id)" title="Modifier">
           ✏️
         </button>
-        <!-- <button
-          class="btn btn-sm"
-          [class.btn-success]="!product.available"
-          [class.btn-warning]="product.available"
-          (click)="toggleAvailability(product)"
-          [title]="product.available ? 'Désactiver' : 'Activer'">
-          {{ product.available ? '🔒' : '🔓' }}
-        </button> -->
         <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)" title="Supprimer">
           🗑️
         </button>

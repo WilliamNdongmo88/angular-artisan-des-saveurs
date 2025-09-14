@@ -219,7 +219,7 @@ export class I18nService {
 
       //Catalog page
       "category": {
-        "decoupes_porc_classiques": "Découpes de porc classiques",
+        "decoupes_porc_classiques": "Viande à la coupe",
         "charcuteries_terrines": "Charcuteries & terrines",
         "saucisses_variantes": "Saucisses & variantes",
         "produits_cuisines": "Produits cuisinés ou assaisonnés",
@@ -349,7 +349,8 @@ export class I18nService {
             },
             "DELIVERY": {
               "TITLE": "Livraison",
-              "TEXT": "Livraison possible dans un rayon de 50km autour de Grand Baie. Frais de livraison : Rs 100 (gratuit à partir de Rs 3000 d'achat)"
+              "TEXT": "Livraison possible dans toute L'île. Frais de livraison : Rs 100 (gratuit à partir de Rs 3000 d'achat)",
+              "DELAY":"Livraison entre 3 et 5 jours suivant vos disponibilités"
             }
           }
         }
@@ -770,7 +771,7 @@ export class I18nService {
 
       //Catalog page
       "category": {
-        "decoupes_porc_classiques": "Classic pork cuts",
+        "decoupes_porc_classiques": "Cut meat",
         "charcuteries_terrines": "Charcuteries & terrines",
         "saucisses_variantes": "Sausages & variants",
         "produits_cuisines": "Cooked or seasoned products",
@@ -900,7 +901,8 @@ export class I18nService {
             },
             "DELIVERY": {
               "TITLE": "Delivery",
-              "TEXT": "Delivery available within 50km around Grand Baie. Delivery fee: Rs 100 (free for orders over Rs 3000)"
+              "TEXT": "Delivery possible throughout the island. Delivery fee: Rs 100 (free for orders over Rs 3000)",
+              "DELAY":"Delivery between 3 and 5 days depending on your availability"
             }
           }
         }

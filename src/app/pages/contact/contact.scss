@@ -502,6 +502,29 @@
     display: flex;
     gap: 7rem;
 
+    .map-action {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+
+      .btn-map {
+        display: inline-block;
+        padding: 0.8rem 1.2rem;
+        border-radius: 6px;
+        background: #e74c3c;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #c0392b;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+
     .info-content{
       width: 100%;
     }

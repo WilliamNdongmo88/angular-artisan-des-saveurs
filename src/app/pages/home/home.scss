@@ -108,7 +108,7 @@
 
 // Featured Products Section
 .featured-section {
-  padding: 5rem 0;
+  padding: 1rem 0;
   background: #f8f9fa;
 
   .container {
@@ -119,14 +119,15 @@
 
   .section-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 
     .section-title {
       font-size: 2.5rem;
       font-weight: 700;
       color: #8B0000;
       font-family: 'Georgia', serif;
-      margin-bottom: 1rem;
+      margin-bottom: 0rem;
+      margin-top: 0rem;
     }
 
     .section-divider {
@@ -372,7 +373,7 @@
   }
 
   .featured-section {
-    padding: 3rem 0;
+    padding: 0rem 0;
 
     .section-header {
       .section-title {
@@ -450,7 +451,7 @@
   }
 
   .featured-section {
-    padding: 2rem 0;
+    padding: 0rem 0;
 
     .section-header {
       .section-title {

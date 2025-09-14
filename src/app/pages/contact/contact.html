@@ -227,26 +227,78 @@
     
     <div class="contact-location-card slide-up">
       <h3 class="info-title">{{ 'CONTACT_PAGE.INFO.LOCATION_TITLE' | translate }}</h3>
-      
       <div class="access-info">
         <div class="info-content">
-          <div class="mode transport">
+          <!-- <div class="mode location">
+            <h4>📍 Localisation</h4>
+            <p>
+              Trouvez-nous facilement sur Google Maps :
+              <a 
+                href="https://www.google.com/maps?q=-20.160891,57.501222" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="map-link"
+              >
+                Voir la carte
+              </a>
+            </p>
+          </div> -->
+          <div class="mode location">
+            <h4>📍 Localisation</h4>
+            <p>Retrouvez-nous directement sur la carte :</p>
+
+            <div class="map-container">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3748.7676512691332!2d57.57048507365464!3d-20.018264141060033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x217dab004ec48e8f%3A0x2d1ff374f2ffa404!2sAspenvillas!5e0!3m2!1sfr!2smu!4v1757856908905!5m2!1sfr!2smu" 
+                width="600" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen=""
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+            <div class="map-action">
+              <a 
+                href="https://www.google.com/maps/place/Aspenvillas/@-20.018264,57.570485,17z" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="btn-map">
+                📌 Voir sur Google Maps
+              </a>
+
+              <a 
+                href="https://www.google.com/maps/dir/?api=1&destination=-20.018264,57.570485"
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="btn-map">
+                🚗 Itinéraire
+              </a>
+            </div>
+
+          </div>
+
+          <!-- <div class="mode transport">
             <h4>🚗 {{ 'CONTACT_PAGE.INFO.ACCESS.CAR.TITLE' | translate }}</h4>
             <p>{{ 'CONTACT_PAGE.INFO.ACCESS.CAR.TEXT' | translate }}</p>
-          </div>
-          <div class="mode transport">
+          </div> -->
+          <!-- <div class="mode transport">
             <h4>🚇 {{ 'CONTACT_PAGE.INFO.ACCESS.PUBLIC.TITLE' | translate }}</h4>
             <p>{{ 'CONTACT_PAGE.INFO.ACCESS.PUBLIC.TEXT' | translate }}</p>
-          </div>
+          </div> -->
         </div>
         <div class="info-content">
-          <div class="mode transport">
+          <!-- <div class="mode transport">
             <h4>🚶 {{ 'CONTACT_PAGE.INFO.ACCESS.WALK.TITLE' | translate }}</h4>
             <p>{{ 'CONTACT_PAGE.INFO.ACCESS.WALK.TEXT' | translate }}</p>
-          </div>
+          </div> -->
           <div class="mode transport">
             <h4>📦 {{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.TITLE' | translate }}</h4>
-            <p>{{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.TEXT' | translate }}</p>
+            <ul class="special-orders-list">
+              <li><p>{{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.TEXT' | translate }}</p></li>
+              <li><p>{{ 'CONTACT_PAGE.INFO.ACCESS.DELIVERY.DELAY' | translate }}</p></li>
+            </ul>
           </div>
         </div>
       </div>
