@@ -10,7 +10,7 @@
       <input type="text" placeholder="Rechercher par nom ou ID..." [(ngModel)]="searchTerm" (input)="applyFilters()">
     </div>
     <div class="status-filter">
-      <label for="status">Filtrer par statut :</label>
+      <label for="status" class="status-filter-text">Filtrer par statut :</label>
       <select id="status" [(ngModel)]="statusFilter" (change)="applyFilters()">
         <option>Tous</option>
         <option>En attente</option>
@@ -47,10 +47,7 @@
             <span class="status" [ngClass]="'status-' + order.slug">{{ order.status }}</span>
         </td>
         <td class="actions">
-            <!-- Utiliser routerLink pour la navigation -->
             <button class="btn-icon" [routerLink]="['/dashboard/orders', order.id]" title="Voir les détails">👁️</button>
-            <!-- <button class="btn-icon" title="Modifier">✏️</button>
-            <button class="btn-icon btn-danger" title="Annuler">❌</button> -->
         </td>
         </tr>
         <!-- Ajouter un état de chargement -->

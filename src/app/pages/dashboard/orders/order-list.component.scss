@@ -28,6 +28,21 @@
     color: #333;
     margin: 0;
   }
+
+  // Styles pour les boutons (repris de votre dashboard)
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+
+    &.btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+  }
 }
 
 .filters-bar {
@@ -125,17 +140,66 @@
   }
 }
 
-// Styles pour les boutons (repris de votre dashboard)
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
 
-  &.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+@media (max-width: 768px) {
+  .orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+
+    h1 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+    .btn {
+      padding: 4px 21px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+    }
+  }
+
+  .filters-bar {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 25px;
+    align-items: center;
+
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      font-size: 14px;
+      width: 90%;
+    }
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      font-size: 14px;
+      width: 48%;
+    }
+
+    .status-filter{
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .status-filter-text{
+      font-size: 14px;
+      padding-top: 11px;
+    }
   }
 }
