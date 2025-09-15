@@ -28,6 +28,22 @@
   gap: 20px;
 }
 
+.status-control {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  .status { /* Reprendre les styles de la liste */ }
+  select { padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  &.total { font-size: 1.1em; margin-top: 15px; }
+}
+
 .detail-card {
   background: #fff;
   border-radius: 12px;
@@ -44,45 +60,86 @@
   p { margin: 5px 0; }
 }
 
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  &.total { font-size: 1.1em; margin-top: 15px; }
+.orders-table-container {
+  overflow-x: auto;
 }
 
-.status-control {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  
-  .status { /* Reprendre les styles de la liste */ }
-  select { padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
-}
-
-.items-list table {
+.orders-table {
   width: 100%;
   border-collapse: collapse;
-  
-  th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e9ecef; }
-  th { font-weight: 600; }
-  
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
   .product-info {
     display: flex;
     align-items: center;
     gap: 15px;
-    
-    img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+
+    img { 
+      width: 50px; 
+      height: 50px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      border: 1px solid #ddd;
+    }
+  }
+
+  th, td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+  }
+
+  th {
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+    background-color: #f8f9fa00;
+  }
+
+  td {
+    font-size: 14px;
+    color: #333;
+  }
+
+  tbody {
+    tr {
+      // Alternance de couleur pour les lignes
+      &:nth-child(odd) {
+        background-color: #fafafa;
+      }
+
+      &:nth-child(even) {
+        background-color: #ffffff;
+      }
+
+      // Effet au survol
+      &:hover {
+        background-color: #f0f8ff;
+        transition: background-color 0.2s ease-in-out;
+      }
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    background-color: #fff;
   }
 }
 
-.loading-text {
-  text-align: center;
-  padding: 50px;
-  font-size: 1.2em;
-  color: #6c757d;
-}
 
-// Reprendre les styles de boutons et de statuts
-.btn { /* ... */ }
-.status { /* ... */ }
+// Responsive screen
+@media (max-width: 768px){
+  .order-detail-container {
+    gap: 10px;
+  }
+
+  .detail-header {
+    h1 { margin: 0 0 5px 0; font-size: 23px; }
+    p { margin: 0; color: #6c757d; font-size: 13px;}
+  }
+}
