@@ -9,11 +9,25 @@ export class SharedService {
   private signalSourceAvatar = new Subject<string>();
   signalAvatar$ = this.signalSourceAvatar.asObservable();
 
+  private signalSourceReq = new Subject<string>();
+  signalReq$ = this.signalSourceReq.asObservable();
+
+  private signalSourceResp = new Subject<number>();
+  signalResp$ = this.signalSourceResp.asObservable();
+
   sendSignal(bool: boolean) {
     this.signalSource.next(bool);
   }
 
-  sendAvatar(avatar: string){
+  sendAvatar(avatar: string){//From Profil to Header
     this.signalSourceAvatar.next(avatar);
+  }
+
+  sendReq(req: string){//From cart to product-details
+    this.signalSourceReq.next(req);
+  }
+
+  sendResp(resp: number){
+    this.signalSourceResp.next(resp);
   }
 }

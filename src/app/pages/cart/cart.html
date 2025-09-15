@@ -62,7 +62,7 @@
           <div class="item-quantity">
             <label>{{ 'cart.item.quantity' | translate }}</label>
 
-            <div class="quantity-controls">
+            <!-- <div class="quantity-controls">
               <button 
                 class="quantity-btn" 
                 (click)="decreaseItemQuantity(item)"
@@ -84,10 +84,10 @@
                 (click)="increaseItemQuantity(item)">
                 +
               </button>
-            </div>
+            </div> -->
 
             <div class="quantity-display-info">
-              <span class="quantity-text">{{ item.displayQuantity }} {{ item.selectedUnit }}</span>
+              <span class="quantity-text"><b style="font-size:large;">(+/-) </b>{{ item.displayQuantity }} {{ item.selectedUnit }}</span>
               <small class="quantity-equivalent" *ngIf="item.selectedUnit === 'g'">
                 ({{ (item.displayQuantity / 1000) | number:'1.2-2' }} {{ 'cart.item.unitKg' | translate }})
               </small>
@@ -95,6 +95,14 @@
           </div>
           <div class="item-total">
             <div class="total-price">Rs {{ getItemTotalPrice(item) | number:'1.2-2' }}</div>
+            <button class="edit-btn" (click)="editItem(item.product.id)" title="Modifier cet article">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" 
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
             <button class="remove-btn" (click)="removeItem(item.product.id)" title="Supprimer cet article">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

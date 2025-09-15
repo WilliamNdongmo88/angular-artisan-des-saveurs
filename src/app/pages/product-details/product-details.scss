@@ -266,6 +266,15 @@
       height: 20px;
     }
   }
+  .btn:disabled,
+  .btn[disabled] {
+    background: #ccc !important; /* gris clair */
+    border-color: #ccc !important;
+    color: #666 !important; /* texte plus pâle */
+    cursor: not-allowed !important;
+    opacity: 0.7;
+  }
+
 }
 
 .btn {
@@ -280,7 +289,7 @@
   transition: all 0.3s ease;
   
   &.btn-primary {
-    background: #8B0000;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);;
     color: white;
     
     &:hover {
@@ -327,6 +336,11 @@
     
     .add-to-cart-btn {
       order: 1;
+
+      svg {
+        width: 40px;
+        height: 30px;
+      }
     }
   }
 }

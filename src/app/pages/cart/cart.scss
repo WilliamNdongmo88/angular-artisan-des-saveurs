@@ -175,7 +175,7 @@
   
   label {
     display: block;
-    font-size: 0.9rem;
+    font-size: 20px;
     color: #666;
     font-weight: 600;
   }
@@ -273,7 +273,7 @@
     .quantity-text {
       font-weight: 600;
       color: #495057;
-      font-size: 0.95rem;
+      font-size: 20px;
     }
     
     .quantity-equivalent {
@@ -292,6 +292,32 @@
     font-weight: 700;
     color: #8B0000;
     margin-bottom: 0.5rem;
+  }
+
+  .edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    color: #2c3e50; // Couleur par défaut (gris foncé)
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+
+    &:hover {
+      background-color: #f0f8ff; // léger bleu clair au survol
+      color: #2980b9; // bleu plus marqué
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
   
   .remove-btn {

@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService, CartItem } from '../../services/cart.service';
-import { OrderPayload } from '../../models/order';
 import { OrderModalComponent, OrderData, OrderFormData } from '../../components/order-modal/order-modal.component';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from "../../services/translate.pipe";
+import { SharedService } from '../../services/sharedService';
 
 // Interface étendue pour les articles du panier avec unités
 interface ExtendedCartItem extends CartItem {
@@ -53,13 +52,19 @@ export class CartComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private router: Router,
     private toastr: ToastrService,
-    private authService: AuthService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit() {
     this.loadCartItems();
     this.cartSubscription = this.cartService.getCartItemCount().subscribe(() => {
       this.loadCartItems();
+    });
+    this.sharedService.signalResp$.subscribe(resp  => {
+      if(resp){
+        this.removeItem(resp);
+        localStorage.removeItem("req");
+      }
     });
   }
 
@@ -146,7 +151,7 @@ export class CartComponent implements OnInit, OnDestroy {
    * Obtient la quantité minimale selon l'unité
    */
   getMinQuantityForUnit(unit: 'kg' | 'g'): number {
-    return unit === 'kg' ? 0.1 : 50;
+    return unit === 'kg' ? 0.1 : 250;
   }
 
   /**
@@ -217,6 +222,9 @@ export class CartComponent implements OnInit, OnDestroy {
    * Met à jour la quantité d'un article dans le service de panier
    */
   private updateCartItemQuantity(item: ExtendedCartItem): void {
+    console.log("item.displayQuantity :: ", item.displayQuantity)
+    console.log("this.getMinQuantityForUnit(item.selectedUnit) :: ", this.getMinQuantityForUnit(item.selectedUnit))
+    console.log("Val == ", item.displayQuantity <= this.getMinQuantityForUnit(item.selectedUnit))
     // Convertir la quantité d'affichage en kg pour le service
     const quantityInKg = this.convertToKg(item.displayQuantity, item.selectedUnit);
     
@@ -238,6 +246,10 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
+  editItem(id: number) {
+    this.sharedService.sendReq("isUpdate");
+    this.router.navigate(['/products/view',id])
+  }
   removeItem(productId: number) {
     this.cartService.removeFromCart(productId);
   }

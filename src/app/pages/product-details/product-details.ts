@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Product } from '../../models/product';
+import { Product, ProductCategory } from '../../models/product';
 import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { TranslatePipe } from "../../services/translate.pipe";
+import { SharedService } from '../../services/sharedService';
 
 @Component({
   selector: 'app-product-details',
@@ -19,27 +20,34 @@ export class ProductDetailsComponent implements OnInit {
   // Propriétés existantes
   product?: Product;
   loading = true;
+  isMinQuantity = false;
+  isInCart = false;
   error = false;
   discountPercentage = 10;
   originalPrice = 0;
   discountedPrice = 0;
+  request: string | null = null;
   
   // Nouvelles propriétés pour la gestion des quantités avec unités
   quantity: number = 0.1; // Quantité décimale
-  selectedUnit: 'kg' | 'g' = 'kg'; // Unité sélectionnée par défaut
+  selectedUnit: 'kg' | 'g' = 'g'; // Unité sélectionnée par défaut
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
     private cartService: CartService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const productId = params['id'];
       this.loadProduct(productId);
+    });
+    this.sharedService.signalReq$.subscribe(req  => {
+      localStorage.setItem("req", req);
     });
   }
 
@@ -56,7 +64,7 @@ export class ProductDetailsComponent implements OnInit {
           this.discountedPrice = this.originalPrice * (1 - this.discountPercentage / 100);
           
           // Initialiser la quantité minimale selon l'unité
-          this.quantity = this.getMinQuantity();
+          this.quantity = this.getMinQuantity(this.product.category);
           
           this.loading = false;
         } else {
@@ -75,6 +83,8 @@ export class ProductDetailsComponent implements OnInit {
    * Augmente la quantité selon le pas défini pour l'unité
    */
   increaseQuantity(): void {
+    console.log(":: Augmente la quantité ::")
+    if (localStorage.getItem("req") == "isUpdate") this.isInCart = true;
     const step = this.getQuantityStep();
     this.quantity = Math.round((this.quantity + step) * 100) / 100; // Arrondir à 2 décimales
   }
@@ -83,24 +93,33 @@ export class ProductDetailsComponent implements OnInit {
    * Diminue la quantité selon le pas défini pour l'unité
    */
   decreaseQuantity(): void {
+    console.log(":: Diminue la quantité ::")
     const step = this.getQuantityStep();
     const newQuantity = Math.round((this.quantity - step) * 100) / 100; // Arrondir à 2 décimales
     
-    if (newQuantity >= this.getMinQuantity()) {
+    if (newQuantity >= this.getMinQuantity(this.product?.category)) {
       this.quantity = newQuantity;
     }
+
+    if (localStorage.getItem("req") == "isUpdate") this.isInCart = true;
   }
 
   /**
    * Gestionnaire de changement de quantité (input direct)
    */
   onQuantityChange(): void {
+    console.log(":: changement de quantité ::")
     // Valider que la quantité respecte les limites
-    if (this.quantity < this.getMinQuantity()) {
-      this.toastr.error(`La quantité minimale est de ${this.getMinQuantity()} ${this.selectedUnit}.`);
-      this.quantity = this.getMinQuantity();
+    if (this.quantity < this.getMinQuantity(this.product?.category)) {
+      this.isMinQuantity = true;
+      this.toastr.error(`La quantité minimale est de ${this.getMinQuantity(this.product?.category)} ${this.selectedUnit}.`);
+      this.quantity = this.getMinQuantity(this.product?.category);
+    }else{
+      this.isMinQuantity = false;
     }
     
+    if (localStorage.getItem("req") == "isUpdate") this.isInCart = true;
+
     // Arrondir à 2 décimales
     this.quantity = Math.round(this.quantity * 100) / 100;
   }
@@ -110,6 +129,7 @@ export class ProductDetailsComponent implements OnInit {
    */
   onUnitChange(): void {
     console.log("Unit changed to: ", this.selectedUnit);
+    if (localStorage.getItem("req") == "isUpdate") this.isInCart = true;
     // Convertir la quantité actuelle vers la nouvelle unité
     if (this.selectedUnit === 'g' && this.quantity < 1) {
       // Si on passe en grammes et qu'on a moins de 1 kg, convertir
@@ -121,7 +141,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log("Converted quantity to kg: ", this.quantity);
     } else {
       // Sinon, réinitialiser à la quantité minimale pour la nouvelle unité
-      this.quantity = this.getMinQuantity();
+      this.quantity = this.getMinQuantity(this.product?.category);
       console.log("Reset quantity to min for new unit: ", this.quantity);
     }
     
@@ -146,12 +166,17 @@ export class ProductDetailsComponent implements OnInit {
   /**
    * Obtient la quantité minimale selon l'unité sélectionnée
    */
-  getMinQuantity(): number {
+  getMinQuantity(category: ProductCategory | undefined): number {
     switch (this.selectedUnit) {
       case 'kg':
         return 1; // Minimum 1kg
       case 'g':
-        return 50; // Minimum 50g
+        if (category == "charcuteries-terrines"
+         ) {
+          return 100; // Minimum 250g
+        }else{
+          return 250; // Minimum 250g
+        }
       default:
         return 1;
     }
@@ -165,8 +190,9 @@ export class ProductDetailsComponent implements OnInit {
     if (!this.product) return 0;
     
     // Supposons que le prix du produit est par kg
-    const pricePerKg = this.discountPercentage > 0 ? this.discountedPrice : this.originalPrice;
-    
+    //const pricePerKg = this.discountPercentage > 0 ? this.discountedPrice : this.originalPrice;
+    const pricePerKg = this.originalPrice;
+    // console.log("pricePerKg :: ", pricePerKg)
     switch (this.selectedUnit) {
       case 'kg':
         return pricePerKg;
@@ -205,19 +231,38 @@ export class ProductDetailsComponent implements OnInit {
    * Ajoute le produit au panier avec la quantité convertie en kg/g
    */
   addToCart(): void {
-    if (!this.product) return;
+    if (this.isInCart) {
+      console.log("Mise à jour du panier");
+      
+      if (!this.product) return;
+      this.sharedService.sendResp(this.product?.id);
+      const quantityInKg = this.getQuantityInKg();
+      const carts = JSON.parse(localStorage.getItem("cart") || "[]");
+      const found = !!carts.find((elt: any) => elt.product?.id === this.product?.id);
+      console.log("Do you found ? :: ", found);
 
-    const quantityInKg = this.getQuantityInKg();
-    const carts = JSON.parse(localStorage.getItem("cart") || "[]");
-    const found = !!carts.find((elt: any) => elt.product?.id === this.product?.id);
-    console.log("Do you found ? :: ", found);
+
+      this.cartService.addToCart( this.product, quantityInKg, found ? 0 : 1, this.selectedUnit);
+
+      this.toastr.success(
+        `${this.quantity} ${this.selectedUnit} de ${this.product.name} mis à jour dans le panier !`
+      );
+    } else {
+      if (!this.product) return;
+
+      const quantityInKg = this.getQuantityInKg();
+      const carts = JSON.parse(localStorage.getItem("cart") || "[]");
+      const found = !!carts.find((elt: any) => elt.product?.id === this.product?.id);
+      console.log("Do you found ? :: ", found);
 
 
-    this.cartService.addToCart( this.product, quantityInKg, found ? 0 : 1, this.selectedUnit);
+      this.cartService.addToCart( this.product, quantityInKg, found ? 0 : 1, this.selectedUnit);
 
-    this.toastr.success(
-      `${this.quantity} ${this.selectedUnit} de ${this.product.name} ajouté(s) au panier !`
-    );
+      this.toastr.success(
+        `${this.quantity} ${this.selectedUnit} de ${this.product.name} ajouté(s) au panier !`
+      );
+    }
+    this.isInCart = false;
   }
 
   // Vos méthodes existantes restent inchangées

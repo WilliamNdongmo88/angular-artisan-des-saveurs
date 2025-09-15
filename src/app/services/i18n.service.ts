@@ -370,14 +370,16 @@ export class I18nService {
         "breadcrumbCatalog": "Catalogue",
         "recommendedPreparation": "Préparation recommandée",
         "specialOffer": "Offre spéciale -{discount}%",
-        "discountDescription": "Profitez de notre offre spéciale ! Commandez maintenant et économisez {discount}% sur ce produit de qualité artisanale.",
+        // "discountDescription": "Profitez de notre offre spéciale ! Commandez maintenant et économisez {discount}% sur ce produit de qualité artisanale.",
+        "discountDescription": "Profitez de notre offre spéciale ! Commandez maintenant et économisez {discount}% sur l'ensemble de votre commande.",
         "quantity": "Quantité :",
         "unitKg": "Kilogrammes (kg)",
         "unitG": "Grammes (g)",
         "priceTotal": "Prix total :",
         "addToCart": "Ajouter au panier",
+        "updateCart": "Mettre à jour le panier",
         "freeShippingTitle": "Livraison gratuite",
-        "freeShippingText": "Profitez de la livraison gratuite pour toute commande à pa Rs 3,000</strong>"
+        "freeShippingText": "Profitez de la livraison gratuite pour toute commande à partir de Rs 3,000</strong>"
       },
 
       //Cart page
@@ -926,12 +928,13 @@ export class I18nService {
         "breadcrumbCatalog": "Catalog",
         "recommendedPreparation": "Recommended preparation",
         "specialOffer": "Special offer -{discount}%",
-        "discountDescription": "Take advantage of our special offer! Order now and save {discount}% on this artisanal quality product.",
+        "discountDescription": "Take advantage of our special offer! Order now and save {discount}% on your entire order.",
         "quantity": "Quantity:",
         "unitKg": "Kilograms (kg)",
         "unitG": "Grams (g)",
         "priceTotal": "Total price:",
         "addToCart": "Add to cart",
+        "updateCart": "Update cart",
         "freeShippingTitle": "Free delivery",
         "freeShippingText": "Enjoy free delivery for any order from <strong>Rs 3,000</strong>"
       },
