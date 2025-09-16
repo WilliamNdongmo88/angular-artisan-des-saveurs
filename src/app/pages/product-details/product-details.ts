@@ -171,9 +171,9 @@ export class ProductDetailsComponent implements OnInit {
       case 'kg':
         return 1; // Minimum 1kg
       case 'g':
-        if (category == "charcuteries-terrines"
+        if (category == "charcuteries-et-terrines"
          ) {
-          return 100; // Minimum 250g
+          return 100; // Minimum 100g
         }else{
           return 250; // Minimum 250g
         }

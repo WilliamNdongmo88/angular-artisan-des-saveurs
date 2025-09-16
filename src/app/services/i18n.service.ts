@@ -219,7 +219,7 @@ export class I18nService {
 
       //Catalog page
       "category": {
-        "decoupes_porc_classiques": "Viande à la coupe",
+        "viande_a_la_coupe": "Viande à la coupe",
         "charcuteries_terrines": "Charcuteries & terrines",
         "saucisses_variantes": "Saucisses & variantes",
         "produits_cuisines": "Produits cuisinés ou assaisonnés",
@@ -777,7 +777,7 @@ export class I18nService {
 
       //Catalog page
       "category": {
-        "decoupes_porc_classiques": "Cut meat",
+        "viande_a_la_coupe": "Cut meat",
         "charcuteries_terrines": "Charcuteries & terrines",
         "saucisses_variantes": "Sausages & variants",
         "produits_cuisines": "Cooked or seasoned products",

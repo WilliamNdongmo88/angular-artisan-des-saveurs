@@ -122,7 +122,7 @@ export class ProductService {
 
   getCategoryDisplayName(category: ProductCategory): string {
     const categoryKeys = {
-      [ProductCategory.DECOUPE_PORC_CLASSIQUE]: 'category.decoupes_porc_classiques',
+      [ProductCategory.VIANDE_A_LA_COUPE]: 'category.viande_a_la_coupe',
       [ProductCategory.CHARCUTERIES_TERRINES]: 'category.charcuteries_terrines',
       [ProductCategory.SAUCISSES_VIANDE]: 'category.saucisses_variantes',
       [ProductCategory.BOUDINS]: 'category.boudins',

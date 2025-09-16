@@ -15,9 +15,9 @@ export interface Product {
 }
 
 export enum ProductCategory {
-  DECOUPE_PORC_CLASSIQUE = 'decoupes-porc-classiques',
-  CHARCUTERIES_TERRINES = 'charcuteries-terrines',
-  SAUCISSES_VIANDE = 'saucisses-variantes',
+  VIANDE_A_LA_COUPE = 'viande-a-la-coupe',
+  CHARCUTERIES_TERRINES = 'charcuteries-et-terrines',
+  SAUCISSES_VIANDE = 'saucisses-et-variantes',
   BOUDINS = 'boudins',
   PRODUITS_TRANSFORMES = 'produits-transformes'
 }
