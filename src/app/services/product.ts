@@ -98,6 +98,7 @@ export class ProductService {
         image: product.mainImage.content,
         origin: product.origin,
         preparation: product.preparation,
+        recette: product.recette,
         featured: product.featured,
         imageUrl: product.imageUrl,
         available: product.available,

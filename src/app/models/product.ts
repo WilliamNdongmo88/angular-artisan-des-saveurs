@@ -11,7 +11,8 @@ export interface Product {
   available: boolean;
   origin: string;
   preparation?: string;
-  stockQuantity: number; // Quantité en stock (en unité de base)
+  recette?: string; // Nouvelle propriété pour la recette
+  stockQuantity: number; // Quantité en stock en kg
 }
 
 export enum ProductCategory {

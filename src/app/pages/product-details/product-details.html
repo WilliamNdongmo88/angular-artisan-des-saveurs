@@ -50,6 +50,12 @@
           <p>{{ product.preparation }}</p>
         </div>
 
+        <!-- Recette -->
+        <div *ngIf="product.recette" class="preparation-info">
+          <h3>{{ 'product.recommendedPreparation' | translate }}</h3>
+          <p>{{ product.recette }}</p>
+        </div>
+
         <!-- Discount offer -->
         <div class="discount-offer">
           <div class="discount-badge">
