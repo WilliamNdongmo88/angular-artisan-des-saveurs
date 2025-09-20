@@ -147,6 +147,22 @@
           </div>
         </div>
 
+        <!-- Recette -->
+         <!-- @if (categories) {} -->
+        <div class="form-group full-width">
+          <label for="recette">Recette</label>
+          <textarea
+            id="recette"
+            formControlName="recette"
+            class="form-control"
+            [class.is-invalid]="submitted && f['recette'].errors"
+            placeholder="Recette du produit"
+            rows="4"></textarea>
+          <div *ngIf="submitted && f['recette'].errors" class="invalid-feedback">
+            <div *ngIf="f['recette'].errors['maxlength']">Le text ne peut pas dépasser 1000 caractères</div>
+          </div>
+        </div>
+
         <!-- URL de l'image -->
         <div class="form-group full-width">
           <label for="imageUrl">URL de l'image</label>

@@ -45,6 +45,7 @@ export class ProductFormComponent implements OnInit {
     price: 0,
     description: '',
     preparation: '',
+    recette: '',
     category: '',
     available: true,
     origin: '',
@@ -89,6 +90,7 @@ export class ProductFormComponent implements OnInit {
       origin: ['', [Validators.required, Validators.maxLength(100)]],//
       description: ['', [Validators.maxLength(1000)]],
       preparation: ['', [Validators.maxLength(1000)]],
+      recette: ['', [Validators.maxLength(1000)]],
       price: ['', [Validators.required, Validators.min(0.01)]],
       category: ['', [Validators.maxLength(50)]],
       imageUrl: [''], //[Validators.maxLength(500)]
@@ -128,6 +130,7 @@ export class ProductFormComponent implements OnInit {
           origin: product.origin,
           description: product.description,
           preparation: product.preparation,
+          recette: product.recette,
           price: product.price,
           category: product.category,
           imageUrl: product?.mainImage?.filePath?.substring(0, 100) ?? '',
@@ -189,6 +192,7 @@ onSubmit() {
   console.log("this.productDto :: ", this.productDto);
   if (this.imageFile) {
     if (this.isEditMode && this.productId) {
+      //console.log("productDto with imageFile :: ", this.productDto);
       this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
         next: (res : ProductResponse) => {
           this.uploadedFile = res.mainImage;
@@ -202,6 +206,7 @@ onSubmit() {
         }
       });
     } else {
+      //console.log("productDto with imageFile :: ", this.productDto);
       this.productService.createProduct(this.productDto, this.imageFile).subscribe({
         next: (res : ProductResponse) => {
           this.uploadedFile = res.mainImage;
@@ -216,6 +221,7 @@ onSubmit() {
       });
     }
   } else if (this.isEditMode && this.productId) {
+      //console.log("productDto without imageFile :: ", this.productDto);
       this.imageFile = new File([], ''); // Fichier vide pour indiquer pas de changement
       this.productService.updateProduct(this.productId, this.productDto, this.imageFile).subscribe({
         next: (res : ProductResponse) => {

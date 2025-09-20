@@ -27,6 +27,7 @@ export interface ProductDto {
   price: number;
   description: string;
   preparation?: string;
+  recette?: string;
   category?: string;
   available: boolean;
   origin?: string;
@@ -74,5 +75,6 @@ export interface ProductResponse {
   updatedAt: string;
   origin: string;
   preparation: string;
+  recette: string;
 }
 
