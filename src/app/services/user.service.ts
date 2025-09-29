@@ -46,6 +46,18 @@ export interface messageResponse {
   message: string;
 }
 
+export interface DeleteAccountRequest {
+  confirmationText: string;
+  password: string;
+}
+
+export interface ApiResponse {
+  success: boolean;
+  message: string;
+  userId?: number;
+  username?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -144,6 +156,11 @@ export class UserService {
     return this.http.get<Address[]>(`${this.apiUrl}addresses`, this.httpOptions);
   }
 
+  // Get Company account number
+  getAccountNumber(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/users/account-number`, this.httpOptions);
+  }
+
   addAddress(address: Address): Promise<Address> {
     return new Promise((resolve, reject) => {
       this.http.post<Address>(`${this.apiUrl}addresses`, address, this.httpOptions)
@@ -210,14 +227,30 @@ export class UserService {
   }
 
   // Supprimer le compte utilisateur
-  deleteAccount(id: number): Observable<messageResponse> {
-    return this.http.delete<messageResponse>(`${this.apiUrl}/auth/${id}`, this.httpOptions).pipe(
-      map(response => {
-        console.log('Réponse de la suppression du compte:', response);
-        return response;
-      })
-    );
+  /**
+   * Supprime le compte de l'utilisateur connecté
+   * @param deleteRequest Les données de confirmation
+   * @returns Observable avec la réponse de l'API
+   */
+  deleteAccount(deleteRequest: DeleteAccountRequest): Observable<ApiResponse> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log("Delete Request :: ", deleteRequest);
+    return this.http.delete<ApiResponse>(`${this.apiUrl}/users/account`, {
+      headers,
+      body: deleteRequest
+    });
   }
+
+  /**
+   * Récupère les informations de l'utilisateur connecté
+   * @returns Observable avec les informations utilisateur
+   */
+  getCurrentUser(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/users/me`);
+  }
+
 
   // Méthodes utilitaires
   private getAuthHeaders(): HttpHeaders {

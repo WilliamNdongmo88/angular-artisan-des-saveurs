@@ -77,3 +77,8 @@
 <ng-template #loading>
   <p class="loading-text">Chargement des détails de la commande...</p>
 </ng-template>
+
+<!-- Spinner -->
+<div class="loading-spinner" *ngIf="isLoading">
+  <app-loading-spinner [overlay]="true"></app-loading-spinner>
+</div>

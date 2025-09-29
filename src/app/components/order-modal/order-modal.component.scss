@@ -55,6 +55,15 @@
   }
 }
 
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-top: 1px solid #e5e7eb;
+  
+}
+
 .order-form {
   padding: 24px;
 }
@@ -181,6 +190,40 @@
     
     &:hover:not(:disabled) {
       background-color: #2563eb;
+    }
+  }
+
+}
+
+.form-actions-next {
+  display: flex;
+  // gap: 12px;
+  justify-content: center;
+  // margin-top: 5px;
+  // margin-bottom: 15px;
+  
+  button {
+    padding: 12px 24px;
+    margin-right: 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  
+  .btn-submit {
+    background-color: #60a5fa;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: #60a5fa;
     }
   }
 

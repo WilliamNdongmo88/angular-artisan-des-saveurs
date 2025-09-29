@@ -4,110 +4,145 @@
       <h2>{{ 'orderModal.title' | translate }}</h2>
       <button class="close-btn" (click)="closeModal()">&times;</button>
     </div>
-    
-    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="order-form">
-      <!-- Infos utilisateur si non connecté -->
-      <div *ngIf="!isUserConnected">
+    @if(isLocation){
+      <app-delivery 
+        [selectedMethod]="currentDeliveryMethod"
+        (deliveryMethodChange)="onDeliveryMethodChange($event)"
+        (deliveryOptionChange)="onDeliveryOptionChange($event)">
+      </app-delivery>
+    } @else if (isOrderCompleted) {
+      <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="order-form">
+        <!-- Infos utilisateur si non connecté -->
+        <div *ngIf="!isUserConnected">
+          <div class="form-group">
+            <label for="firstName">{{ 'orderModal.labels.firstName' | translate }}</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              formControlName="firstName"
+              (change)="handleChange($event)"
+              [class.error]="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched"
+              [placeholder]="'orderModal.placeholders.firstName' | translate">
+            <div class="error-message" *ngIf="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched">
+              {{ 'orderModal.errors.firstNameRequired' | translate }}
+            </div>
+          </div>
+
         <div class="form-group">
-          <label for="firstName">{{ 'orderModal.labels.firstName' | translate }}</label>
+          <label for="lastName">{{ 'orderModal.labels.lastName' | translate }}</label>
           <input 
             type="text" 
-            id="firstName" 
-            formControlName="firstName"
+            id="lastName" 
+            formControlName="lastName"
             (change)="handleChange($event)"
-            [class.error]="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched"
-            [placeholder]="'orderModal.placeholders.firstName' | translate">
-          <div class="error-message" *ngIf="orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched">
-            {{ 'orderModal.errors.firstNameRequired' | translate }}
+            [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
+            [placeholder]="'orderModal.placeholders.lastName' | translate">
+          
+          <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
+            {{ 'orderModal.errors.lastNameRequired' | translate }}
           </div>
         </div>
 
-      <div class="form-group">
-        <label for="lastName">{{ 'orderModal.labels.lastName' | translate }}</label>
-        <input 
-          type="text" 
-          id="lastName" 
-          formControlName="lastName"
-          (change)="handleChange($event)"
-          [class.error]="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched"
-          [placeholder]="'orderModal.placeholders.lastName' | translate">
-        
-        <div class="error-message" *ngIf="orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched">
-          {{ 'orderModal.errors.lastNameRequired' | translate }}
-        </div>
-      </div>
 
+          <div class="form-group">
+            <label for="email">{{ 'orderModal.labels.email' | translate }}</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email"
+              (change)="handleChange($event)"
+              [class.error]="orderForm.get('email')?.invalid && orderForm.get('email')?.touched"
+              [placeholder]="'orderModal.placeholders.email' | translate">
+            <div class="error-message" *ngIf="orderForm.get('email')?.invalid && orderForm.get('email')?.touched">
+              <span *ngIf="orderForm.get('email')?.errors?.['required']">{{ 'orderModal.errors.emailRequired' | translate }}</span>
+              <span *ngIf="orderForm.get('email')?.errors?.['email']">{{ 'orderModal.errors.emailInvalid' | translate }}</span>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="email">{{ 'orderModal.labels.email' | translate }}</label>
-          <input 
-            type="email" 
-            id="email" 
-            formControlName="email"
-            (change)="handleChange($event)"
-            [class.error]="orderForm.get('email')?.invalid && orderForm.get('email')?.touched"
-            [placeholder]="'orderModal.placeholders.email' | translate">
-          <div class="error-message" *ngIf="orderForm.get('email')?.invalid && orderForm.get('email')?.touched">
-            <span *ngIf="orderForm.get('email')?.errors?.['required']">{{ 'orderModal.errors.emailRequired' | translate }}</span>
-            <span *ngIf="orderForm.get('email')?.errors?.['email']">{{ 'orderModal.errors.emailInvalid' | translate }}</span>
+          <div class="form-group">
+            <label for="phone">{{ 'orderModal.labels.phone' | translate }}</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              formControlName="phone"
+              (change)="handleChange($event)"
+              [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
+              [placeholder]="'orderModal.placeholders.phone' | translate">
+            <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
+              {{ 'orderModal.errors.phoneInvalid' | translate }}
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="phone">{{ 'orderModal.labels.phone' | translate }}</label>
-          <input 
-            type="tel" 
-            id="phone" 
-            formControlName="phone"
-            (change)="handleChange($event)"
-            [class.error]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
-            [placeholder]="'orderModal.placeholders.phone' | translate">
-          <div class="error-message" *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched">
-            {{ 'orderModal.errors.phoneInvalid' | translate }}
+        <!-- Infos utilisateur si connecté -->
+        <div *ngIf="isUserConnected" class="user-info">
+          <p class="user-name">{{ 'orderModal.userInfo.labelName' | translate }} <strong>{{ user.firstName }} {{ user.lastName }}</strong></p>
+          <p class="user-email">{{ 'orderModal.userInfo.labelEmail' | translate }} {{ user.email }}</p>
+          <p class="user-phone">{{ 'orderModal.userInfo.labelPhone' | translate }} {{ user.phone }}</p>
+        </div>
+
+        <!-- Résumé commande -->
+        <div class="order-summary">
+          <h3>{{ 'orderModal.summary.title' | translate }}</h3>
+          <div class="summary-line">
+            <span>{{ 'orderModal.summary.subtotal' | translate }}</span>
+            <span>{{ orderData.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</span>
+          </div>
+          <div class="summary-line" *ngIf="orderData.discount > 0">
+            <span>{{ 'orderModal.summary.discount' | translate }}</span>
+            <span class="discount">-{{ orderData.discount | currency:'Rs ':'symbol':'1.2-2' }}</span>
+          </div>
+          <div class="summary-line total">
+            <span><strong>{{ 'orderModal.summary.total' | translate }}</strong></span>
+            <span><strong>{{ orderData.total | currency:'Rs ':'symbol':'1.2-2' }}</strong></span>
+          </div>
+          <div class="shipping-info" *ngIf="orderData.freeShipping">
+            <span class="free-shipping">{{ 'orderModal.summary.freeShipping' | translate }}</span>
           </div>
         </div>
-      </div>
 
-      <!-- Infos utilisateur si connecté -->
-      <div *ngIf="isUserConnected" class="user-info">
-        <p class="user-name">{{ 'orderModal.userInfo.labelName' | translate }} <strong>{{ user.firstName }} {{ user.lastName }}</strong></p>
-        <p class="user-email">{{ 'orderModal.userInfo.labelEmail' | translate }} {{ user.email }}</p>
-        <p class="user-phone">{{ 'orderModal.userInfo.labelPhone' | translate }} {{ user.phone }}</p>
-      </div>
+        <!-- Actions -->
+        <!-- <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">{{ 'orderModal.actions.cancel' | translate }}</button>
+          <button type="submit" class="btn-submit" [disabled]="isDisabled || isSubmitting">
+            <span *ngIf="!isSubmitting">{{ 'orderModal.actions.confirmOrder' | translate }}</span>
+            <span *ngIf="isSubmitting">{{ 'orderModal.actions.processing' | translate }}</span>
+          </button>
+        </div> -->
+      </form>
+    } @else if(isPayment){
+      <app-payment 
+        [currentDeliveryMethod]="currentDeliveryMethod"
+        (paymentMethodChange)="onPaymentMethodChange($event)">
+      </app-payment>
+    }
+    <div class="modal-footer form-actions-next">
+      <!-- Bouton retour -->
+      <button type="button" class="btn-cancel" (click)="goToPreviousStep()">← Back</button>
 
-      <!-- Résumé commande -->
-      <div class="order-summary">
-        <h3>{{ 'orderModal.summary.title' | translate }}</h3>
-        <div class="summary-line">
-          <span>{{ 'orderModal.summary.subtotal' | translate }}</span>
-          <span>{{ orderData.subtotal | currency:'Rs ':'symbol':'1.2-2' }}</span>
-        </div>
-        <div class="summary-line" *ngIf="orderData.discount > 0">
-          <span>{{ 'orderModal.summary.discount' | translate }}</span>
-          <span class="discount">-{{ orderData.discount | currency:'Rs ':'symbol':'1.2-2' }}</span>
-        </div>
-        <div class="summary-line total">
-          <span><strong>{{ 'orderModal.summary.total' | translate }}</strong></span>
-          <span><strong>{{ orderData.total | currency:'Rs ':'symbol':'1.2-2' }}</strong></span>
-        </div>
-        <div class="shipping-info" *ngIf="orderData.freeShipping">
-          <span class="free-shipping">{{ 'orderModal.summary.freeShipping' | translate }}</span>
-        </div>
-      </div>
+      <!-- Bouton Next -->
+      <button 
+        *ngIf="showNextButton()" 
+        type="button" 
+        class="btn-submit"  
+        (click)="goToNextStep()" 
+        [disabled]="isDisabled || isSubmitting">
+        Next →
+      </button>
 
-      <!-- Actions -->
-      <div class="form-actions">
-        <button type="button" class="btn-cancel" (click)="closeModal()">{{ 'orderModal.actions.cancel' | translate }}</button>
-        <button type="submit" class="btn-submit" [disabled]="isDisabled || isSubmitting">
-          <span *ngIf="!isSubmitting">{{ 'orderModal.actions.confirmOrder' | translate }}</span>
-          <span *ngIf="isSubmitting">{{ 'orderModal.actions.processing' | translate }}</span>
-        </button>
-      </div>
-
-      <!-- Spinner -->
-      <div class="loading-spinner" *ngIf="isSubmitting">
-        <app-loading-spinner [overlay]="true"></app-loading-spinner>
-      </div>
-    </form>
+      <!-- Bouton Valider si pas location et pas orderCompleted -->
+      <button 
+        *ngIf="!isLocation && !isOrderCompleted" 
+        type="button" 
+        class="btn-submit"  
+        (click)="validateOrder()" 
+        [disabled]="isDisabled">
+        Valider
+      </button>
+    </div>
+    <!-- Spinner -->
+    <div class="loading-spinner" *ngIf="isSubmitting">
+      <app-loading-spinner [overlay]="true"></app-loading-spinner>
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -61,11 +61,15 @@ export class ProfilComponent implements OnInit, OnDestroy {
   isLoading = false;
   userAvatar: string | null = null;
   notification: Notification | null = null;
+  showConfirmation = false;
+  errorMessage = '';
+  successMessage = '';
 
   // Formulaires
   personalInfoForm!: FormGroup;
   passwordForm!: FormGroup;
   preferencesForm!: FormGroup;
+  deleteAccountForm!: FormGroup;
   showCurrentPassword: boolean = false;
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
@@ -92,8 +96,12 @@ export class ProfilComponent implements OnInit, OnDestroy {
   private currencyService = inject(CurrencyService);
   public userData: any = {}; // Pour stocker les données utilisateur
 
-  constructor(private formBuilder: FormBuilder, private sharedService: SharedService) {
+  constructor(private formBuilder: FormBuilder, private sharedService: SharedService, private router: Router) {
     this.initializeForms();
+    this.deleteAccountForm = this.formBuilder.group({
+      confirmationText: ['', [Validators.required, this.confirmationValidator]],
+      password: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -254,6 +262,20 @@ export class ProfilComponent implements OnInit, OnDestroy {
       console.log("[ProfileComponent] User Id :: ", this.currentUser.id);
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
+              console.log("Orders :: ", orders);
+              orders.forEach(element => {
+                if(element.delivered == 'En attente'){
+                  element.delivered='pending';
+                }else if(element.delivered=='En cours'){
+                  element.delivered = "processing";
+                }else if(element.delivered=='Expédiée'){
+                  element.delivered = "shipped";
+                }else if(element.delivered=='Livrée'){
+                  element.delivered = "delivered";
+                }else{
+                  element.delivered='cancelled';
+                }
+              });
               this.orders = orders;
             },
             error: (error) => {
@@ -503,53 +525,92 @@ export class ProfilComponent implements OnInit, OnDestroy {
   }
 
   // Suppression du compte
-  confirmDeleteAccount() {
-    const confirmation = confirm(
-      'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
-    );
-    
-    if (confirmation) {
-      const doubleConfirmation = confirm(
-        'Cette action supprimera définitivement toutes vos données. Confirmez-vous ?'
-      );
-      
-      if (doubleConfirmation) {
-        this.deleteAccount();
-      }
+  // Validateur personnalisé pour vérifier que l'utilisateur tape "SUPPRIMER"
+  confirmationValidator(control: any) {
+    if (control.value && control.value.toUpperCase() !== 'SUPPRIMER') {
+      return { invalidConfirmation: true };
+    }
+    return null;
+  }
+
+  // Afficher la boîte de dialogue de confirmation
+  showDeleteConfirmation(): void {
+    if (this.deleteAccountForm.valid) {
+      this.showConfirmation = true;
+      this.errorMessage = '';
+    } else {
+      this.errorMessage = 'Veuillez remplir tous les champs correctement.';
     }
   }
 
-  private async deleteAccount() {
-    this.isLoading = true;
+  // Annuler la suppression
+  cancelDeletion(): void {
+    this.showConfirmation = false;
+    this.deleteAccountForm.reset();
+    this.errorMessage = '';
+  }
 
-    try {
-      if (!this.userId) {
-        throw new Error("ID utilisateur non disponible");
-      }
-      this.userService.deleteAccount(this.userId).subscribe({
-        next: (res: messageResponse) => {
-          console.log("Compte supprimé :", res);
-          this.showNotification('success', res.message || 'Compte supprimé avec succès');
-          this.authService.logout();
+  // Confirmer et procéder à la suppression du compte
+  confirmDeleteAccount(): void {
+    if (this.deleteAccountForm.valid) {
+      this.isLoading = true;
+      this.errorMessage = '';
+
+      const deleteRequest = {
+        confirmationText: this.deleteAccountForm.get('confirmationText')?.value,
+        password: this.deleteAccountForm.get('password')?.value
+      };
+
+      this.userService.deleteAccount(deleteRequest).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          this.successMessage = 'Votre compte a été supprimé avec succès.';
+          
+          // Déconnecter l'utilisateur et rediriger vers la page d'accueil
+          setTimeout(() => {
+            this.authService.logout();
+            this.router.navigate(['/']);
+          }, 2000);
         },
-        error: (err: { error: { message: string; }; }) => {
-          console.error("Erreur suppression du compte :", err);
-          this.showNotification('error', err?.error?.message || 'Erreur lors de la suppression du compte');
+        error: (error) => {
+          this.isLoading = false;
+          this.showConfirmation = false;
+          
+          if (error.status === 400) {
+            this.errorMessage = 'Mot de passe incorrect ou données invalides.';
+          } else if (error.status === 404) {
+            this.errorMessage = 'Compte utilisateur non trouvé.';
+          } else {
+            this.errorMessage = 'Une erreur est survenue lors de la suppression du compte. Veuillez réessayer.';
+          }
         }
       });
-    } catch (error) {
-      console.error('Erreur lors de la suppression du compte:', error);
-      this.showNotification('error', 'Erreur lors de la suppression du compte');
     }
-  
+  }
+
+  // Getter pour faciliter l'accès aux contrôles du formulaire dans le template
+  get confirmationText() {
+    return this.deleteAccountForm.get('confirmationText');
+  }
+
+  get password() {
+    return this.deleteAccountForm.get('password');
   }
 
   // Utilitaires
   getOrderStatusText(delivered: boolean | string): string {
-    const isDelivered = typeof delivered === 'boolean' ? delivered : delivered === 'true';
-    return isDelivered 
-      ? this.i18nService.translate('orders.status.delivered')
-      : this.i18nService.translate('orders.status.processing');
+    console.log("delivered :: ", delivered);
+    if(delivered=='pending'){
+      return this.i18nService.translate('orders.status.pending');
+    }else if(delivered=='processing'){
+      return this.i18nService.translate('orders.status.processing')
+    }else if(delivered=='shipped'){
+      return this.i18nService.translate('orders.status.shipped')
+    }else if(delivered=='delivered'){
+      return this.i18nService.translate('orders.status.delivered')
+    }else{
+      return this.i18nService.translate('orders.status.cancelled')
+    }
   }
 
   // Méthodes utilitaires pour les traductions

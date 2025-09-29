@@ -1,0 +1,48 @@
+<div class="delivery-container">
+  <h1 class="delivery-title">Livraison</h1>
+  
+  <div class="delivery-options">
+    <!-- Option Expédier -->
+    <div class="delivery-option" 
+         [class.selected]="selectedMethod === 'expedier'"
+         (click)="selectDeliveryMethod('expedier')">
+      <div class="option-content">
+        <input type="radio" 
+               name="deliveryMethod" 
+               value="expedier" 
+               [checked]="selectedMethod === 'expedier'"
+               (change)="selectDeliveryMethod('expedier')">
+        <span class="option-label">Expédier</span>
+        <div class="option-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16,8 20,8 23,11 23,16 16,16"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Option Récupérer -->
+    <div class="delivery-option" 
+         [class.selected]="selectedMethod === 'recuperer'"
+         (click)="selectDeliveryMethod('recuperer')">
+      <div class="option-content">
+        <input type="radio" 
+               name="deliveryMethod" 
+               value="recuperer" 
+               [checked]="selectedMethod === 'recuperer'"
+               (change)="selectDeliveryMethod('recuperer')">
+        <span class="option-label">Récupérer</span>
+        <div class="option-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9,22 9,12 15,12 15,22"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -128,9 +128,9 @@
               <button 
                 type="button" 
                 class="toggle-password" 
-                (click)="showPassword = !showPassword" 
+                (click)="showConfirmPassword = !showConfirmPassword" 
                 tabindex="-1">
-                <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
               </button>
           </div>
           <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">

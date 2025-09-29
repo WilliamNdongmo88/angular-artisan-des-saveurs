@@ -153,10 +153,10 @@
         <div class="order-card" *ngFor="let order of orders">
           <div class="order-header">
             <div class="order-info">
-              <h3>{{ 'orders.orderNumber' | translate }}{{'CMD-00'+ order.id || 'CMD-001'}}</h3>
+              <h3>{{ 'orders.orderNumber' | translate }}{{'CMD-00'+ order.id || 'CMD-0051'}}</h3>
               <span class="order-date">{{ order.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
             </div>
-            <div class="order-status" [class]="order.delivered ? 'delivered' : 'processing'">
+            <div class="order-status" [class]="order.delivered">
               {{ getOrderStatusText(order.delivered) }}
             </div>
           </div>
@@ -374,6 +374,122 @@
           </div>
         </form>
       </div>
+
+      <div class="danger-zone-container">
+        <div class="danger-zone-card">
+          <div class="danger-zone-header">
+            <h2 class="danger-zone-title">
+              <i class="fas fa-exclamation-triangle danger-icon"></i>
+              Zone de Danger
+            </h2>
+            <p class="danger-zone-subtitle">
+              Cette action est irréversible. Une fois votre compte supprimé, toutes vos données seront définitivement perdues.
+            </p>
+          </div>
+
+          <!-- Messages d'erreur et de succès -->
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            <i class="fas fa-times-circle"></i>
+            {{ errorMessage }}
+          </div>
+
+          <div *ngIf="successMessage" class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            {{ successMessage }}
+          </div>
+
+          <!-- Formulaire de suppression -->
+          <form [formGroup]="deleteAccountForm" *ngIf="!showConfirmation && !successMessage">
+            <div class="form-group-del">
+              <label for="confirmationText" class="form-label">
+                Pour confirmer, tapez <strong>"SUPPRIMER"</strong> dans le champ ci-dessous :
+              </label>
+              <input
+                type="text"
+                id="confirmationText"
+                formControlName="confirmationText"
+                class="form-control"
+                [class.is-invalid]="confirmationText?.invalid && confirmationText?.touched"
+                placeholder="Tapez SUPPRIMER"
+              />
+              <div *ngIf="confirmationText?.invalid && confirmationText?.touched" class="invalid-feedback">
+                <div *ngIf="confirmationText?.errors?.['required']">
+                  Ce champ est obligatoire.
+                </div>
+                <div *ngIf="confirmationText?.errors?.['invalidConfirmation']">
+                  Vous devez taper exactement "SUPPRIMER".
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-del">
+              <label for="password" class="form-label">
+                Confirmez avec votre mot de passe :
+              </label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                [class.is-invalid]="password?.invalid && password?.touched"
+                placeholder="Votre mot de passe"
+              />
+              <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
+                Le mot de passe est obligatoire.
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="button"
+                class="btn btn-danger btn-delete"
+                [disabled]="deleteAccountForm.invalid"
+                (click)="showDeleteConfirmation()"
+              >
+                <i class="fas fa-trash-alt"></i>
+                Supprimer mon compte
+              </button>
+            </div>
+          </form>
+
+          <!-- Boîte de dialogue de confirmation finale -->
+          <div *ngIf="showConfirmation" class="confirmation-dialog">
+            <div class="confirmation-content">
+              <h3 class="confirmation-title">
+                <i class="fas fa-exclamation-triangle"></i>
+                Êtes-vous absolument sûr ?
+              </h3>
+              <p class="confirmation-message">
+                Cette action <strong>ne peut pas être annulée</strong>. Cela supprimera définitivement votre compte
+                et toutes les données associées de nos serveurs.
+              </p>
+              
+              <div class="confirmation-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="cancelDeletion()"
+                  [disabled]="isLoading"
+                >
+                  <i class="fas fa-times"></i>
+                  Annuler
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-confirm-delete"
+                  (click)="confirmDeleteAccount()"
+                  [disabled]="isLoading"
+                >
+                  <i *ngIf="!isLoading" class="fas fa-trash-alt"></i>
+                  <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+                  {{ isLoading ? 'Suppression...' : 'Oui, supprimer définitivement' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

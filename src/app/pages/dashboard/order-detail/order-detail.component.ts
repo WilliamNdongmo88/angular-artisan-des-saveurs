@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../../services/order.service';
 import { Observable } from 'rxjs';
 import { OrderPayload } from '../../../models/order';
+import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-order-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, CurrencyPipe, DatePipe],
+  imports: [CommonModule, RouterLink, CurrencyPipe, DatePipe, LoadingSpinnerComponent],
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.scss']
 })
@@ -16,6 +17,7 @@ export class OrderDetailComponent implements OnInit {
   order$: Observable<OrderPayload | undefined> | undefined;
   orderId: number = 0;
   newStatus: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,13 +39,16 @@ export class OrderDetailComponent implements OnInit {
   }
 
   updateStatusOrder(){
+    this.isLoading = true;
     this.orderService.updateOrderStatus(this.orderId, this.newStatus).subscribe({
       next: (response) => {
-      console.log('Statut de la commande mis à jour : ', response);
-      this.order$ = this.orderService.getOrderById(this.orderId);
+        console.log('Statut de la commande mis à jour : ', response);
+        this.order$ = this.orderService.getOrderById(this.orderId);
+        this.isLoading = false;
       },
       error: (err) => {
-      console.error('Erreur lors de la mise à jour du statut', err);
+        console.error('Erreur lors de la mise à jour du statut', err);
+        this.isLoading = false;
       }
     });
   }

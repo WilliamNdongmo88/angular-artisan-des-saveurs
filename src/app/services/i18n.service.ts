@@ -513,8 +513,13 @@ export class I18nService {
         'title': 'Historique des commandes',
         'orderNumber': 'Commande #',
         'date': 'Date',
-        'status.delivered': 'Livrée',
-        'status.processing': 'En cours',
+        "status": {
+          "processing": "En cours",
+          "delivered": "Livrée",
+          "shipped": "Expédiée",
+          "pending": "En Attente",
+          "cancelled": "Annulée"
+        },
         'quantity': 'Quantité',
         'subtotal': 'Sous-total',
         'discount': 'Réduction',
@@ -1073,7 +1078,10 @@ export class I18nService {
         "date": "Date",
         "status": {
           "delivered": "Delivered",
-          "processing": "Processing"
+          "processing": "Processing",
+          "shipped": "Ship",
+          "pending": "Pending",
+          "cancelled": "Cancelled"
         },
         "quantity": "Quantity",
         "subtotal": "Subtotal",

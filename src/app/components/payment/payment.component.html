@@ -1,0 +1,126 @@
+<div class="payment-container">
+  <h1 class="payment-title">Paiement</h1>
+  
+  <p class="security-text">
+    Toutes les transactions sont sécurisées et chiffrées.
+  </p>
+  
+  <div class="payment-options">
+    <!-- Option MIPS (sélectionnée) -->
+    <div class="payment-option selected" (click)="selectPaymentMethod('mips')">
+      <div class="option-header">
+        <input type="radio" 
+               name="paymentMethod" 
+               value="mips" 
+               [checked]="selectedMethod === 'mips'"
+               (change)="selectPaymentMethod('mips')">
+        <span class="option-label">MIPS</span>
+        <div class="card-logos">
+          <img src="img/logo/visa.webp" alt="Visa" class="card-logo">
+          <img src="img/logo/mastercard.png" alt="Mastercard" class="card-logo">
+        </div>
+      </div>
+    </div>
+    <div class="mips-details" *ngIf="selectedMethod === 'mips'">
+      <div class="redirect-illustration">
+        <div class="browser-window">
+          <div class="browser-header">
+            <div class="browser-dots">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+          <div class="browser-content">
+            <div class="redirect-arrow">→</div>
+          </div>
+        </div>
+      </div>
+      <p class="redirect-alert">
+        Fonctionnalité non disponible pour le moment.
+        Veuillez choisir une autre méthode de paiement.
+      </p>
+      <!-- <p class="redirect-text">
+        Après avoir cliqué sur « Payer maintenant »,
+        vous serez redirigé(e) vers MIPS pour finaliser
+        votre achat de façon sécurisée.
+      </p> -->
+    </div>
+    
+    <!-- Dépôt en banque -->
+    <div class="payment-option" (click)="selectPaymentMethod('bank')">
+      <input type="radio" 
+             name="paymentMethod" 
+             value="bank" 
+             [checked]="selectedMethod === 'bank'"
+             (change)="selectPaymentMethod('bank')">
+      <span class="option-label">Paiement par Juice (MCB)</span>
+    </div>
+    <div class="mips-details" *ngIf="selectedMethod === 'bank'">
+      <p class="redirect-text">
+        Veuillez effectuer un dépôt au compte suivant :<br>
+
+        <b>Numero de compte: </b> 
+        <span>{{ accountNumber }}</span>
+        <button class="copy-btn" (click)="copyToClipboard(accountNumber)" title="Copier">
+          📋
+        </button>
+        <br>
+
+        <b>Nom du bénéficiaire: </b> 
+        <span>{{ beneficiaryName }}</span>
+        <button class="copy-btn" (click)="copyToClipboard(beneficiaryName)" title="Copier">
+          📋
+        </button>
+        <br>
+
+        Une fois le dépôt effectué, veuillez envoyer le reçu à {{email}}
+        <button class="copy-btn" (click)="copyToClipboard(email)" title="Copier">
+          📋
+        </button> ou par 
+        <b>WhatsApp:</b> 
+        <span>{{ whatsapp }}</span>
+        <button class="copy-btn" (click)="copyToClipboard(whatsapp)" title="Copier">
+          📋
+        </button>, pour confirmer votre commande.
+      </p>
+    </div>
+    
+    <!-- Paiement à la livraison -->
+    <div class="payment-option" (click)="selectPaymentMethod('delivery')">
+      <input type="radio" 
+             name="paymentMethod" 
+             value="delivery" 
+             [checked]="selectedMethod === 'delivery'"
+             (change)="selectPaymentMethod('delivery')">
+      <span class="option-label">Paiement à la livraison</span>
+    </div>
+    <div class="mips-details" *ngIf="selectedMethod === 'delivery'">
+      <p class="redirect-text" *ngIf="currentDeliveryMethod === 'expedier'">
+        Vous pouvez uniquement payer en espèces lors de la livraison.<br>
+        Veuillez vous assurer que quelqu'un soit disponible pour recevoir la commande et effectuer le paiement.
+      </p>
+      <p class="redirect-text" *ngIf="currentDeliveryMethod === 'recuperer'">
+        Vous pouvez uniquement payer en espèces lors du retrait de votre commande.<br>
+        Localisation du magasin: <a 
+                href="https://www.google.com/maps/dir/?api=1&destination=-20.018264,57.570485"
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="btn-map">
+                Itinéraire Google Maps
+              </a>
+      </p>
+    </div>
+    
+    <!-- Card on Delivery -->
+    <!-- <div class="payment-option" (click)="selectPaymentMethod('card-delivery')">
+      <input type="radio" 
+             name="paymentMethod" 
+             value="card-delivery" 
+             [checked]="selectedMethod === 'card-delivery'"
+             (change)="selectPaymentMethod('card-delivery')">
+      <span class="option-label">Card on Delivery</span>
+    </div> -->
+  </div>
+</div>
+
