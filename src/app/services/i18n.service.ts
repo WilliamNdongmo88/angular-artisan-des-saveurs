@@ -517,6 +517,7 @@ export class I18nService {
           "processing": "En cours",
           "delivered": "Livrée",
           "shipped": "Expédiée",
+          "recovery":"Récupération",
           "pending": "En Attente",
           "cancelled": "Annulée"
         },
@@ -1080,6 +1081,7 @@ export class I18nService {
           "delivered": "Delivered",
           "processing": "Processing",
           "shipped": "Ship",
+          "recovery":"Recovery",
           "pending": "Pending",
           "cancelled": "Cancelled"
         },

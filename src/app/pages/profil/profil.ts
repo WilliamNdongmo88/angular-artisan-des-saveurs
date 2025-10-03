@@ -263,11 +263,14 @@ export class ProfilComponent implements OnInit, OnDestroy {
         this.userService.getOrderHistory(this.currentUser.id).subscribe({
             next: (orders) => {
               console.log("Orders :: ", orders);
+              console.log("delivered :: ", orders[0].delivered);
               orders.forEach(element => {
                 if(element.delivered == 'En attente'){
                   element.delivered='pending';
                 }else if(element.delivered=='En cours'){
                   element.delivered = "processing";
+                }else if(element.delivered=='Récupération'){
+                  element.delivered = "recovery";
                 }else if(element.delivered=='Expédiée'){
                   element.delivered = "shipped";
                 }else if(element.delivered=='Livrée'){
@@ -606,6 +609,8 @@ export class ProfilComponent implements OnInit, OnDestroy {
       return this.i18nService.translate('orders.status.processing')
     }else if(delivered=='shipped'){
       return this.i18nService.translate('orders.status.shipped')
+    }else if(delivered=='recovery'){
+      return this.i18nService.translate('orders.status.recovery')
     }else if(delivered=='delivered'){
       return this.i18nService.translate('orders.status.delivered')
     }else{
