@@ -53,6 +53,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService,
     private sharedService: SharedService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -268,8 +269,17 @@ export class CartComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Ouvrir le modal de commande
-    this.showOrderModal = true;
+    if (this.authService.isAuthenticatedAfterAnyProcess()) {
+      this.showOrderModal = true;
+    } else {
+      // Stocker l'action à exécuter après login
+      this.authService.pendingOrderAction = () => {
+        this.showOrderModal = true;
+      };
+
+      // Rediriger vers login avec returnUrl
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/cart' } });
+    }
   }
 
   closeOrderModal() {

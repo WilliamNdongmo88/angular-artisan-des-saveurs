@@ -56,17 +56,22 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     console.log('Tentative de connexion avec:', this.loginForm.value);
-    this.authService.login(this.loginForm.value)
-      .subscribe({
-        next: (data) => {
-          this.toastr.success('Connexion réussie!', 'Succès');
-          this.router.navigate([this.returnUrl]);
-        },
-        error: (error) => {
-          this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
-          this.loading = false;
-        }
-      });
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (data) => {
+        this.toastr.success('Connexion réussie!', 'Succès');
+
+        // Navigation vers returnUrl
+        const returnUrl = this.returnUrl || '/';
+        this.router.navigate([returnUrl]);
+
+        // L'action pending (ex: ouvrir modal) sera déjà exécutée dans AuthService.login via tap()
+        this.loading = false;
+      },
+      error: (error) => {
+        this.toastr.error(error.error?.message || 'Erreur de connexion', 'Erreur');
+        this.loading = false;
+      }
+    });
   }
 }
 

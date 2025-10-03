@@ -35,6 +35,10 @@ export class AuthService {
   user = signal<Users | undefined| null>(undefined);
   isDashboard = signal(false);
 
+  // Pour reprendre le processus là ou il s'était arreter
+  pendingOrderAction: (() => void) | null = null;
+  private _isAuthenticated = false;
+
   public isProd = environment.production;
   private AUTH_API: string | undefined;
 
@@ -60,7 +64,19 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<JwtResponse> {
     this.isDashboard.set(true);
     return this.http.post<JwtResponse>(this.AUTH_API + 'signin', credentials, httpOptions)
-      .pipe(map(response => {
+      .pipe(
+        tap(() => {
+          this._isAuthenticated = true;
+
+          // Si une action est en attente, l'exécuter
+          if (this.pendingOrderAction) {
+            this.pendingOrderAction();
+            this.pendingOrderAction = null;
+          }
+        }
+      ),
+
+        map(response => {
         // Stocker les détails de l'utilisateur et le token JWT dans le localStorage
         const user: AuthUser = {
           id: response.id,
@@ -88,6 +104,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('refreshToken'); // <-- Supprimer le refresh token
     this.currentUserSubject.next(null);
+    this._isAuthenticated = false;
   }
 
   activateAccount(token: string): Observable<MessageResponse> {
@@ -140,9 +157,12 @@ export class AuthService {
     if (!token) {
       return false;
     }
-
     // Vérifie si le token est expiré
     return !this.jwtHelper.isTokenExpired(token);
+  }
+  
+  isAuthenticatedAfterAnyProcess(): boolean {
+    return this._isAuthenticated;
   }
 
   // Méthode pour rafraîchir le token; Utilisé dans l'[interceptor] et le [guard]

@@ -1,7 +1,7 @@
 <div class="order-detail-container" *ngIf="order$ | async as order; else loading">
   <header class="detail-header">
     <div>
-      <h1>Commande #{{ order.id }}</h1>
+      <h1>Commande N°{{ order.id }}</h1>
       <!-- date: 'fullDate' -->
       <p>Passée le {{ order.createdAt | date:'yyyy-MM-dd HH:mm' }}</p>
     </div>
@@ -34,7 +34,8 @@
           <option >Sélectionner un statut</option>
           <option [selected]="order.status === 'pending'" value="pending">En attente</option>
           <option [selected]="order.status === 'processing'" value="processing">En cours</option>
-          <option [selected]="order.status === 'shipped'" value="shipped">Expédiée</option>
+          <option *ngIf="order.deliveryMethod == 'expedier'" [selected]="order.status === 'shipped'" value="shipped">Expédiée</option>
+          <option *ngIf="order.deliveryMethod == 'recuperer'" [selected]="order.status === 'recovery'" value="recovery">Récupération</option>
           <option [selected]="order.status === 'delivered'" value="delivered">Livrée</option>
           <option [selected]="order.status === 'cancelled'" value="cancelled">Annulée</option>
         </select>

@@ -511,7 +511,7 @@ export class I18nService {
       // Commandes
       "orders":{
         'title': 'Historique des commandes',
-        'orderNumber': 'Commande #',
+        'orderNumber': 'Commande N°',
         'date': 'Date',
         "status": {
           "processing": "En cours",
@@ -1074,7 +1074,7 @@ export class I18nService {
       // Commandes
       "orders": {
         "title": "Order History",
-        "orderNumber": "Order #",
+        "orderNumber": "Order N°",
         "date": "Date",
         "status": {
           "delivered": "Delivered",

@@ -87,7 +87,7 @@ export const routes: Routes = [
 
   // --- Autres routes protégées (si elles ne font pas partie du layout du dashboard) ---
   {
-    path: 'products/view/:id', // Gardez celle-ci si elle est accessible hors du dashboard
+    path: 'products/view/:id', // Accessible hors du dashboard
     component: ProductDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_USER'] }
