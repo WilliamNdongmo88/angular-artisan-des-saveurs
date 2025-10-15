@@ -62,6 +62,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<JwtResponse> {
+    console.log('[AuthService] credentials :: ', credentials);
     this.isDashboard.set(true);
     return this.http.post<JwtResponse>(this.AUTH_API + 'signin', credentials, httpOptions)
       .pipe(
