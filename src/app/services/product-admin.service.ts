@@ -95,10 +95,6 @@ export class ProductAdminService {
     );
   }
 
-  // updateProduct(id: number, product: ProductToSend): Observable<ProductResponse> {
-  //   return this.http.put<ProductResponse>(`${this.PRODUCTS_API}${id}`, product, httpOptions);
-  // }
-
   /** Suppression d'un produit */
   deleteProduct(id: number): Observable<MessageResponse> {
     return this.http.delete<MessageResponse>(`${this.PRODUCTS_API}${id}`)

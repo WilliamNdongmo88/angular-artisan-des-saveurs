@@ -1193,21 +1193,6 @@ export class I18nService {
     return translation;
   }
 
-//   private getNestedTranslation(obj: Translation, key: string): string {
-//     const keys = key.split('.');
-//     let result: any = obj;
-
-//     for (const k of keys) {
-//       if (result && typeof result === 'object' && k in result) {
-//         result = result[k];
-//       } else {
-//         return '';
-//       }
-//     }
-
-//     return typeof result === 'string' ? result : '';
-//   }
-
     private getNestedTranslation(obj: any, key: string): string | null {
         if (!obj || !key) return null;
 

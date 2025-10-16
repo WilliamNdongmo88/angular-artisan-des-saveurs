@@ -1,4 +1,3 @@
-// src/app/features/orders/order-list/order-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';

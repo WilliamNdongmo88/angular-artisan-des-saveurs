@@ -15,7 +15,6 @@ import { SharedService } from './services/sharedService';
 })
 export class AppComponent implements OnInit {
 
-  //isDashboard: boolean = false; // Set this based on your routing logic
   title = 'Artisan des Saveurs';
 
   private router = inject(Router);

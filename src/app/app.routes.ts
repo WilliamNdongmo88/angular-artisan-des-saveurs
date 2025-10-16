@@ -19,14 +19,10 @@ import { NewPasswordComponent } from './pages/auth/new-password/new-password.com
 import { ActiveAccountComponent } from './pages/auth/active-account/active-account.component';
 import { NewActivationComponent } from './pages/auth/new-activation/new-activation.component';
 import { EmailComponent } from './pages/auth/email-component/email.component';
-import { DummyComponent } from './pages/dummy-component';
 import { ProfilComponent } from './pages/profil/profil';
 import { FileUploadComponent } from './components/file-upload/file-upload';
 import { OrderListComponent } from './pages/dashboard/orders/order-list.component';
 import { OrderDetailComponent } from './pages/dashboard/order-detail/order-detail.component';
-import { PaymentComponent } from './pages/payment/interface/payment.component';
-import { PaymentStatusComponent } from './pages/payment/status/payment-status.component';
-
 
 export const routes: Routes = [
   // --- Routes publiques et d'authentification (inchangées) ---
@@ -92,7 +88,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
-  { path: 'test-guard', component: DummyComponent, canActivate: [AuthGuard], data: { roles: [] } },
   // {
   //   path: 'payment',
   //   component: PaymentComponent, canActivate: [AuthGuard], data: { roles: [] }

@@ -85,11 +85,6 @@ export class UserService {
     }
   }
 
-  // Récupérer les informations utilisateur complètes
-  // getUserProfile(): Observable<any> {
-  //   return this.http.get(`${this.apiUrl}/profile`, this.httpOptions);
-  // }
-
   getUserById(id: number): Observable<Users> {
     return this.http.get<Users>(`${this.apiUrl}/users/${id}`, this.httpOptions);
   }

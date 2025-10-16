@@ -5,7 +5,6 @@ import { ProductDto, ProductResponse } from '../../../models/product.models';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from "../header/header";
 
 // Interface pour les statuts de commande
 export interface OrderStatus {
@@ -257,53 +256,16 @@ export class ProductListComponent implements OnInit {
     return statusObj ? statusObj.color : '#6c757d';
   }
 
-  /**
-   * Affiche un message de succès (à adapter selon votre système de notifications)
-   * @param message Le message à afficher
-   */
-  private showSuccessMessage(message: string): void {
-    // Implémentez selon votre système de notifications
-    // Exemple avec Angular Material Snackbar :
-    // this.snackBar.open(message, 'Fermer', { duration: 3000, panelClass: 'success-snackbar' });
-    
-    // Ou simplement avec console.log pour le moment :
-    console.log('Succès:', message);
-  }
-
-  /**
-   * Affiche un message d'erreur (à adapter selon votre système de notifications)
-   * @param message Le message à afficher
-   */
-  private showErrorMessage(message: string): void {
-    // Implémentez selon votre système de notifications
-    // Exemple avec Angular Material Snackbar :
-    // this.snackBar.open(message, 'Fermer', { duration: 5000, panelClass: 'error-snackbar' });
-    
-    // Ou simplement avec console.error pour le moment :
-    console.error('Erreur:', message);
-  }
-
   // Méthode optionnelle pour filtrer par statut de commande
   filterByOrderStatus(status: string | null): void {
     if (status === null) {
       this.filteredProducts = [...this.products];
-    } else {
-      // this.filteredProducts = this.products.filter(product => 
-      //   (product.orderStatus || 'pending') === status
-      // );
     }
   }
 
   // Méthode pour obtenir le nombre de produits par statut
   getStatusCounts(): { [key: string]: number } {
     const counts: { [key: string]: number } = {};
-    
-    // ORDER_STATUSES.forEach(status => {
-    //   counts[status.value] = this.products.filter(product => 
-    //     (product.orderStatus || 'pending') === status.value
-    //   ).length;
-    // });
-    
     return counts;
   }
 

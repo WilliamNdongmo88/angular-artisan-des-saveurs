@@ -1,5 +1,0 @@
-export const environment = {
-  production: true,
-  apiUrl: 'http://localhost:8070/api'
-};
-console.log("✅ Fichier environment.ts chargé !");

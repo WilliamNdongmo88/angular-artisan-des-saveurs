@@ -40,11 +40,6 @@ export class CartService {
     this.loadCartFromStorage();
   }
 
-  // constructor(private http: HttpClient) {
-  //   // Charger le panier depuis le localStorage au démarrage
-  //   this.loadCartFromStorage();
-  // }
-
   // Observable pour le nombre d'articles dans le panier
   getCartItemCount(): Observable<number> {
     return this.cartItemCountSubject.asObservable();
@@ -134,7 +129,7 @@ export class CartService {
     }
   }
 
-  // Méthode pour envoyer le panier à un serveur ou une API
+  // Méthode pour envoyer le panier à l'API Spring Boot
   submitOrder(order: OrderPayload): Observable<{ success: boolean; message: string }> {
     console.log("[CartService] Envoi de la commande à l'API : ", order);
     return this.http.post<{ success: boolean; message: string }>(this.apiUrl+"/place-order", order, httpOptions).pipe(

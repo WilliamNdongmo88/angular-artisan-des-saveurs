@@ -106,7 +106,6 @@ export class AddressModalComponent implements OnInit, OnChanges {
         this.closeModal();
       } catch (error) {
         console.error('Erreur lors de la sauvegarde de l\'adresse:', error);
-        // Ici, vous pourriez afficher un message d'erreur à l'utilisateur
       } finally {
         this.isLoading = false;
       }

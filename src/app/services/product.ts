@@ -56,7 +56,7 @@ export class ProductService {
         tap(products => {
           this.products = products;
         }),
-        shareReplay(1)  // <-- Important : permet de partager la même valeur à tous les abonnés et de la mettre en cache
+        shareReplay(1)  // Permet de partager la même valeur à tous les abonnés et de la mettre en cache
       );
     }
     return this.productsCache$;

@@ -119,7 +119,7 @@ export class DeliveryComponent {
   private getDeliveryCost(method: string): number {
     switch (method) {
       case 'expedier':
-        return 5.99; // Frais de livraison standard
+        return 5; // Frais de livraison standard
       case 'recuperer':
         return 0; // Retrait gratuit
       default:
@@ -155,7 +155,7 @@ export class DeliveryComponent {
 
   /**
    * Obtient le coût formaté de la livraison
-   * @returns Le coût formaté (ex: "5,99 €" ou "Gratuit")
+   * @returns Le coût formaté (ex: "5 €" ou "Gratuit")
    */
   getFormattedDeliveryCost(): string {
     const cost = this.getDeliveryCost(this.selectedMethod);

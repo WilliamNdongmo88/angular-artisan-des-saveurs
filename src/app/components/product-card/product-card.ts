@@ -44,12 +44,7 @@ export class ProductCardComponent implements OnInit {
 
   navigateToDetails() {
     console.log("Navigate ...")
-    // this.router.navigateByUrl('/').then(() => {
-    //   this.router.navigate(['/product', this.product.id]);
-    // });
-
     this.router.navigate(['/produit', this.product.id]);
-    //this.router.navigate(['/products/view/', this.product.id]);
   }
 
   addToCart() {

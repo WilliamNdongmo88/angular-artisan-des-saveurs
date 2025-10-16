@@ -41,8 +41,7 @@ export class OrderService {
 
   // Récupère une seule commande par son ID
   getOrderById(id: number): Observable<OrderPayload | undefined> {
-    // Pour cet exemple, on filtre les résultats de getOrders().
-    // Idéalement, votre API devrait avoir un endpoint comme /api/orders/{id}
+    // On filtre les résultats de getOrders().
     return this.getOrders().pipe(
       map(orders => orders.find(order => order.id === id))
     );

@@ -264,6 +264,9 @@ export class OrderModalComponent implements OnInit {
       this.order = order;
       this.userFirstName = formData.firstName;
 
+      // Cette logique était nécessaire pour les utilisateurs non connectés
+      // mais maintenant que l'utilisateur doit être connecté pour passer une commande,
+      // on gère tout dans validateOrder()
       // Envoi de la commande à l'API
       // this.cartService.submitOrder(order).subscribe({
       //   next: (response) => {

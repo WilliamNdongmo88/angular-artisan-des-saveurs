@@ -35,7 +35,7 @@ export enum PaymentMethod {
 export enum Currency {
   USD = 'USD',
   EUR = 'EUR',
-  GBP = 'GBP'
+  MUR = 'MUR'
 }
 
 // Interface pour l'état du paiement
