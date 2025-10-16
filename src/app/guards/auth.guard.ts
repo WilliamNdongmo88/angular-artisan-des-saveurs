@@ -30,12 +30,13 @@ export class AuthGuard implements CanActivate {
     if (currentUser) {
       // Vérification si token valide
       if (this.authService.isAuthenticated()) {
-        const hasRole = currentUser.roles.some((role: string) =>
-          requiredRoles.includes(role)
-        );
-        console.log('[AuthGuard] currentUser has valid role ::', hasRole);
+        console.log('### [AuthGuard] currentUser roles ::', currentUser.roles);
+        // const hasRole = currentUser.roles.some((role: string) =>
+        //   requiredRoles.includes(role)
+        // );
+        // console.log('[AuthGuard] currentUser has valid role ::', hasRole);
 
-        if (hasRole) {
+        if (currentUser.roles.includes('ROLE_USER') || currentUser.roles.includes('ROLE_ADMIN')) {
           return of(true); // accès autorisé
         } else {
           console.log('[AuthGuard] Rôle non autorisé, redirection');
