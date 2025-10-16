@@ -86,25 +86,8 @@ export const routes: Routes = [
     path: 'products/view/:id', // Accessible hors du dashboard
     component: ProductDetailsComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_USER'] }
+    data: { roles: ['ROLE_USER', 'ROLE_ADMIN'] }
   },
-  // {
-  //   path: 'payment',
-  //   component: PaymentComponent, canActivate: [AuthGuard], data: { roles: [] }
-  // },
-  // {
-  //   path: 'success',
-  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
-  // },
-  // {
-  //   path: 'cancel',
-  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
-  // },
-  // {
-  //   path: 'error',
-  //   component: PaymentStatusComponent, canActivate: [AuthGuard], data: { roles: [] }
-  // },
-  // --- Route par défaut (inchangée) ---
   { path: '**', redirectTo: '' }
 ];
 
